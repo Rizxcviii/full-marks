@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>user login</title>
+    <script src="validate.js"></script>
+  </head>
+
+  <body>
+    <div class="align">
+      <h1>Full Marks</h1>
+      <img src="Logo.JPG" alt="logo" />
+      <div class="card">
+        <div class="head">
+          <div></div>
+          <a id="login" class="selected" href="#login">Login</a>
+          <a id="register" href="#register">Register</a>
+          <div></div>
+        </div>
+        <div class="tabs">
+          <form
+            method="get"
+            id="form"
+            class="form"
+            onsubmit="return ValidateForm()"
+          >
+            <div class="inputs">
+              <div class="form-control">
+                <input
+                  placeholder="username"
+                  type="text"
+                  id="username"
+                  required
+                />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+
+                <img src="img/user.svg" />
+              </div>
+              <div class="form-control">
+                <input
+                  placeholder="password"
+                  type="password"
+                  id="password"
+                  required
+                />
+                <img src="img/pass.svg" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+              </div>
+              <label class="checkbox"> </label>
+            </div>
+            <button>Login</button>
+          </form>
+          <form
+            method="get"
+            id="form"
+            class="form"
+            onsubmit="return ValidateForm()"
+          >
+            <div class="inputs">
+              <div class="form-control">
+                <input placeholder="Email" type="email" id="email" required />
+                <img src="img/mail.svg" />
+              </div>
+
+              <div class="form-control">
+                <input
+                  placeholder="username"
+                  type="text"
+                  id="username"
+                  required
+                />
+                <img src="img/user.svg" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+              </div>
+              <div class="form-control">
+                <input
+                  placeholder="password"
+                  type="password"
+                  id="password"
+                  required
+                />
+                <img src="img/pass.svg" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+              </div>
+              <div class="form-control">
+                <input
+                  placeholder="Confirm Password"
+                  type="password"
+                  id="password2"
+                  required
+                />
+                <img src="img/pass.svg" />
+              </div>
+            </div>
+            <button>Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
