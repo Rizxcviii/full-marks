@@ -1,13 +1,17 @@
 function ValidateForm() {
-  const username = document.getElementsById("username");
-  const password = document.getElementsById("password");
-  var password2 = document.getElementsById("cpassword2");
+  debugger;
+  console.log(324234);
 
-  var email = document.getElementsById("email");
+  const username = document.getElementById("username");
+  const password = document.getElementById("password");
+  var password2 = document.getElementById("cpassword2");
+
+  var email = document.getElementById("email");
   var form = document.getElementById("form");
 
   form.addEventListener("submit", e => {
     e.preventDefault();
+    debugger;
 
     checkInputs();
   });
@@ -49,6 +53,7 @@ function ValidateForm() {
   }
 
   function setErrorFor(input, message) {
+    console.log(123, input, message);
     const formControl = input.parentElement;
     const small = formControl.querySelector("small");
     formControl.className = "form-control error";
@@ -61,7 +66,7 @@ function ValidateForm() {
   }
 
   function isEmail(email) {
-    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1, 3}\.[0-9]{1, 3}\.[0-9]{1, 3}\.[0-9]{1, 3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email
     );
   }

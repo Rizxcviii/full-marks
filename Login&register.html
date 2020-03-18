@@ -27,6 +27,7 @@
             id="form"
             class="form"
             onsubmit="return ValidateForm()"
+            action="index.html"
           >
             <div class="inputs">
               <div class="form-control">
@@ -62,33 +63,24 @@
             method="get"
             id="form"
             class="form"
-            onsubmit="return ValidateForm()"
+            onsubmit="return ValidateForm()
+            "
           >
             <div class="inputs">
               <div class="form-control">
-                <input placeholder="Email" type="email" id="email" required />
+                <input placeholder="Email" type="email" id="email" />
                 <img src="img/mail.svg" />
               </div>
 
               <div class="form-control">
-                <input
-                  placeholder="username"
-                  type="text"
-                  id="username"
-                  required
-                />
+                <input placeholder="username" type="text" id="username" />
                 <img src="img/user.svg" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
               </div>
               <div class="form-control">
-                <input
-                  placeholder="password"
-                  type="password"
-                  id="password"
-                  required
-                />
+                <input placeholder="password" type="password" id="password" />
                 <img src="img/pass.svg" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
@@ -99,7 +91,6 @@
                   placeholder="Confirm Password"
                   type="password"
                   id="password2"
-                  required
                 />
                 <img src="img/pass.svg" />
               </div>
