@@ -40,7 +40,7 @@
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
 
-                <img src="img/user.svg" />
+                <img src="{{ url_for('static', filename='img/user.svg') }}" />
               </div>
               <div class="form-control">
                 <input
@@ -49,7 +49,7 @@
                   id="password"
                   required
                 />
-                <img src="img/pass.svg" />
+                <img src="{{ url_for('static', filename='img/pass.svg') }}" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -67,7 +67,7 @@
             <div class="inputs">
               <div class="form-control">
                 <input placeholder="Email" type="email" id="email" required />
-                <img src="img/mail.svg" />
+                <img src="{{ url_for('static', filename='img/mail.svg') }}" />
               </div>
 
               <div class="form-control">
@@ -77,7 +77,7 @@
                   id="username"
                   required
                 />
-                <img src="img/user.svg" />
+                <img src="{{ url_for('static', filename='img/user.svg') }}" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -89,7 +89,7 @@
                   id="password"
                   required
                 />
-                <img src="img/pass.svg" />
+                <img src="{{ url_for('static', filename='img/pass.svg') }}" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -101,7 +101,7 @@
                   id="password2"
                   required
                 />
-                <img src="img/pass.svg" />
+                <img src="{{ url_for('static', filename='img/pass.svg') }}" />
               </div>
             </div>
             <button>Register</button>
