@@ -82,6 +82,10 @@ a:hover
 }
 
 .image-left
+{
+	float: left;
+	margin: 0 2em 2em 0;
+}
 
 .image-centered
 {
