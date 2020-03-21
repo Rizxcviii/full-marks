@@ -8,7 +8,9 @@ form.addEventListener("submit", e => {
   // Whenever the user clicks login, all the text fields in the register page is validated.
   e.preventDefault();
 
-  checkInputs();
+  if (checkInputs()) {
+    handleLoginData();
+  }
 });
 
 function checkInputs() {
@@ -17,34 +19,43 @@ function checkInputs() {
   const emailValue = email.value.trim();
   const passwordValue = password.value.trim();
   const password2Value = password2.value.trim();
+  let success = true;
 
   if (usernameValue === "") {
     setErrorFor(username, "Username cannot be blank");
+    success = false;
   } else {
     setSuccessFor(username);
   }
 
   if (emailValue === "") {
     setErrorFor(email, "Email cannot be blank");
+    success = false;
   } else if (!isEmail(emailValue)) {
     setErrorFor(email, "Not a valid email");
+    success = false;
   } else {
     setSuccessFor(email);
   }
 
   if (passwordValue === "") {
     setErrorFor(password, "Password cannot be blank");
+    success = false;
   } else {
     setSuccessFor(password);
   }
 
   if (password2Value === "") {
     setErrorFor(password2, "Password2 cannot be blank");
+    success = false;
   } else if (passwordValue !== password2Value) {
     setErrorFor(password2, "Passwords does not match");
+    success = false;
   } else {
     setSuccessFor(password2);
   }
+
+  return success;
 }
 
 function setErrorFor(input, message) {
@@ -65,4 +76,23 @@ function isEmail(email) {
   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );
+}
+
+function handleLoginData(){
+  const data = {
+    usernameValue: username.value.trim(),
+    emailValue: email.value.trim(),
+    passwordValue: password.value.trim(),
+    password2Value: password2.value.trim(),
+  }
+
+  fetch(window.origin+'/login/handleLoginData', {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify(data),
+    cache: "no-cache",
+    headers: new Headers({
+      "content-type": "application/json"
+    })
+  });
 }
