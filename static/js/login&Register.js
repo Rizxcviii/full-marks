@@ -9,7 +9,12 @@ form.addEventListener("submit", e => {
   e.preventDefault();
 
   if (checkInputs()) {
-    handleLoginData();
+    networkController.sendDataToBeckend({
+      usernameValue: username.value.trim(),
+      emailValue: email.value.trim(),
+      passwordValue: password.value.trim(),
+      password2Value: password2.value.trim(),
+    },'/login/handleLoginData');
   }
 });
 
@@ -76,23 +81,4 @@ function isEmail(email) {
   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );
-}
-
-function handleLoginData(){
-  const data = {
-    usernameValue: username.value.trim(),
-    emailValue: email.value.trim(),
-    passwordValue: password.value.trim(),
-    password2Value: password2.value.trim(),
-  }
-
-  fetch(window.origin+'/login/handleLoginData', {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify(data),
-    cache: "no-cache",
-    headers: new Headers({
-      "content-type": "application/json"
-    })
-  });
 }
