@@ -10,12 +10,20 @@ def index():
 def login():
     return render_template('login_register.html')
 
-@app.route('/login/handleLoginData', methods=['POST'])
-def handleLoginData():
+@app.route('/login/handleRegistrationData', methods=['POST'])
+def handleRegistrationData():
     req = request.get_json()
     print(req)
     res = make_response(jsonify({"message": "JSON recieved"}), 200)
     return res
+
+@app.route('/login/handleLoginData', methods=['POST'])
+def handlLoginData():
+    req = request.get_json()
+    print(req)
+    res = make_response(jsonify({"message": "JSON recieved"}), 200)
+    return res
+
 
 if __name__=="__main__":
     app.run(debug=True)

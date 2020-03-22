@@ -474,10 +474,6 @@ ul.contact li a.icon-rss:before
 	color: #FFF;
 }
 
-#menu li:hover a, #menu li.active a, #menu li.active span
-{
-}
-
 #menu .current_page_item a
 {
 	color: #8dc63f;
