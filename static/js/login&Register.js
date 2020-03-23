@@ -1,50 +1,94 @@
-const form = document.getElementById("form");
-const username = document.getElementById("username");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const password2 = document.getElementById("password2");
+const registerForm = document.getElementById("register-form");
+const loginForm = document.getElementById("login-form");
 
-form.addEventListener("submit", e => {
-  // Whenever the user clicks login, all the text fields in the register page is validated.
+registerForm.addEventListener("submit", e => {
+  //validation for registration
   e.preventDefault();
+  let credentials = {
+    username: document.getElementById("username"),
+    email: document.getElementById("email"),
+    password: document.getElementById("password"),
+    password2: document.getElementById("password2"),
+  };
 
-  checkInputs();
+  //if verfication is correct, send data to networkcontroller
+  if (checkRegisterInputs(credentials)) {
+    networkController.sendDataToBeckend(credentials,'/login/handleRegistrationData');
+  }
 });
 
-function checkInputs() {
-  // trim to remove the whitespaces
-  const usernameValue = username.value.trim();
-  const emailValue = email.value.trim();
-  const passwordValue = password.value.trim();
-  const password2Value = password2.value.trim();
-
-  if (usernameValue === "") {
-    setErrorFor(username, "Username cannot be blank");
-  } else {
-    setSuccessFor(username);
+loginForm.addEventListener("submit", e => {
+  //verification of login
+  e.preventDefault();
+  let credentials = {
+    username: document.getElementById("username-login"),
+    password: document.getElementById("password-login"),
   }
 
-  if (emailValue === "") {
-    setErrorFor(email, "Email cannot be blank");
-  } else if (!isEmail(emailValue)) {
-    setErrorFor(email, "Not a valid email");
+  //if verfication is correct, send data to networkcontroller
+  if (checkLoginInputs(credentials)) {
+    networkController.sendDataToBeckend(credentials,'/login/handleLoginData');
+  }
+});
+
+function checkRegisterInputs(credentials) {
+  let success = true;
+
+  if (credentials.username.value.trim() === "") {
+    setErrorFor(credentials.username, "Username cannot be blank");
+    success = false;
   } else {
-    setSuccessFor(email);
+    setSuccessFor(credentials.username);
   }
 
-  if (passwordValue === "") {
-    setErrorFor(password, "Password cannot be blank");
+  if (credentials.email.value.trim() === "") {
+    setErrorFor(credentials.email, "Email cannot be blank");
+    success = false;
+  } else if (!isEmail(credentials.email.value.trim())) {
+    setErrorFor(credentials.email, "Not a valid email");
+    success = false;
   } else {
-    setSuccessFor(password);
+    setSuccessFor(credentials.email);
   }
 
-  if (password2Value === "") {
-    setErrorFor(password2, "Password2 cannot be blank");
-  } else if (passwordValue !== password2Value) {
-    setErrorFor(password2, "Passwords does not match");
+  if (credentials.password.value.trim() === "") {
+    setErrorFor(credentials.password, "Password cannot be blank");
+    success = false;
   } else {
-    setSuccessFor(password2);
+    setSuccessFor(credentials.password);
   }
+
+  if (credentials.password2.value.trim() === "") {
+    setErrorFor(credentials.password2, "Password2 cannot be blank");
+    success = false;
+  } else if (credentials.password.value.trim() !== credentials.password2.value.trim()) {
+    setErrorFor(credentials.password2, "Passwords does not match");
+    success = false;
+  } else {
+    setSuccessFor(credentials.password2);
+  }
+
+  return success;
+}
+
+function checkLoginInputs(credentials){
+  let success = true;
+
+  if (credentials.username.value.trim() === "") {
+    setErrorFor(credentials.username, "Username cannot be blank");
+    success = false;
+  } else {
+    setSuccessFor(credentials.username);
+  }
+
+  if (credentials.password.value.trim() === "") {
+    setErrorFor(credentials.password, "Password cannot be blank");
+    success = false;
+  } else {
+    setSuccessFor(credentials.password);
+  }
+
+  return success;
 }
 
 function setErrorFor(input, message) {

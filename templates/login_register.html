@@ -12,6 +12,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
     />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Login&Register.css') }}" />
+    <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/login&Register.js') }}" defer></script>
   </head>
   <body>
     <div class="align">
@@ -23,7 +27,7 @@
           <a id="register" href="#register">Login</a>
         </div>
         <div class="tabs">
-          <form method="get" id="form" class="form">
+          <form method="get" id="register-form" class="form">
             <div class="inputs">
               <div class="form-control">
                 <input type="text" placeholder="username" id="username" />
@@ -33,7 +37,7 @@
                 <img src="{{ url_for('static', filename='img/user.svg') }}" />
               </div>
               <div class="form-control">
-                <input type="text" placeholder="email" id="email" />
+                <input type="email" placeholder="email" id="email" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -56,13 +60,13 @@
             </div>
             <button>Register</button>
           </form>
-          <form method="get" id="form" class="form" action="homepage.html">
+          <form method="get" id="login-form" class="form">
             <div class="inputs">
               <div class="form-control">
                 <input
                   type="text"
                   placeholder="username"
-                  id="username"
+                  id="username-login"
                   required
                 />
                 <i class="fas fa-check-circle"></i>
@@ -75,7 +79,7 @@
                 <input
                   type="password"
                   placeholder="password"
-                  id="password"
+                  id="password-login"
                   required
                 />
                 <i class="fas fa-check-circle"></i>
@@ -89,8 +93,5 @@
         </div>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/login&Register.js') }}"></script>
   </body>
 </html>
