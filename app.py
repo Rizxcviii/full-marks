@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('ImageCapture.html')
 
 @app.route('/login')
 def login():
@@ -23,6 +23,10 @@ def handlLoginData():
     print(req)
     res = make_response(jsonify({"message": "JSON recieved"}), 200)
     return res
+
+@app.route('/ImageCapture')
+def imageCapture():
+    return render_template('ImageCapture.html')
 
 
 if __name__=="__main__":
