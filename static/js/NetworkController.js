@@ -17,32 +17,20 @@ class NetworkController{
         fetch(window.origin+dest, {
             method: "POST",
             credentials: "include",
-            body: JSON.stringify(this.trimObjValues(data)),
+            body: JSON.stringify(data),
             cache: "no-cache",
             headers: new Headers({
             "content-type": "application/json"
             })
         })
         //receive response from JSON being sent successfully/unsuccessfully
+        //upon unsuccessful transmission, data contains an error object
+        //error object contains error code, error message and error type
         .then(function(response){
-            //if unsuccessfull, error code is recieved and outtputed to console
-            if (response.status != 200) {
-                console.log('Response status was not 200'+response.status);
-                return;
-            }
-            //else, ouput to console that JSON was recieved successfully
             response.json().then(function(data){
                 console.log(data);
             })
         });
-    }
-
-    //since data being sent are DOM objects, retrieve value from DOM and trim to remove unecessary whitespace
-    trimObjValues(obj) {
-        return Object.keys(obj).reduce((acc, curr) => {
-        acc[curr] = obj[curr].value.trim()
-        return acc;
-        }, {});
     }
 }
 

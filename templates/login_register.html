@@ -63,16 +63,11 @@
           <form method="get" id="login-form" class="form">
             <div class="inputs">
               <div class="form-control">
-                <input
-                  type="text"
-                  placeholder="username"
-                  id="username-login"
-                  required
-                />
+                <input type="email" placeholder="email" id="email-login" required />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
-                <img src="{{ url_for('static', filename='img/user.svg') }}" />
+                <img src="{{ url_for('static', filename='img/mail.svg') }}" />
               </div>
 
               <div class="form-control">
