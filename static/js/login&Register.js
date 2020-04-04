@@ -13,7 +13,7 @@ registerForm.addEventListener("submit", e => {
 
   //if verfication is correct, send data to networkcontroller
   if (checkRegisterInputs(credentials)) {
-    networkController.sendDataToBeckend(credentials,'/login/handleRegistrationData');
+    networkController.sendDataToBeckend(trimObjValues(credentials),'/login/handleRegistrationData');
   }
 });
 
@@ -21,13 +21,13 @@ loginForm.addEventListener("submit", e => {
   //verification of login
   e.preventDefault();
   let credentials = {
-    username: document.getElementById("username-login"),
+    email: document.getElementById("email-login"),
     password: document.getElementById("password-login"),
   }
 
   //if verfication is correct, send data to networkcontroller
   if (checkLoginInputs(credentials)) {
-    networkController.sendDataToBeckend(credentials,'/login/handleLoginData');
+    networkController.sendDataToBeckend(trimObjValues(credentials),'/login/handleLoginData');
   }
 });
 
@@ -74,11 +74,11 @@ function checkRegisterInputs(credentials) {
 function checkLoginInputs(credentials){
   let success = true;
 
-  if (credentials.username.value.trim() === "") {
-    setErrorFor(credentials.username, "Username cannot be blank");
+  if (credentials.email.value.trim() === "") {
+    setErrorFor(credentials.email, "email cannot be blank");
     success = false;
   } else {
-    setSuccessFor(credentials.username);
+    setSuccessFor(credentials.email);
   }
 
   if (credentials.password.value.trim() === "") {
@@ -109,4 +109,12 @@ function isEmail(email) {
   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );
+}
+
+//since data being sent are DOM objects, retrieve value from DOM and trim to remove unecessary whitespace
+function trimObjValues(obj) {
+  return Object.keys(obj).reduce((acc, curr) => {
+  acc[curr] = obj[curr].value.trim()
+  return acc;
+  }, {});
 }
