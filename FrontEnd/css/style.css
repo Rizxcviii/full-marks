@@ -5,9 +5,10 @@ body{
 	background:#f4f4f4;
 }
 
-.imager{
-	color: green;
-	text-align: center;
+.homeicon{
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
 }
 
 home{
@@ -28,8 +29,35 @@ li{
 	overflow:auto;
 }
 
-.pull-left{float:left;}
-.pull-right{float:right;}
+.pull-left{
+	float:left;
+}
+.pull-right{
+	float:right;
+}
+.pull-right2{
+	float: right;
+}
+
+/* unvisited link */
+ahome:link {
+ color: red;
+}
+
+/* visited link */
+ahome:visited {
+ color: yellow;
+}
+
+/* mouse over link */
+ahome:hover {
+ color: hotpink;
+}
+
+/* selected link */
+ahome:active {
+ color: green;
+}
 
 header{
 	background:#1f88f4;
