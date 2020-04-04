@@ -5,6 +5,15 @@ body{
 	background:#f4f4f4;
 }
 
+.imager{
+	color: green;
+	text-align: center;
+}
+
+home{
+	text-align: center;
+}
+
 h1{
 	text-align: center;
 }
