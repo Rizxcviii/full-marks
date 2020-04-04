@@ -43,17 +43,14 @@ li{
 ahome:link {
  color: red;
 }
-
 /* visited link */
 ahome:visited {
  color: yellow;
 }
-
 /* mouse over link */
 ahome:hover {
  color: hotpink;
 }
-
 /* selected link */
 ahome:active {
  color: green;
