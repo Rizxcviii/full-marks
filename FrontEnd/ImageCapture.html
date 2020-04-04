@@ -19,6 +19,7 @@
   <body>
     <div id="camera"></div>
     <button onclick="takeSnapshot()">Take Picture</button>
+
     <div id="results"></div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
@@ -29,7 +30,7 @@
       width: 360,
       hieght: 360,
       image_format: "jpeg",
-      jpeg_quality: 90
+      jpeg_quality: 90,
     });
 
     Webcam.attach("#camera");
@@ -41,10 +42,11 @@
       : "shutter.mp3";
 
     function takeSnapshot() {
-      Webcam.snap(function(data_uri) {
+      Webcam.snap(function (data_uri) {
         document.getElementById("results").innerHTML =
           '<img src="' + data_uri + '" />';
       });
     }
   </script>
+  <button>Submit</button>
 </html>
