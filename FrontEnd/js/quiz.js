@@ -6,15 +6,15 @@ var highest = total * point;
 //Initializer
 function init(){
 	//set correct answers
-	sessionStorage.setItem('a1','b');
-	sessionStorage.setItem('a2','d');
-	sessionStorage.setItem('a3','c');
-	sessionStorage.setItem('a4','a');
-	sessionStorage.setItem('a5',"a");
-	sessionStorage.setItem('a6','b');
+	sessionStorage.setItem('a1','a');
+	sessionStorage.setItem('a2','c');
+	sessionStorage.setItem('a3','a');
+	sessionStorage.setItem('a4','d');
+	sessionStorage.setItem('a5',"b");
+	sessionStorage.setItem('a6','c');
 	sessionStorage.setItem('a7','d');
-	sessionStorage.setItem('a8','c');
-	sessionStorage.setItem('a9','a');
+	sessionStorage.setItem('a8','b');
+	sessionStorage.setItem('a9','b');
 	sessionStorage.setItem('a10',"a");
 }
 
