@@ -4,11 +4,10 @@ body{
 }
 
 h2{
-  color: red;
+  color: green;
 }
 
 .backicon{
   position: absolute;
   left: 0px;
   bottom: 0px;
-}
