@@ -24,24 +24,39 @@
           <a id="register" href="#register">Login</a>
         </div>
         <div class="tabs">
-          <form method="get" id="form" class="form">
+          <form method="POST" id="form" class="form" action="process-form.php">
             <div class="inputs">
               <div class="form-control">
-                <input type="text" placeholder="username" id="username" />
+                <input
+                  type="text"
+                  placeholder="username"
+                  id="username"
+                  name="username"
+                />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
                 <img src="img/user.svg" />
               </div>
               <div class="form-control">
-                <input type="text" placeholder="email" id="email" />
+                <input
+                  type="text"
+                  placeholder="email"
+                  id="email"
+                  name="email"
+                />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
                 <img src="img/mail.svg" />
               </div>
               <div class="form-control">
-                <input type="password" placeholder="password" id="password" />
+                <input
+                  type="password"
+                  placeholder="password"
+                  id="password"
+                  name="password"
+                />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -60,16 +75,11 @@
           <form method="get" id="form" class="form" action="homepage.html">
             <div class="inputs">
               <div class="form-control">
-                <input
-                  type="text"
-                  placeholder="username"
-                  id="username"
-                  required
-                />
+                <input type="text" placeholder="email" id="email" required />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
-                <img src="img/user.svg" />
+                <img src="img/mail.svg" />
               </div>
 
               <div class="form-control">
