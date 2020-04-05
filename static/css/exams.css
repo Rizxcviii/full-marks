@@ -1,10 +1,18 @@
 body{
-  background-color: lightblue;
+  background-color: #2b2b2b;
   background-position: center;
 }
 
 h2{
-  color: black;
+  color: lightblue;
+}
+
+table{
+  color: white;
+}
+
+th{
+  color: white;
 }
 
 .backicon{

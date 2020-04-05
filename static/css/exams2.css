@@ -1,5 +1,5 @@
 body{
-  background-color: lightblue;
+  background-color: #2b2b2b;
   background-position: center;
 }
 
@@ -7,7 +7,16 @@ h2{
   color: green;
 }
 
+table{
+  color: white;
+}
+
+th{
+  color: white;
+}
+
 .backicon{
   position: absolute;
   left: 0px;
   bottom: 0px;
+}
