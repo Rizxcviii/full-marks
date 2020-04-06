@@ -11,11 +11,26 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
     />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/Login&Register.css') }}" />
-    <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='js/login&Register.js') }}" defer></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/Login&Register.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='js/NetworkController.js') }}"
+      defer
+    ></script>
+    <script
+      src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"
+      defer
+    ></script>
+    <script
+      src="{{ url_for('static', filename='js/index.js') }}"
+      defer
+    ></script>
+    <script
+      src="{{ url_for('static', filename='js/login&Register.js') }}"
+      defer
+    ></script>
   </head>
   <body>
     <div class="align">
@@ -23,8 +38,8 @@
       <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="logo" />
       <div class="card">
         <div class="head">
-          <a id="login" href="#login" class="selected">Register</a>
-          <a id="register" href="#register">Login</a>
+          <a id="register" href="#register" class="selected">Register</a>
+          <a id="login" href="#login">Login</a>
         </div>
         <div class="tabs">
           <form method="get" id="register-form" class="form">
@@ -63,7 +78,12 @@
           <form method="get" id="login-form" class="form">
             <div class="inputs">
               <div class="form-control">
-                <input type="email" placeholder="email" id="email-login" required />
+                <input
+                  type="email"
+                  placeholder="email"
+                  id="email-login"
+                  required
+                />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
