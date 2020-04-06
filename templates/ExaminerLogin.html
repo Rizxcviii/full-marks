@@ -11,13 +11,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
     />
-    <link rel="stylesheet" href="./Login&Register.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Login&Register.css') }}" />
   </head>
 
   <body>
     <div class="align">
       <h1><b>Full Marks</b></h1>
-      <img src="Logo.JPG" alt="logo" />
+      <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="logo" />
       <div class="card">
         <div class="head">
           <a id="login" href="#login" class="selected">Examiner Login</a>
@@ -30,8 +30,9 @@
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
-                <img src="img/user.svg" />
+                <img src="{{ url_for('static', filename='img/user.svg') }}" />
               </div>
+
               <div class="form-control">
                 <input
                   type="password"
@@ -42,7 +43,7 @@
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
-                <img src="img/pass.svg" />
+                <img src="{{ url_for('static', filename='img/pass.svg') }}" />
               </div>
             </div>
             <button>Login</button>
@@ -51,10 +52,9 @@
       </div>
     </div>
     <a href="homepage.html">
-      <img border="0" alt="homeicon" src="home-icon.png" width="64" height="64">
+        <img border="0" alt="homeicon" src="{{ url_for('static', filename='img/home-icon.png') }}" width="64" height="64">
     </a>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/index.js"></script>
-    </p>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
   </body>
 </html>
