@@ -29,6 +29,7 @@ class NetworkController{
                 "content-type": "application/json"
                 })
             });
+            
             const json = await response.json();
             return(typeof json.error == 'undefined');
         }catch(err){
