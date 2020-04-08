@@ -13,24 +13,33 @@ class NetworkController{
     }
 
     //use of fetch API to send data as JSON back to flask
-    sendDataToBeckend(data, dest){
-        fetch(window.origin+dest, {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify(data),
-            cache: "no-cache",
-            headers: new Headers({
-            "content-type": "application/json"
-            })
-        })
-        //receive response from JSON being sent successfully/unsuccessfully
-        //upon unsuccessful transmission, data contains an error object
-        //error object contains error code, error message and error type
-        .then(function(response){
-            response.json().then(function(data){
-                console.log(data);
-            })
-        });
+    //also uses async/await so therefore calls to this must also be an async method
+    //async means to handle data asynchronously
+    //lines of code are therefore performed one after another
+    //otherwise, e.g. lines 30 may perform first then line 21 after
+    //since JavaScript is single-threaded and can't handle threads simultaneously
+    async sendDataToBackend(data, dest){
+        try{
+            const response = await fetch(window.origin+dest, {
+                method: "POST",
+                credentials: "include",
+                body: JSON.stringify(data),
+                cache: "no-cache",
+                headers: new Headers({
+                "content-type": "application/json"
+                })
+            });
+            const json = await response.json();
+            return(typeof json.error == 'undefined');
+        }catch(err){
+            console.log(err);
+            return false;
+        }
+    }
+
+    //redirect to route of 'reoute' variable
+    redirect(route){
+        window.location = window.origin + "/" + route;
     }
 }
 

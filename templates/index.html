@@ -26,26 +26,29 @@ Released   : 20131202
       ]><link href="default_ie6.css" rel="stylesheet" type="text/css"
     /><![endif]-->
   </head>
+
   <body>
     <div id="header-wrapper">
       <div id="header" class="container">
         <div id="new">
           <h1>
-            <i id="logo2" class="fa fa-pencil-square-o"></i
-            ><a href="#">Full Marks</a>
+            <img src="{{ url_for('static', filename='img/Logo.jpg') }}" alt="FullMarks Logo" width="180" height="109" />
           </h1>
-          <img id="logo1" src="Logo.JPG" alt="logo" />
-
-          <nav id="menu">
+          <div id="menu">
             <ul>
               <li class="current_page_item">
-                <a href="{{ url_for('index') }}" accesskey="1" title="">Homepage</a>
+                <a href="#" accesskey="1" title="">Homepage</a>
               </li>
-              <li><a href="#" accesskey="3" title="">Take Exam</a></li>
-              <li><a href="{{ url_for('login') }}" accesskey="4" title="">Practice Exams</a></li>
-              <li><a href="#" accesskey="5" title="">Timetable</a></li>
+              <li>
+                <a href="personalDetails.html" accesskey="3" title=""
+                  >Details</a
+                >
+              </li>
+              <li><a href="button.html">Exam</a></li>
+              <li><a href="ExaminerLogin.html">Examiner</a></li>
+              <li><a href="login_register.html">Signout</a></li>
             </ul>
-          </nav>
+          </div>
         </div>
       </div>
       <div id="header-featured">
@@ -58,8 +61,8 @@ Released   : 20131202
               goals to the best of your ability by using technology that is
               accessible to you anywhere at anytime.
             </p>
-            <a href="#" class="button"
-              >Click here to check your current exams</a
+            <a href="timetable.html" class="button"
+              >Click here to check your current exams timetable</a
             >
           </div>
         </div>

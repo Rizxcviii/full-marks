@@ -54,13 +54,13 @@ def handleRegistrationData():
     try:
         auth.create_user_with_email_and_password(req['email'], req['password'])
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
+        print(e)
         try:
             error = json.loads(str(e)[str(e).index(']')+2:]) # If the error is a Firebase error, it throws back a specfic 'JSON' object, so we need to translate it to JSON for JavaScript
         except Exception as e: # Else, it could be any other Error, so we need to capture it and handle it
-            print(e)
             return make_reponse({"message": "Unknown error occured"})
         return make_response(error, 500)
-    return make_response(jsonify({"message": "Registration Successful"}), 200)
+    return make_response({"success" : "true"}, 301)
 
 
 # If you choose login within the login page, the below ''sub route'' will be called, handling that data passed. 
@@ -70,14 +70,23 @@ def handlLoginData():
     try:
         auth.sign_in_with_email_and_password(req['email'], req['password'])
     except Exception as e:
-        error = json.loads(str(e)[str(e).index(']')+2:])
-        return make_response(error, error.args)
-    return make_response(jsonify({"message": "Login successful"}), 200)
+        print(e)
+        try:
+            error = json.loads(str(e)[str(e).index(']')+2:])
+        except Exception as e: 
+            return make_reponse({"message": "Unknown error occured"})
+        return make_response(error, 500)
+    return make_response({"success" : "true"}, 301)
 
 # Handling for the 'Image Capture' webpage
 @app.route('/ImageCapture')
 def imageCapture():
     return render_template('ImageCapture.html')
+
+# Loads up user dashboard
+@app.route('/dashboard')
+def dashboard():
+    return render_template('index.html')
 
 # Run the application and start it in debugging mode to display errors
 if __name__=="__main__":

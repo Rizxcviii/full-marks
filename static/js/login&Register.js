@@ -1,7 +1,7 @@
 const registerForm = document.getElementById("register-form");
 const loginForm = document.getElementById("login-form");
 
-registerForm.addEventListener("submit", e => {
+registerForm.addEventListener("submit", async e => {
   //validation for registration
   e.preventDefault();
   let credentials = {
@@ -12,12 +12,15 @@ registerForm.addEventListener("submit", e => {
   };
 
   //if verfication is correct, send data to networkcontroller
+  //if running 'sendingDataToBackend', use 'await' keywork and store in async method
   if (checkRegisterInputs(credentials)) {
-    networkController.sendDataToBeckend(trimObjValues(credentials),'/login/handleRegistrationData');
+    if (await networkController.sendDataToBackend(trimObjValues(credentials),'/login/handleLoginData')) {
+      networkController.redirect('dashboard');
+    } 
   }
 });
 
-loginForm.addEventListener("submit", e => {
+loginForm.addEventListener("submit", async e => {
   //verification of login
   e.preventDefault();
   let credentials = {
@@ -27,7 +30,9 @@ loginForm.addEventListener("submit", e => {
 
   //if verfication is correct, send data to networkcontroller
   if (checkLoginInputs(credentials)) {
-    networkController.sendDataToBeckend(trimObjValues(credentials),'/login/handleLoginData');
+    if (await networkController.sendDataToBackend(trimObjValues(credentials),'/login/handleLoginData')) {
+      networkController.redirect('dashboard');
+    }
   }
 });
 
