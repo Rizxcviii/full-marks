@@ -14,7 +14,7 @@ registerForm.addEventListener("submit", async e => {
   //if verfication is correct, send data to networkcontroller
   //if running 'sendingDataToBackend', use 'await' keywork and store in async method
   if (checkRegisterInputs(credentials)) {
-    if (await networkController.sendDataToBackend(trimObjValues(credentials),'/login/handleLoginData')) {
+    if (await networkController.sendDataToBackend(trimObjValues(credentials),'/login/handleRegistrationData')) {
       networkController.redirect('dashboard');
     } 
   }
