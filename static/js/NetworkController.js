@@ -31,6 +31,7 @@ class NetworkController{
             });
             
             const json = await response.json();
+            console.log(json);
             return(typeof json.error == 'undefined');
         }catch(err){
             console.log(err);

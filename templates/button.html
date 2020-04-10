@@ -7,12 +7,12 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/button.css') }}">
   </head>
     <body id= "body">
-      <a href = "exams.html"><button id="demo" onclick = "Button()">Take Practice Exam</button>
-      <a href = "exams2.html"><button id= "style" onclick = "Button1()">Take Exam</button>
+      <a href = "{{ url_for('exams') }}"><button id="demo" onclick = "Button()">Take Practice Exam</button>
+      <a href = "{{ url_for('exams2') }}"><button id= "style" onclick = "Button1()">Take Exam</button>
     </body>
 
     <p>
-    <a href="homepage.html">
+    <a href="{{ url_for('homepage') }}">
         <img border="0" alt="homeicon" src="{{ url_for('static', filename='img/home-icon.png') }}" width="64" height="64">
       </a>
     </p>

@@ -23,7 +23,7 @@
           <a id="login" href="#login" class="selected">Examiner Login</a>
         </div>
         <div class="tabs">
-          <form method="get" id="form" class="form" action="examiner.html">
+          <form method="get" id="form" class="form" action="{{ url_for('examiner') }}">
             <div class="inputs">
               <div class="form-control">
                 <input type="email" placeholder="email" id="email" required />
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <a href="homepage.html">
+    <a href="{{ url_for('homepage') }}">
         <img border="0" alt="homeicon" src="{{ url_for('static', filename='img/home-icon.png') }}" width="64" height="64">
     </a>
     <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>

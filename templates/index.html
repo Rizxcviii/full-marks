@@ -32,7 +32,7 @@ Released   : 20131202
       <div id="header" class="container">
         <div id="new">
           <h1>
-            <img src="{{ url_for('static', filename='img/Logo.jpg') }}" alt="FullMarks Logo" width="180" height="109" />
+            <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="FullMarks Logo" width="180" height="109" />
           </h1>
           <div id="menu">
             <ul>
@@ -61,7 +61,7 @@ Released   : 20131202
               goals to the best of your ability by using technology that is
               accessible to you anywhere at anytime.
             </p>
-            <a href="timetable.html" class="button"
+            <a href="{{ url_for('timetable') }}" class="button"
               >Click here to check your current exams timetable</a
             >
           </div>

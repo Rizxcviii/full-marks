@@ -10,7 +10,7 @@
     </tr>
     <tr>
       <td>GUI</td>
-      <td><a href="ImageCapture.html">Take Exam </td>
+      <td><a href="{{ url_for('ImageCapture') }}">Take Exam </td>
     </tr>
     <tr>
       <td>Procedural Programming</td>
@@ -30,7 +30,7 @@
       </tr>
     </table>
     <div id="backicon" class="backicon" >
-      <a href="button.html"><img src="{{ url_for('static', filename='backarrow.png') }}" alt="HomeIcon Logo" width="32" height="32">
+      <a href="{{ url_for('button') }}"><img src="{{ url_for('static', filename='backarrow.png') }}" alt="HomeIcon Logo" width="32" height="32">
     </div>
 </body>
 </html>

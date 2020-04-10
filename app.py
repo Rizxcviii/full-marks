@@ -41,7 +41,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 def index():
     return render_template('index.html')
 
-# The login route when redirected to the login and regsitration page.
+# login_register.html
 @app.route('/login')
 def login():
     return render_template('login_register.html')
@@ -53,12 +53,19 @@ def handleRegistrationData():
     req = request.get_json() # Since we know that data is being sent as JSON, we need to convert it to a data structure that python understands, which is dictionaries
     try:
         auth.create_user_with_email_and_password(req['email'], req['password'])
+        user = auth.sign_in_with_email_and_password(req['email'], req['password'])
+        user = auth.refresh(user['refreshToken'])
+        print(user['userId'])
+        db.child('students').child(user['userId']).set({
+            'fname': 'Please add your first name',
+            'lname': 'Please enter your last name',
+        })
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
         print(e)
         try:
             error = json.loads(str(e)[str(e).index(']')+2:]) # If the error is a Firebase error, it throws back a specfic 'JSON' object, so we need to translate it to JSON for JavaScript
         except Exception as e: # Else, it could be any other Error, so we need to capture it and handle it
-            return make_reponse({"message": "Unknown error occured"})
+            return make_response({"message": "Unknown error occured"})
         return make_response(error, 500)
     return make_response({"success" : "true"}, 301)
 
@@ -68,7 +75,9 @@ def handleRegistrationData():
 def handlLoginData():
     req = request.get_json()
     try:
-        auth.sign_in_with_email_and_password(req['email'], req['password'])
+        user = auth.sign_in_with_email_and_password(req['email'], req['password'])
+        user = auth.refresh(user['refreshToken'])
+        print(user)
     except Exception as e:
         print(e)
         try:
@@ -78,27 +87,60 @@ def handlLoginData():
         return make_response(error, 500)
     return make_response({"success" : "true"}, 301)
 
-# Handling for the 'Image Capture' webpage
+# ImageCapture.html
 @app.route('/ImageCapture')
 def imageCapture():
     return render_template('ImageCapture.html')
 
-# Loads up user dashboard
+# index.html
 @app.route('/dashboard')
 def dashboard():
     return render_template('index.html')
 
+# personalDetails.html
 @app.route('/personalDetails')
 def personalDetails():
     return render_template('personalDetails.html')
 
+# button.html
 @app.route('/button')
 def button():
     return render_template('button.html')
 
+# ExaminerLogin.html
 @app.route('/ExaminerLogin')
 def ExaminerLogin():
     return render_template('ExaminerLogin.html')
+
+# admin.html
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
+# examiner.html
+@app.route('/examiner')
+def examiner():
+    return render_template('examiner.html')
+
+# exams.html
+@app.route('/exams')
+def exams():
+    return render_template('exams.html')
+
+# exams2.html
+@app.route('/exams2')
+def exams2():
+    return render_template('exams2.html')
+
+# quiz.html
+@app.route('/quiz')
+def quiz():
+    return render_template('quiz.html')
+
+# timetable.html
+@app.route('/timetable')
+def timetable():
+    return render_template('timetable.html')
 
 # Run the application and start it in debugging mode to display errors
 if __name__=="__main__":
