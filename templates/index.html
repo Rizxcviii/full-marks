@@ -40,13 +40,13 @@ Released   : 20131202
                 <a href="#" accesskey="1" title="">Homepage</a>
               </li>
               <li>
-                <a href="personalDetails.html" accesskey="3" title=""
+                <a href="{{ url_for('personalDetails') }}" accesskey="3" title=""
                   >Details</a
                 >
               </li>
-              <li><a href="button.html">Exam</a></li>
-              <li><a href="ExaminerLogin.html">Examiner</a></li>
-              <li><a href="login_register.html">Signout</a></li>
+              <li><a href="{{ url_for('button') }}">Exam</a></li>
+              <li><a href="{{ url_for('ExaminerLogin') }}">Examiner</a></li>
+              <li><a href="{{ url_for('login') }}">Signout</a></li>
             </ul>
           </div>
         </div>

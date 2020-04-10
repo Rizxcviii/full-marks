@@ -88,6 +88,18 @@ def imageCapture():
 def dashboard():
     return render_template('index.html')
 
+@app.route('/personalDetails')
+def personalDetails():
+    return render_template('personalDetails.html')
+
+@app.route('/button')
+def button():
+    return render_template('button.html')
+
+@app.route('/ExaminerLogin')
+def ExaminerLogin():
+    return render_template('ExaminerLogin.html')
+
 # Run the application and start it in debugging mode to display errors
 if __name__=="__main__":
     app.run(debug=True)
