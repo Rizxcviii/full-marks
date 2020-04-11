@@ -39,7 +39,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 # The route that is loaded up when first coming to the website.
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('login'))
 
 # login_register.html
 @app.route('/login')
