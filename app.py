@@ -67,7 +67,7 @@ def handleRegistrationData():
 def handleLoginData():
     req = request.get_json()
     try:
-        student = singIn(req['email'], req['password'])
+        student = signIn(req['email'], req['password'])
     except Exception as e:
         print(e)
         try:
@@ -144,7 +144,7 @@ def timetable():
 # Helper method to create a student account
 def createUser(email, password, uid, userRole):
     auth.create_user_with_email_and_password(email, password)
-    user = singIn(email, password)
+    user = signIn(email, password)
     db.child('users').child(user['userId']).set({
         'UID': uid,
         'userRole': userRole
@@ -152,7 +152,7 @@ def createUser(email, password, uid, userRole):
     return user
 
 # Helper method to sign in a student
-def singIn(email, password):
+def signIn(email, password):
     user = auth.sign_in_with_email_and_password(email, password)
     user = auth.refresh(user['refreshToken'])
     print(user['userId'])
