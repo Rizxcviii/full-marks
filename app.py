@@ -39,7 +39,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 # The route that is loaded up when first coming to the website.
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return redirect(url_for('admin'))
 
 # login_register.html
 @app.route('/login')
@@ -52,14 +52,7 @@ def login():
 def handleRegistrationData():
     req = request.get_json() # Since we know that data is being sent as JSON, we need to convert it to a data structure that python understands, which is dictionaries
     try:
-        auth.create_user_with_email_and_password(req['email'], req['password'])
-        user = auth.sign_in_with_email_and_password(req['email'], req['password'])
-        user = auth.refresh(user['refreshToken'])
-        print(user['userId'])
-        db.child('students').child(user['userId']).set({
-            'fname': 'Please add your first name',
-            'lname': 'Please add your last name',
-        })
+        user = createUser(req['email'], req['password'], req['username'], 'student')
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
         print(e)
         try:
@@ -71,12 +64,10 @@ def handleRegistrationData():
 
 # If you choose login within the login page, the below ''sub route'' will be called, handling that data passed. 
 @app.route('/login/handleLoginData', methods=['POST'])
-def handlLoginData():
+def handleLoginData():
     req = request.get_json()
     try:
-        user = auth.sign_in_with_email_and_password(req['email'], req['password'])
-        user = auth.refresh(user['refreshToken'])
-        print(user)
+        student = singIn(req['email'], req['password'])
     except Exception as e:
         print(e)
         try:
@@ -116,6 +107,15 @@ def ExaminerLogin():
 def admin():
     return render_template('admin.html')
 
+# admin.html with adding users
+@app.route('/admin/create-user', methods=['GET', 'POST'])
+def adminCreateUser():
+    if request.method == 'POST' or request.method == 'GET':
+        req = request.get_jsor('an()
+        user = createUser(req['email'], req['password'], 'Please enter your user ID', req['userRole'])
+        auth.current_user = None
+        return redirect(url_fodmin'))
+
 # examiner.html
 @app.route('/examiner')
 def examiner():
@@ -140,6 +140,23 @@ def quiz():
 @app.route('/timetable')
 def timetable():
     return render_template('timetable.html')
+
+# Helper method to create a student account
+def createUser(email, password, uid, userRole):
+    auth.create_user_with_email_and_password(email, password)
+    user = singIn(email, password)
+    db.child('users').child(user['userId']).set({
+        'UID': uid,
+        'userRole': userRole
+    })
+    return user
+
+# Helper method to sign in a student
+def singIn(email, password):
+    user = auth.sign_in_with_email_and_password(email, password)
+    user = auth.refresh(user['refreshToken'])
+    print(user['userId'])
+    return user
 
 # Run the application and start it in debugging mode to display errors
 if __name__=="__main__":
