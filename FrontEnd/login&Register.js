@@ -1,10 +1,13 @@
 const form = document.getElementById("form");
-const username = document.getElementById("username");
+const SID = document.getElementById("SID");
+const fname = document.getElementById("fname");
+const flname = document.getElementById("lname");
+
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const password2 = document.getElementById("password2");
 
-form.addEventListener("submit", e => {
+form.addEventListener("submit", (e) => {
   // Whenever the user clicks login, all the text fields in the register page is validated.
   e.preventDefault();
 
@@ -13,15 +16,29 @@ form.addEventListener("submit", e => {
 
 function checkInputs() {
   // trim to remove the whitespaces
-  const usernameValue = username.value.trim();
+  const SIDValue = SID.value.trim();
+  const fnameValue = fname.value.trim();
+  const lnameValue = lname.value.trim();
   const emailValue = email.value.trim();
   const passwordValue = password.value.trim();
   const password2Value = password2.value.trim();
 
-  if (usernameValue === "") {
-    setErrorFor(username, "Username cannot be blank");
+  if (SIDValue === "") {
+    setErrorFor(SID, "Student ID cannot blank");
   } else {
-    setSuccessFor(username);
+    setSuccessFor(SID);
+  }
+
+  if (fnameValue === "") {
+    setErrorFor(fname, "First Name cannot be blank");
+  } else {
+    setSuccessFor(fname);
+  }
+
+  if (lnameValue === "") {
+    setErrorFor(lname, "Last Name cannot be blank");
+  } else {
+    setSuccessFor(lname);
   }
 
   if (emailValue === "") {
