@@ -39,7 +39,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 # The route that is loaded up when first coming to the website.
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('login'))
 
 # login_register.html
 @app.route('/login')
@@ -58,7 +58,7 @@ def handleRegistrationData():
         print(user['userId'])
         db.child('students').child(user['userId']).set({
             'fname': 'Please add your first name',
-            'lname': 'Please enter your last name',
+            'lname': 'Please add your last name',
         })
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
         print(e)
@@ -68,7 +68,6 @@ def handleRegistrationData():
             return make_response({"message": "Unknown error occured"})
         return make_response(error, 500)
     return make_response({"success" : "true"}, 301)
-
 
 # If you choose login within the login page, the below ''sub route'' will be called, handling that data passed. 
 @app.route('/login/handleLoginData', methods=['POST'])
