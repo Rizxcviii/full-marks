@@ -4,14 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+    <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}">
   </head>
   <body id= "body">
     <h1 id="admin">Admin</h1>
     <h2>Create/Add a User</h2>
 
     <div>
-      <form action="/action_page.php">
+      <form id="add-user" onsubmit="submit()">
         <label for="fname">Email</label>
         <input type="text" id="email" name="Email" placeholder="Email">
         <label for="fname">Password</label>
@@ -23,14 +25,12 @@
         <label for="country">Select User</label>
         <select id="country" name="country">
           <option disabled selected value> -- select an option -- </option>
-          <option value="techinvigilator">Technical Invigilator</option>
+          <option value="admin">Admin</option>
           <option value="examiner">Examiner</option>
-          <option value="regStudent">Registered Student</option>
           <option value="student">Student</option>
-          <option value="guest">Guest</option>
         </select>
         <input type="submit" value="Submit">
-        <input type="logout" value="Logout">
+        <input type="button" value="Logout" id="logout">
       </form>
     </div>
   </body>
