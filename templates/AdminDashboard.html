@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AdminDashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/Login&Register.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="align">
+      <h1><b>Full Marks</b></h1>
+      <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="logo" />
+      <div class="card">
+        <div class="head">
+          <a id="login" href="#login" class="selected">Admin Dashboard</a>
+        </div>
+
+        <br /><br /><br /><br /><br />
+        <form>
+          <fieldset>
+            <button id="AdminLogout">Logout</button>
+            <br />
+            <button id="Add_Student">Add Student</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <a href="{{ url_for('homepage') }}">
+      <img
+        border="0"
+        alt="homeicon"
+        src="{{ url_for('static', filename='img/home-icon.png') }}"
+        width="64"
+        height="64"
+      />
+    </a>
+  </body>
+</html>
