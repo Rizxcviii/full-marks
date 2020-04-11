@@ -1,11 +1,13 @@
 const registerForm = document.getElementById("register-form");
 const loginForm = document.getElementById("login-form");
 
-registerForm.addEventListener("submit", async e => {
+registerForm.addEventListener("submit", async (e) => {
   //validation for registration
   e.preventDefault();
   let credentials = {
-    username: document.getElementById("username"),
+    SID: document.getElementById("SID"),
+    fname: document.getElementById("fname"),
+    lname: document.getElementById("lname"),
     email: document.getElementById("email"),
     password: document.getElementById("password"),
     password2: document.getElementById("password2"),
@@ -14,24 +16,34 @@ registerForm.addEventListener("submit", async e => {
   //if verfication is correct, send data to networkcontroller
   //if running 'sendingDataToBackend', use 'await' keywork and store in async method
   if (checkRegisterInputs(credentials)) {
-    if (await networkController.sendDataToBackend(trimObjValues(credentials),'/login/handleRegistrationData')) {
-      networkController.redirect('dashboard');
-    } 
+    if (
+      await networkController.sendDataToBackend(
+        trimObjValues(credentials),
+        "/login/handleRegistrationData"
+      )
+    ) {
+      networkController.redirect("dashboard");
+    }
   }
 });
 
-loginForm.addEventListener("submit", async e => {
+loginForm.addEventListener("submit", async (e) => {
   //verification of login
   e.preventDefault();
   let credentials = {
     email: document.getElementById("email-login"),
     password: document.getElementById("password-login"),
-  }
+  };
 
   //if verfication is correct, send data to networkcontroller
   if (checkLoginInputs(credentials)) {
-    if (await networkController.sendDataToBackend(trimObjValues(credentials),'/login/handleLoginData')) {
-      networkController.redirect('dashboard');
+    if (
+      await networkController.sendDataToBackend(
+        trimObjValues(credentials),
+        "/login/handleLoginData"
+      )
+    ) {
+      networkController.redirect("dashboard");
     }
   }
 });
@@ -39,11 +51,25 @@ loginForm.addEventListener("submit", async e => {
 function checkRegisterInputs(credentials) {
   let success = true;
 
-  if (credentials.username.value.trim() === "") {
-    setErrorFor(credentials.username, "Username cannot be blank");
+  if (credentials.SID.value.trim() === "") {
+    setErrorFor(credentials.SID, "Student ID cannot be blank");
     success = false;
   } else {
-    setSuccessFor(credentials.username);
+    setSuccessFor(credentials.SID);
+  }
+
+  if (credentials.fname.value.trim() === "") {
+    setErrorFor(credentials.fname, "First Name cannot be blank");
+    success = false;
+  } else {
+    setSuccessFor(credentials.fname);
+  }
+
+  if (credentials.lname.value.trim() === "") {
+    setErrorFor(credentials.lname, "Last Name cannot be blank");
+    success = false;
+  } else {
+    setSuccessFor(credentials.lname);
   }
 
   if (credentials.email.value.trim() === "") {
@@ -66,7 +92,9 @@ function checkRegisterInputs(credentials) {
   if (credentials.password2.value.trim() === "") {
     setErrorFor(credentials.password2, "Password2 cannot be blank");
     success = false;
-  } else if (credentials.password.value.trim() !== credentials.password2.value.trim()) {
+  } else if (
+    credentials.password.value.trim() !== credentials.password2.value.trim()
+  ) {
     setErrorFor(credentials.password2, "Passwords does not match");
     success = false;
   } else {
@@ -76,7 +104,7 @@ function checkRegisterInputs(credentials) {
   return success;
 }
 
-function checkLoginInputs(credentials){
+function checkLoginInputs(credentials) {
   let success = true;
 
   if (credentials.email.value.trim() === "") {
@@ -119,7 +147,7 @@ function isEmail(email) {
 //since data being sent are DOM objects, retrieve value from DOM and trim to remove unecessary whitespace
 function trimObjValues(obj) {
   return Object.keys(obj).reduce((acc, curr) => {
-  acc[curr] = obj[curr].value.trim()
-  return acc;
+    acc[curr] = obj[curr].value.trim();
+    return acc;
   }, {});
 }
