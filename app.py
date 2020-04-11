@@ -39,7 +39,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 # The route that is loaded up when first coming to the website.
 @app.route('/')
 def index():
-    return redirect(url_for('admin'))
+    return redirect(url_for('login'))
 
 # login_register.html
 @app.route('/login')
@@ -111,10 +111,10 @@ def admin():
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def adminCreateUser():
     if request.method == 'POST' or request.method == 'GET':
-        req = request.get_jsor('an()
+        req = request.get_json()
         user = createUser(req['email'], req['password'], 'Please enter your user ID', req['userRole'])
         auth.current_user = None
-        return redirect(url_fodmin'))
+        return redirect(url_for('admin'))
 
 # examiner.html
 @app.route('/examiner')
