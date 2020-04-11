@@ -37,16 +37,14 @@ Released   : 20131202
           <div id="menu">
             <ul>
               <li class="current_page_item">
-                <a href="#" accesskey="1" title="">Homepage</a>
+                <a href="{{ url_for('index.html') }}" accesskey="1" title="">Homepage</a>
               </li>
               <li>
-                <a href="{{ url_for('personalDetails') }}" accesskey="3" title=""
-                  >Details</a
-                >
+                <a href="{{ url_for('personalDetails') }}" accesskey="3" title="">Details</a>
               </li>
               <li><a href="{{ url_for('button') }}">Exam</a></li>
               <li><a href="{{ url_for('ExaminerLogin') }}">Examiner</a></li>
-              <li><a href="{{ url_for('login') }}">Signout</a></li>
+              <li><a href="{{ url_for('login_register') }}">Signout</a></li>
             </ul>
           </div>
         </div>

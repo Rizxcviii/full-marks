@@ -6,6 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/examiner.css') }}">
   </head>
+  <div id="body">
+    <div id="header" class="container">
+      <div id="new">
+        <h1>
+          <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="FullMarks Logo" width="180" height="109" />
+        </h1>
+        <div id="menu">
+          <ul>
+            <li>
+              <a href="{{ url_for('index.html') }}" accesskey="1" title="">Homepage</a>
+            </li>
+            <li>
+              <a href="{{ url_for('personalDetails') }}" accesskey="3" title="">Details</a>
+            </li>
+            <li><a href="{{ url_for('button') }}">Exam</a></li>
+            <li class="current_page_item">
+              <a href="{{ url_for('ExaminerLogin') }}">Examiner</a>
+            </li>
+            <li><a href="{{ url_for('login_register') }}">Signout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
     <body id= "body">
       <button id = "demo" onclick = "Button()">View Marks</button>
       <button id = "style" onclick = "Button()">Add Exam</button>
@@ -14,9 +38,7 @@
     </body>
 
     <p>
-    <a href="{{ url_for('homepage') }}">
-        <img border="0" alt="homeicon" src="{{ url_for('static', filename='img/home-icon.png') }}" width="64" height="64">
-      </a>
+    <a href="{{ url_for('index') }}"></a>
     </p>
 
   </html>
