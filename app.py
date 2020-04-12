@@ -23,17 +23,12 @@ firebase = pyrebase.initialize_app(config)
 storage = firebase.storage() # Storage bucket for storing files other than normal text, such as images, videos, etc
 db = firebase.database() # Real Time database for storing data. Real Time so firebase updates as you push data, no need to refresh database webpage if being viewed
 auth = firebase.auth() # Authentication service, provides authentication for different users of the application, and also handling creating/logging in new users with email/password
-role = None
-uid = None
+# role = None
+# uid = None
 # session = ''
-termsAccepted = None
+# termsAccepted = None
 app = Flask(__name__)
-
-class User:
-    def init(self, UID, role):
-        self.user = None
-        self.uid = None
-        self.role = None
+app.secret_key = 'a'
 
 '''
 ''@app.route'' is an app decorator used to manage the flow of website. Inside the arguments is the custom 'url' that you can create, with '/' being the index route. 
@@ -51,11 +46,11 @@ def home():
     print("Hello")
     if not session.get('logged in'):
         return redirect(url_for('login'))
-    elif session.get('logged in') and user.role == "admin":
+    elif session.get('logged in') and session.get('role') == "admin":
         return redirect(url_for('admin'))
-    elif session.get('logged in') and user.role == "examiner":
+    elif session.get('logged in') and session.get('role') == "examiner":
         return render_template('examiner')
-    elif session.get('logged in') and user.role == "tech":
+    elif session.get('logged in') and session.get('role') == "tech":
         return render_template('tech')
     else:
         return render_template('student')
@@ -107,9 +102,8 @@ def handleLoginData():
         except Exception as e: 
             return make_reponse({"message": "Unknown error occured"})
         return make_response(error, 500)
-    uid = db.child('users').child(student['userId']).child('UID').get().val()
-    role = db.child('users').child(student['userId']).child('userRole').get().val()
-    signedUser = User(uid, role)
+    session['uid'] = db.child('users').child(student['userId']).child('UID').get().val()
+    session['role'] = db.child('users').child(student['userId']).child('userRole').get().val()
     session['logged in'] = True
     return make_response({"success" : "true"}, 301)
 
@@ -141,7 +135,7 @@ def ExaminerLogin():
 # admin.html
 @app.route('/admin')
 def admin():
-    if not session.get('logged in') or role != 'admin':
+    if not session.get('logged in') or session.get('role') != 'admin':
         return redirect(url_for('login'))
     return render_template('admin.html')
 
