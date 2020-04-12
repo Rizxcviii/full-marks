@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Login&Register</title>
+    <title>Login_Register</title>
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
       rel="stylesheet"
@@ -35,7 +35,6 @@
 
   <body>
     <div class="align">
-      <h1><b>Full Marks</b></h1>
       <img
         src="{{ url_for('static', filename='img/Logo.JPG') }}"
         width="223"
@@ -48,40 +47,24 @@
           <a id="login" href="#login">Login</a>
         </div>
         <div class="tabs">
-          <form method="get" id="register-form" class="form">
+          <form method="POST" id="register-form" class="form">
             <div class="inputs">
               <div class="form-control">
-                <input type="text" placeholder="SID" id="SID" />
+                <input type="text" placeholder="Student ID" id="SID" required/>
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
                 <img src="{{ url_for('static', filename='img/user.svg') }}" />
               </div>
               <div class="form-control">
-                <input type="text" placeholder="First Name" id="fname" />
+                <input type="text" placeholder=" Student Email" id="email" required/>
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
-                <img src="{{ url_for('static', filename='img/user.svg') }}" />
-              </div>
-
-              <div class="form-control">
-                <input type="text" placeholder="Last Name" id="lname" />
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
-                <small>Error message</small>
-                <img src="{{ url_for('static', filename='img/user.svg') }}" />
-              </div>
-
-              <div class="form-control">
-                <input type="text" placeholder=" Student email" id="email" />
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation-circle"></i>
-                <small>Error message</small>
-                <img src="img/mail.svg" />
+                <img src="{{ url_for('static', filename='img/mail.svg') }}" />
               </div>
               <div class="form-control">
-                <input type="password" placeholder="password" id="password" />
+                <input type="password" placeholder="Password" id="password" required/>
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -92,6 +75,7 @@
                   type="password"
                   placeholder="Repeat password"
                   id="password2"
+                  required
                 />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
@@ -101,12 +85,12 @@
             </div>
             <button>Register</button>
           </form>
-          <form method="get" id="login-form" class="form">
+          <form method="POST" id="login-form" class="form">
             <div class="inputs">
               <div class="form-control">
                 <input
                   type="email"
-                  placeholder="email"
+                  placeholder="Email"
                   id="email-login"
                   required
                 />
@@ -115,11 +99,10 @@
                 <small>Error message</small>
                 <img src="{{ url_for('static', filename='img/mail.svg') }}" />
               </div>
-
               <div class="form-control">
                 <input
                   type="password"
-                  placeholder="password"
+                  placeholder="Password"
                   id="password-login"
                   required
                 />

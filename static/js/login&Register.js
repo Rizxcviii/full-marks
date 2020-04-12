@@ -22,7 +22,7 @@ registerForm.addEventListener("submit", async (e) => {
         "/login/handleRegistrationData"
       )
     ) {
-      networkController.redirect("dashboard");
+      networkController.redirect("");
     }
   }
 });
@@ -43,7 +43,7 @@ loginForm.addEventListener("submit", async (e) => {
         "/login/handleLoginData"
       )
     ) {
-      networkController.redirect("dashboard");
+      networkController.redirect("");
     }
   }
 });
