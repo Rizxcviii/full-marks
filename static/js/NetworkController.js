@@ -34,7 +34,7 @@ class NetworkController{
             console.log(json);
             return(typeof json.error == 'undefined');
         }catch(err){
-            console.log(err);
+            // console.log(err);
             return false;
         }
     }

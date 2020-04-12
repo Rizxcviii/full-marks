@@ -23,8 +23,17 @@ firebase = pyrebase.initialize_app(config)
 storage = firebase.storage() # Storage bucket for storing files other than normal text, such as images, videos, etc
 db = firebase.database() # Real Time database for storing data. Real Time so firebase updates as you push data, no need to refresh database webpage if being viewed
 auth = firebase.auth() # Authentication service, provides authentication for different users of the application, and also handling creating/logging in new users with email/password
-
+role = None
+uid = None
+# session = ''
+termsAccepted = None
 app = Flask(__name__)
+
+class User:
+    def init(self, UID, role):
+        self.user = None
+        self.uid = None
+        self.role = None
 
 '''
 ''@app.route'' is an app decorator used to manage the flow of website. Inside the arguments is the custom 'url' that you can create, with '/' being the index route. 
@@ -38,7 +47,18 @@ easily have 2 or more routes above the view function, one after the other, to li
 
 # The route that is loaded up when first coming to the website.
 @app.route('/')
-def index():
+def home():
+    print("Hello")
+    if not session.get('logged in'):
+        return redirect(url_for('login'))
+    elif session.get('logged in') and user.role == "admin":
+        return redirect(url_for('admin'))
+    elif session.get('logged in') and user.role == "examiner":
+        return render_template('examiner')
+    elif session.get('logged in') and user.role == "tech":
+        return render_template('tech')
+    else:
+        return render_template('student')
     return redirect(url_for('login'))
 
 # login_register.html
@@ -65,9 +85,21 @@ def handleRegistrationData():
 # If you choose login within the login page, the below ''sub route'' will be called, handling that data passed. 
 @app.route('/login/handleLoginData', methods=['POST'])
 def handleLoginData():
+    # if request.form['password'] == link to db here and request.form['email'] == link to db here:
+        # uid = db.child('users').child(student['userId']).child('UID').get().val()
+        # role = db.child('users').child(student['userId']).child('UID').get().val()
+    #     if role == "student":
+    #         termsAccepted = False
+    #     session['logged in'] = True
+    # else:
+    #     flash('Incorrect Password and Email Combination')
+    # return home()
     req = request.get_json()
     try:
         student = signIn(req['email'], req['password'])
+    #     if role == "student":
+    #         termsAccepted = False
+    #     session['logged in'] = True
     except Exception as e:
         print(e)
         try:
@@ -75,6 +107,10 @@ def handleLoginData():
         except Exception as e: 
             return make_reponse({"message": "Unknown error occured"})
         return make_response(error, 500)
+    uid = db.child('users').child(student['userId']).child('UID').get().val()
+    role = db.child('users').child(student['userId']).child('userRole').get().val()
+    signedUser = User(uid, role)
+    session['logged in'] = True
     return make_response({"success" : "true"}, 301)
 
 # ImageCapture.html
@@ -105,6 +141,8 @@ def ExaminerLogin():
 # admin.html
 @app.route('/admin')
 def admin():
+    if not session.get('logged in') or role != 'admin':
+        return redirect(url_for('login'))
     return render_template('admin.html')
 
 # admin.html with adding users
