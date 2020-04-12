@@ -3,14 +3,10 @@ const addUserForm = document.getElementById('add-user');
 addUserForm.addEventListener("submit", async e => {
     e.preventDefault();
     if( await networkController.sendDataToBackend(trimObjValues({
-        fname: document.getElementById('fname'),
-        lname: document.getElementById('lname'),
         email: document.getElementById('email'),
         password: document.getElementById('pword'),
-        userRole: document.getElementById('country')
-    }), '/admin/create-user')){
-        networkController.redirect('admin');
-    }else{
+        userRole: document.getElementById('role')
+    }), '/admin') == false){
         console.log('error');
     }
 });

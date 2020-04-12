@@ -47,7 +47,7 @@ def home():
     if not session.get('logged in'):
         return redirect(url_for('login'))
     elif session.get('logged in') and session.get('role') == "admin":
-        return redirect(url_for('admin'))
+        return redirect(url_for('AdminDashboard'))
     elif session.get('logged in') and session.get('role') == "examiner":
         return render_template('examiner')
     elif session.get('logged in') and session.get('role') == "tech":
@@ -132,21 +132,38 @@ def button():
 def ExaminerLogin():
     return render_template('ExaminerLogin.html')
 
+# # admin.html
+# @app.route('/admin', methods=['POST'])
+# def admin():
+#     if not session.get('logged in') or session.get('role') != 'admin':
+#         return redirect(url_for('home'))
+#     return render_template('admin.html')
+
 # admin.html
-@app.route('/admin')
+@app.route('/admin', methods=['POST','GET'])
 def admin():
     if not session.get('logged in') or session.get('role') != 'admin':
         return redirect(url_for('login'))
+    elif request.method == 'POST':
+        req = request.get_json()
+        user = createUser(req['email'], req['password'], req['userRole'], req['userRole'])
+        return redirect(url_for('AdminDashboard'))
     return render_template('admin.html')
 
-# admin.html with adding users
-@app.route('/admin/create-user', methods=['GET', 'POST'])
-def adminCreateUser():
-    if request.method == 'POST' or request.method == 'GET':
-        req = request.get_json()
-        user = createUser(req['email'], req['password'], 'Please enter your user ID', req['userRole'])
-        auth.current_user = None
-        return redirect(url_for('admin'))
+@app.route('/AdminDashboard')
+def AdminDashboard():
+    if not session.get('logged in') or session.get('role') != 'admin':
+        return redirect(url_for('home'))
+    return render_template('AdminDashboard.html')
+
+# # admin.html with adding users
+# @app.route('/admin/create-user', methods=['GET', 'POST'])
+# def adminCreateUser():
+#     if request.method == 'POST' or request.method == 'GET':
+#         req = request.get_json()
+#         user = createUser(req['email'], req['password'], 'Please enter your user ID', req['userRole'])
+#         auth.current_user = None
+#         return redirect(url_for('AdminDashboard'))
 
 # examiner.html
 @app.route('/examiner')
@@ -193,3 +210,9 @@ def signIn(email, password):
 # Run the application and start it in debugging mode to display errors
 if __name__=="__main__":
     app.run(debug=True)
+
+# Destroy current session
+@app.route("/logout", methods=['GET'])
+def logout():
+    session['logged in'] = False
+    return redirect(url_for('home')) 

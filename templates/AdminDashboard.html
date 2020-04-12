@@ -26,15 +26,19 @@
         </div>
 
         <br /><br /><br /><br /><br />
-        <form>
+        <!-- <form> -->
           <fieldset>
-            <button id="AdminLogout">Logout</button>
+            <form method="GET" action="{{url_for('admin')}}">
+            <button type="submit">Add User</button>
+          </form>
             <br />
-            <button id="Add_Student">Add Student</button>
+          <form method="GET" action="{{url_for('logout')}}">
+            <button type = "submit">Logout</button>
+            </form>
           </fieldset>
-        </form>
+        <!-- </form> -->
       </div>
     </div>
-    <a href="{{ url_for('dashboard') }}"></a>
+    <!-- <a href="{{ url_for('dashboard') }}"></a> -->
   </body>
 </html>
