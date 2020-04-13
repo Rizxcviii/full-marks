@@ -98,12 +98,11 @@ If you have any query about above mentioned terms and conditions then please dro
 info@Full Marks or contact us at +44 8575541645
 <p></p>
 <br></br>
-  <label id="style2" class="container">I accept the Terms and Conditions
-    <input type="checkbox" value = "I accept the Terms and Conditions" required>
-    <span class="checkmark"></span>
-    <!-- <input id ="submit" type="submit" value="Submit"> -->
-  </label>
+<form method="GET" action="{{url_for('exam')}}">
+<p><input type="checkbox" required>
+    <span class="checkmark"></span>I accept the Terms and Conditions</p>
   <br></br>
   <input id ="submit" type="submit" value="Submit">
+</form>
 </body>
 </html>
