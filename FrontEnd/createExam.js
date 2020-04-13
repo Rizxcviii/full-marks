@@ -88,7 +88,7 @@ function createQuestionTxt(){
 function makeOpenFormQuestion(){
     let openFormRadio = document.createElement('input');
     openFormRadio.setAttribute('type', 'radio');
-    openFormRadio.setAttribute('name', 'questionType');
+    openFormRadio.setAttribute('name', 'q'+questionNumber+'QuestionType');
     openFormRadio.setAttribute('class', 'q'+questionNumber);
     openFormRadio.onclick = function(e){
         showHideAnswers(document.getElementById(this.getAttribute('class')));
@@ -100,7 +100,7 @@ function makeOpenFormQuestion(){
 function makeMCQ(){
     let mcqRadio = document.createElement('input');
     mcqRadio.setAttribute('type', 'radio');
-    mcqRadio.setAttribute('name', 'questionType');
+    mcqRadio.setAttribute('name', 'q'+questionNumber+'QuestionType');
     mcqRadio.setAttribute('class', 'q'+questionNumber);
     mcqRadio.onclick = function(e){
         showHideAnswers(this);
