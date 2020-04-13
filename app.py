@@ -49,7 +49,7 @@ def home():
     elif session.get('logged in') and session.get('role') == "admin":
         return redirect(url_for('AdminDashboard'))
     elif session.get('logged in') and session.get('role') == "examiner":
-        return render_template('examiner')
+        return redirect(url_for('examiner'))
     elif session.get('logged in') and session.get('role') == "tech":
         return render_template('tech')
     else:
