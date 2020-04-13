@@ -68,7 +68,8 @@ function createAnswerRadio(answerNumber){
     let radio = document.createElement('input');
     radio.setAttribute('type', 'radio');
     radio.setAttribute('name', 'q'+questionNumber+'mcqRadio');
-    radio.setAttribute('class', 'a'+answerNumber);
+    radio.setAttribute('class', 'a'+answerNumber+' mcqRadio');
+    radio.setAttribute('value', answerNumber);
     return radio;
 }
 
@@ -96,7 +97,7 @@ function createQuestionTxt(){
     let questionTxt = document.createElement('input');
     questionTxt.setAttribute('type', 'text');
     questionTxt.setAttribute('placeholder', 'Please enter your question');
-    questionTxt.setAttribute('class', 'q'+questionNumber);
+    questionTxt.setAttribute('class', 'q'+questionNumber+' questionGiven');
     questionTxt.required = true;
     return questionTxt;
 }
@@ -178,9 +179,36 @@ form.addEventListener('submit', async e => {
     console.log(nodeList);
     nodeList.forEach(
         function(currentValue){
-            console.log(currentValue);
+            let question;
+            let mcqAnswers = [];
+            let answer;
+            children = currentValue.childNodes;
+            children.forEach(function(item){
+                if (item.classList.contains('questionGiven')) {
+                    question = item.value;
+                    console.log(question);
+                }else if (item.classList.contains('mcqAnswers')) {
+                    item.childNodes.forEach(
+                        function(currentValue){
+                            if (currentValue.classList.contains('mcqAnswer')) {
+                                mcqAnswers.push(currentValue.value);
+                            }else if (currentValue.classList.contains('mcqRadio') && (currentValue.checked)) {
+                                answer = currentValue.value;
+                                console.log(answer);
+                            }
+                        }
+                    )
+                }
+            });
+            console.log(mcqAnswers);
+            markScheme.push({
+                question: question,
+                mcqAnswers: mcqAnswers,
+                answer: answer
+            });
         }
-    )
+    );
+    console.log(markScheme);
 });
 
 //since data being sent are DOM objects, retrieve value from DOM and trim to remove unecessary whitespace
