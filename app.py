@@ -49,7 +49,7 @@ def home():
     elif session.get('logged in') and session.get('role') == "admin":
         return redirect(url_for('AdminDashboard'))
     elif session.get('logged in') and session.get('role') == "examiner":
-        return render_template('examiner')
+        return redirect(url_for('examiner'))
     elif session.get('logged in') and session.get('role') == "tech":
         return render_template('tech')
     else:
@@ -91,7 +91,7 @@ def handleLoginData():
     # return home()
     req = request.get_json()
     try:
-        student = signIn(req['email'], req['password'])
+        user = signIn(req['email'], req['password'])
     #     if role == "student":
     #         termsAccepted = False
     #     session['logged in'] = True
@@ -102,9 +102,6 @@ def handleLoginData():
         except Exception as e: 
             return make_reponse({"message": "Unknown error occured"})
         return make_response(error, 500)
-    session['uid'] = db.child('users').child(student['userId']).child('UID').get().val()
-    session['role'] = db.child('users').child(student['userId']).child('userRole').get().val()
-    session['logged in'] = True
     return make_response({"success" : "true"}, 301)
 
 # ImageCapture.html
@@ -205,6 +202,9 @@ def signIn(email, password):
     user = auth.sign_in_with_email_and_password(email, password)
     user = auth.refresh(user['refreshToken'])
     print(user['userId'])
+    session['uid'] = db.child('users').child(user['userId']).child('UID').get().val()
+    session['role'] = db.child('users').child(user['userId']).child('userRole').get().val()
+    session['logged in'] = True
     return user
 
 # Run the application and start it in debugging mode to display errors
@@ -215,4 +215,6 @@ if __name__=="__main__":
 @app.route("/logout", methods=['GET'])
 def logout():
     session['logged in'] = False
+    session.pop('role', None)
+    session.pop('uid', None)
     return redirect(url_for('home')) 
