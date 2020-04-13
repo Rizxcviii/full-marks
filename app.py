@@ -187,6 +187,10 @@ def quiz():
 def timetable():
     return render_template('timetable.html')
 
+@app.route('/createExam')
+def createExam():
+    return render_template('createExam.html')
+
 # Helper method to create a student account
 def createUser(email, password, uid, userRole):
     auth.create_user_with_email_and_password(email, password)
