@@ -1,6 +1,7 @@
 let form = document.getElementById('exam-form');
 let submitBtn = document.getElementById('submit');
 let addQuestionBtn = document.getElementById('add-question');
+let questions = document.getElementById('questions');
 let submit = false;
 let questionNumber = 1;
 
@@ -10,7 +11,7 @@ function addQuestion(){
     //everthing stored in forms
 
     let questionDiv = createDiv('question');
-    form.insertBefore(questionDiv, addQuestionBtn);
+    questions.appendChild(questionDiv);
 
     //the question input text field
     let questionTxt = createQuestionTxt();
@@ -60,7 +61,6 @@ function addQuestion(){
     let lineBreak = createLineBreak();
     questionDiv.appendChild(lineBreak);
     questionNumber++;
-    console.log(questionDiv);
 }
 
 //create an answer radio
@@ -174,9 +174,13 @@ function deleteQuestion(question){
 
 form.addEventListener('submit', async e => {
     e.preventDefault();
-    let markScheme = []
-    let nodeList = document.querySelectorAll('div.question');
-    console.log(nodeList);
+    let markScheme = {
+        examName: document.getElementById('examName').value,
+        examCode: document.getElementById('examCode').value,
+        questions: []
+    };
+    let nodeList = document.querySelector('#questions');
+    nodeList = document.querySelectorAll('div.question');
     nodeList.forEach(
         function(currentValue){
             let question;
@@ -186,7 +190,6 @@ form.addEventListener('submit', async e => {
             children.forEach(function(item){
                 if (item.classList.contains('questionGiven')) {
                     question = item.value;
-                    console.log(question);
                 }else if (item.classList.contains('mcqAnswers')) {
                     item.childNodes.forEach(
                         function(currentValue){
@@ -194,20 +197,23 @@ form.addEventListener('submit', async e => {
                                 mcqAnswers.push(currentValue.value);
                             }else if (currentValue.classList.contains('mcqRadio') && (currentValue.checked)) {
                                 answer = currentValue.value;
-                                console.log(answer);
                             }
                         }
                     )
                 }
             });
-            console.log(mcqAnswers);
-            markScheme.push({
+            markScheme.questions.push({
                 question: question,
                 mcqAnswers: mcqAnswers,
                 answer: answer
             });
         }
     );
+    if(await networkController.sendDataToBackend(markScheme,'/createExam')){
+        console.log('success');
+    }else{
+        console.log('failure');
+    }
     console.log(markScheme);
 });
 

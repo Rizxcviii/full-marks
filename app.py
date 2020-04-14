@@ -73,9 +73,10 @@ def handleRegistrationData():
         try:
             error = json.loads(str(e)[str(e).index(']')+2:]) # If the error is a Firebase error, it throws back a specfic 'JSON' object, so we need to translate it to JSON for JavaScript
         except Exception as e: # Else, it could be any other Error, so we need to capture it and handle it
-            return make_response({"message": "Unknown error occured"})
-        return make_response(error, 500)
-    return make_response({"success" : "true"}, 301)
+            print(e)
+            return make_response({"message": str(e)}, 500)
+        return make_response(error, 511)
+    return make_response({"success" : True}, 200)
 
 # If you choose login within the login page, the below ''sub route'' will be called, handling that data passed. 
 @app.route('/login/handleLoginData', methods=['POST'])
@@ -100,9 +101,10 @@ def handleLoginData():
         try:
             error = json.loads(str(e)[str(e).index(']')+2:])
         except Exception as e: 
-            return make_reponse({"message": "Unknown error occured"})
-        return make_response(error, 500)
-    return make_response({"success" : "true"}, 301)
+            print(e)
+            return make_reponse({"message": str(e)}, 500)
+        return make_response(error, 511)
+    return make_response({"success" : True}, 200)
 
 # ImageCapture.html
 @app.route('/ImageCapture')
@@ -187,8 +189,34 @@ def quiz():
 def timetable():
     return render_template('timetable.html')
 
-@app.route('/createExam')
+# createExam.html
+@app.route('/createExam', methods=['POST', 'GET'])
 def createExam():
+    if request.method == 'POST':
+        try:
+            req = request.get_json()
+            db.child('exams').child(req['examCode']).set({
+                'examName': req['examName']
+            })
+            questions = req['questions']
+            i = 1
+            for question in questions:
+                db.child('exams').child(req['examCode']).child('q'+str(i)).set({'question' : question['question']})
+                if 'answer' in question.keys():
+                    db.child('exams').child(req['examCode']).child('q'+str(i)).set({
+                        'answer' : int(question['answer']),
+                        'mcqAnswers' : question['mcqAnswers']
+                    })
+                i+=1
+        except Exception as e:
+            print(e)
+            try:
+                error = json.loads(str(e)[str(e).index(']')+2:])
+            except Exception as e:
+                print(e)
+                return make_response({'message': 'Unknown error has occurred'}, 500)
+            return make_response(error, 500)
+        return make_response({'success': True}, 200)
     return render_template('createExam.html')
 
 # Helper method to create a student account
