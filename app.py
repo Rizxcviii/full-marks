@@ -67,7 +67,7 @@ def login():
 def handleRegistrationData():
     req = request.get_json() # Since we know that data is being sent as JSON, we need to convert it to a data structure that python understands, which is dictionaries
     try:
-        user = createUser(req['email'], req['password'], req['username'], 'student')
+        user = createUser(req['email'], req['password'], req['SID'], 'student')
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
         print(e)
         try:
