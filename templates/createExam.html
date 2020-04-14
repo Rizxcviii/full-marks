@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ ur_for('static', filename='createExam.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/createExam.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
     <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/createExam.js') }}" type="text/javascript" defer></script>
     <title>Full-Marks: Examiner: Create Exam</title>
 </head>
 <body>
+    <h1>Create Exam</h1>
     <form id="exam-form">
-        <input type="text" name="exam-name" id="examName" placeholder="Enter the module/name of the exam"><br>
-        <input type="text" name="exam-code" id="examCode" placeholder="Enter the module/exam code"><br>
+        <input id="examName" type="text" name="exam-name" placeholder="Enter the module/name of the exam"><br>
+        <input id="examCode" type="text" name="exam-code" placeholder="Enter the module/exam code"><br>
         <p id ="Name">Please enter the questions below</p>
         <div id="questions"></div>
         <button id="add-question" type="button" onclick="addQuestion()">Add Question</button><br>
@@ -22,6 +23,6 @@
 </html>
 
 <div id="backicon" class="backicon" >
-    <a href="{{ url_for('ExaminerDashboard.html') }}"><img src="{{ url_for('static', filename='backarrow.png') }}" alt="HomeIcon Logo" width="32" height="32">
+    <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='img/backarrow.png') }}" alt="HomeIcon Logo" width="32" height="32">
 </div>
   

@@ -35,7 +35,7 @@ html{
 }
 
 
-#submit{
+#btnSubmit{
   background-color: #4CAF50;
   border: none;
   color: black;
@@ -90,7 +90,7 @@ html{
   color: lightblue;
 }
 
-.q1{
+.mcqAnswer{
   font-size: 22px;
 }
 
