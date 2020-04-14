@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ ur_for('static', filename='createExam.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
     <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/createExam.js') }}" type="text/javascript" defer></script>
@@ -12,10 +13,15 @@
     <form id="exam-form">
         <input type="text" name="exam-name" id="examName" placeholder="Enter the module/name of the exam"><br>
         <input type="text" name="exam-code" id="examCode" placeholder="Enter the module/exam code"><br>
-        <p>Please enter the questions below</p>
+        <p id ="Name">Please enter the questions below</p>
         <div id="questions"></div>
         <button id="add-question" type="button" onclick="addQuestion()">Add Question</button><br>
         <button type="submit" id="btnSubmit">Create Exam</button>
     </form>
 </body>
 </html>
+
+<div id="backicon" class="backicon" >
+    <a href="{{ url_for('ExaminerDashboard.html') }}"><img src="{{ url_for('static', filename='backarrow.png') }}" alt="HomeIcon Logo" width="32" height="32">
+</div>
+  
