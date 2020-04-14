@@ -9,8 +9,10 @@
 </head>
 <body>
     <form id="exam-form">
-        <input type="text" name="exam-name" id="examName" placeholder="Enter the module/name of the exam">
-        <input type="text" name="exam-code" id="examCode" placeholder="Enter the module/exam code">
+        <input type="text" name="exam-name" id="examName" placeholder="Enter the module/name of the exam"><br>
+        <input type="text" name="exam-code" id="examCode" placeholder="Enter the module/exam code"><br>
+        <p>Please enter the questions below</p>
+        <div id="questions"></div>
         <button id="add-question" type="button" onclick="addQuestion()">Add Question</button><br>
         <button type="submit" id="submit">Create Exam</button>
     </form>

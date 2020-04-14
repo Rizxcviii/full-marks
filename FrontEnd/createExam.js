@@ -1,6 +1,7 @@
 let form = document.getElementById('exam-form');
 let submitBtn = document.getElementById('submit');
 let addQuestionBtn = document.getElementById('add-question');
+let questions = document.getElementById('questions');
 let submit = false;
 let questionNumber = 1;
 
@@ -10,7 +11,7 @@ function addQuestion(){
     //everthing stored in forms
 
     let questionDiv = createDiv('question');
-    form.insertBefore(questionDiv, addQuestionBtn);
+    questions.appendChild(questionDiv);
 
     //the question input text field
     let questionTxt = createQuestionTxt();
@@ -60,7 +61,6 @@ function addQuestion(){
     let lineBreak = createLineBreak();
     questionDiv.appendChild(lineBreak);
     questionNumber++;
-    console.log(questionDiv);
 }
 
 //create an answer radio
@@ -174,7 +174,8 @@ function deleteQuestion(question){
 form.addEventListener('submit', async e => {
     e.preventDefault();
     let markScheme = []
-    let nodeList = document.querySelectorAll('div.question');
+    let nodeList = document.querySelector('#questions');
+    nodeList = document.querySelectorAll('div.question');
     console.log(nodeList);
     nodeList.forEach(
         function(currentValue){
