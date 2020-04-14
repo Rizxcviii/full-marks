@@ -195,15 +195,15 @@ def createExam():
     if request.method == 'POST':
         try:
             req = request.get_json()
-            db.child('exams').child(req['examCode']).set({
+            db.child('exams').child(req['examCode']).child('markScheme').set({
                 'examName': req['examName']
             })
             questions = req['questions']
             i = 1
             for question in questions:
-                db.child('exams').child(req['examCode']).child('q'+str(i)).set({'question' : question['question']})
+                db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({'question' : question['question']})
                 if 'answer' in question.keys():
-                    db.child('exams').child(req['examCode']).child('q'+str(i)).set({
+                    db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({
                         'answer' : int(question['answer']),
                         'mcqAnswers' : question['mcqAnswers']
                     })
