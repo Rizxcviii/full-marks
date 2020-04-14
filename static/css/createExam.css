@@ -1,11 +1,17 @@
 body, head{
   color: blue;
 }
+
+.form{
+  color: yellow;
+}
+
 h1{
   text-align: center;
-  color: green;
+  color: lime;
   font-size: 45px;
 }
+
 #add-question{
   background-color: #4CAF50;
   border: none;
