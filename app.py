@@ -44,7 +44,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 @app.route('/', methods=['GET'])
 def home():
     print("Hello")
-    if not session.get('logged in'):
+    if not session['logged in']:
         return redirect(url_for('login'))
     else:
         return redirect(url_for('dashboard'))
@@ -61,7 +61,7 @@ def home():
 # login_register.html
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if session.get('logged in'):
+    if session['logged in']:
         return redirect(url_for('home'))
     return render_template('login_register.html')
 
@@ -146,7 +146,7 @@ def handleLoginData():
 # admin.html
 @app.route('/admin', methods=['POST','GET'])
 def admin():
-    if not session.get('logged in'):
+    if not session['logged in']:
         return redirect(url_for('login'))
     elif session.get('role') != 'admin':
         return redirect(url_for('dashboard'))
@@ -158,7 +158,7 @@ def admin():
 
 @app.route('/AdminDashboard')
 def AdminDashboard():
-    if not session.get('logged in') or session.get('role') != 'admin':
+    if not session['logged in'] or session.get('role') != 'admin':
         return redirect(url_for('home'))
     return render_template('AdminDashboard.html')
 
@@ -228,6 +228,8 @@ def student():
 # createExam.html
 @app.route('/createExam', methods=['POST', 'GET'])
 def createExam():
+    if not session['logged in'] or session.get('role') != "examiner":
+        return redirect(url_for('dashboard'))
     if request.method == 'POST':
         try:
             req = request.get_json()
