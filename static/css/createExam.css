@@ -1,0 +1,107 @@
+body, head{
+  color: blue;
+}
+
+.form{
+  color: yellow;
+}
+
+h1{
+  text-align: center;
+  color: lime;
+  font-size: 45px;
+}
+
+#add-question{
+  background-color: #4CAF50;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+ width: 30%;
+ border-radius: 10px;
+ border: none;
+ padding: 10px 20px;
+ color: aliceblue;
+ background-color:#4CAF50;
+ text-align: center;
+}
+
+html{
+  background-color: #2b2b2b;
+}
+
+
+#btnSubmit{
+  background-color: #4CAF50;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+ width: 30%;
+ border-radius: 10px;
+ border: none;
+ padding: 10px 20px;
+ color: aliceblue;
+ background-color: #4CAF50;
+ text-align: center;
+
+}
+
+#examName{
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
+  width: 25%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid red;
+  border-radius: 4px;
+}
+
+#examCode{
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
+  color: black;
+  width: 25%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid red;
+  border-radius: 4px;
+}
+
+#Name{
+  font-size: 24px;
+  color: lightblue;
+}
+
+#questions{
+  font-size: 22px;
+}
+
+.backicon{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
