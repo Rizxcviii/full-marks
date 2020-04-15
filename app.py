@@ -214,10 +214,13 @@ def student():
 # def exams2():
 #     return render_template('exams2.html')
 
-# quiz.html
+# # quiz.html
 # @app.route('/quiz')
 # def quiz():
-#     quiz = db.child('')
+#     examCode = 'ECS404U'
+#     quiz = db.child('exams').child(examCode).child('markScheme').get().val()
+#     examName = quiz['examName']
+#     questions =  quiz['']
 #     return render_template('quiz.html')
 
 # # timetable.html
@@ -237,9 +240,9 @@ def createExam():
             questions = req['questions']
             i = 1
             for question in questions:
-                db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({'question' : question['question']})
+                db.child('exams').child(req['examCode']).child('markScheme').child('questions').child('q'+str(i)).set({'question' : question['question']})
                 if 'answer' in question.keys():
-                    db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({
+                    db.child('exams').child(req['examCode']).child('markScheme').child('questions').child('q'+str(i)).child('answers').set({
                         'answer' : int(question['answer']),
                         'mcqAnswers' : question['mcqAnswers']
                     })
