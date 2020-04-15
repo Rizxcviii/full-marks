@@ -44,7 +44,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 @app.route('/', methods=['GET'])
 def home():
     print("Hello")
-    if not session['logged in']:
+    if session.get('logged in'):
         return redirect(url_for('login'))
     else:
         return redirect(url_for('dashboard'))
