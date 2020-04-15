@@ -6,12 +6,12 @@
     <title>Login&Register</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
-    <link rel="stylesheet" href="./AdminDashboard.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/AdminDashboard.css') }}" />
 </head>
 
 <body>
     <div class="align">
-        <img src="Logo.JPG" alt="logo" />
+        <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="logo" />
         <div class="card">
             <div class="head">
                 <a id="login" href="#login" class="selected">Student Dashboard</a>
