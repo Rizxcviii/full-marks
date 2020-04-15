@@ -61,7 +61,7 @@ def home():
 # login_register.html
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if session['logged in']:
+    if session.get('logged in'):
         return redirect(url_for('home'))
     return render_template('login_register.html')
 
@@ -72,6 +72,7 @@ def handleRegistrationData():
     req = request.get_json() # Since we know that data is being sent as JSON, we need to convert it to a data structure that python understands, which is dictionaries
     try:
         user = createUser(req['email'], req['password'], req['SID'], 'student')
+        logout()
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
         print(e)
         try:
@@ -193,6 +194,7 @@ def examiner():
     else:
         return render_template('ExaminerDashboard.html')
 
+# StudentDashboard.html
 @app.route('/student')
 def student():
     if not session['logged in']:
@@ -212,9 +214,10 @@ def student():
 # def exams2():
 #     return render_template('exams2.html')
 
-# # quiz.html
+# quiz.html
 # @app.route('/quiz')
 # def quiz():
+#     quiz = db.child('')
 #     return render_template('quiz.html')
 
 # # timetable.html
