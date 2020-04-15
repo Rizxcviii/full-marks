@@ -184,15 +184,15 @@ def dashboard():
     else:
         return redirect(url_for('login'))
 
-# examiner.html
-@app.route('/examiner')
-def examiner():
-    if not session['logged in']:
-        return redirect(url_for('home'))
-    elif session.get('role') != "examiner":
-        return redirect(url_for('dashboard'))
-    else:
-        return render_template('ExaminerDashboard.html')
+# # examiner.html
+# @app.route('/examiner')
+# def examiner():
+#     if not session['logged in']:
+#         return redirect(url_for('home'))
+#     elif session.get('role') != "examiner":
+#         return redirect(url_for('dashboard'))
+#     else:
+#         return render_template('ExaminerDashboard.html')
 
 # StudentDashboard.html
 @app.route('/student')
@@ -214,11 +214,14 @@ def student():
 # def exams2():
 #     return render_template('exams2.html')
 
-# quiz.html
+# # quiz.html
 # @app.route('/quiz')
 # def quiz():
-#     quiz = db.child('')
-#     return render_template('quiz.html')
+#     examCode = 'ECS404U'
+#     quiz = db.child('exams').child(examCode).child('markScheme').get().val()
+#     examName = quiz['examName']
+#     questions =  quiz['questions']
+#     return render_template('quiz.html.jinja', examCode=examCode, examName=examName, questions=questions)
 
 # # timetable.html
 # @app.route('/timetable')
@@ -239,9 +242,9 @@ def createExam():
             questions = req['questions']
             i = 1
             for question in questions:
-                db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({'question' : question['question']})
+                db.child('exams').child(req['examCode']).child('markScheme').child('questions').child('q'+str(i)).set({'question' : question['question']})
                 if 'answer' in question.keys():
-                    db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({
+                    db.child('exams').child(req['examCode']).child('markScheme').child('questions').child('q'+str(i)).child('answers').set({
                         'answer' : int(question['answer']),
                         'mcqAnswers' : question['mcqAnswers']
                     })

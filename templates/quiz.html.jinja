@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<h1> {{ examName + " (" + examCode + ")" }} </h1>
+	<title>Exam</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+	<script src="{{ url_for('static', filename='js/quiz.js') }}" type="text/javascript" defer></script>
+	<script type="text/javascript" defer>
+		init({{ questions }},{{ questions|length }})
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<div class="pull-left">Examination</div>
+			<div class="pull-right">Full Marks</div>
+
+		</header>
+		<main>
+			{{ questions }}
+			{% for question in questions.values() %}
+			{{ question }}
+				<form class="questionForm" id= q{{ loop.index }} data-question="1">
+					<h3>1. {{ question['question'] }} </h3>
+					{% if 'answers' in question %}
+						<ul>
+							<li><input name="q1" type="radio" value="a" />1. {{ question['answers']['mcqAnswers'][0] }}</li>
+							<li><input name="q1" type="radio" value="b" />2. {{ question['answers']['mcqAnswers'][1] }}</li>
+							<li><input name="q1" type="radio" value="c" />3. {{ question['answers']['mcqAnswers'][2] }}</li>
+							<li><input name="q1" type="radio" value="d" />4. {{ question['answers']['mcqAnswers'][3] }}</li>
+						</ul>
+					{% else %}
+						<textarea rows = "10" cols = "60" name="q"{{ loop.index }}></textarea><br/>
+					{% endif %}
+					<button id="submit">Submit</button>
+				</form>
+			{% endfor %}
+
+			<div id="results"></div>
+			<br>
+		</main>
+		<footer>
+			<div class="pull-left">Total: 10 Questions</div>
+			<div class="pull-right2"><a href="{{ url_for('examiner') }}">Go Back To Exam Page</div>
+		</footer>
+	</div>
+</body>
+</html>
