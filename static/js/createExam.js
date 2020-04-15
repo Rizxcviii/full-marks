@@ -210,7 +210,7 @@ form.addEventListener('submit', async e => {
         }
     );
     if(await networkController.sendDataToBackend(markScheme,'/createExam')){
-        console.log('success');
+        networkController.redirect('createExam');
     }else{
         console.log('failure');
     }
