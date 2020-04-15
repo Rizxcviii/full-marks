@@ -184,15 +184,15 @@ def dashboard():
     else:
         return redirect(url_for('login'))
 
-# examiner.html
-@app.route('/examiner')
-def examiner():
-    if not session['logged in']:
-        return redirect(url_for('home'))
-    elif session.get('role') != "examiner":
-        return redirect(url_for('dashboard'))
-    else:
-        return render_template('ExaminerDashboard.html')
+# # examiner.html
+# @app.route('/examiner')
+# def examiner():
+#     if not session['logged in']:
+#         return redirect(url_for('home'))
+#     elif session.get('role') != "examiner":
+#         return redirect(url_for('dashboard'))
+#     else:
+#         return render_template('ExaminerDashboard.html')
 
 # StudentDashboard.html
 @app.route('/student')
@@ -220,8 +220,8 @@ def student():
 #     examCode = 'ECS404U'
 #     quiz = db.child('exams').child(examCode).child('markScheme').get().val()
 #     examName = quiz['examName']
-#     questions =  quiz['']
-#     return render_template('quiz.html')
+#     questions =  quiz['questions']
+#     return render_template('quiz.html.jinja', examCode=examCode, examName=examName, questions=questions)
 
 # # timetable.html
 # @app.route('/timetable')

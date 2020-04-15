@@ -1,10 +1,12 @@
-var score = 0; //Set score to 0
-var total = 10; //Total number of questions
-var point = 1; //Points per correct answer
-var highest = total * point;
+let score = 0; //Set score to 0
+let total; //Total number of questions
+let point = 1; //Points per correct answer
+let highest = total * point;
 
 //Initializer
-function init(){
+function init(questions, numberOfQuestion){
+	console.log(questions);
+	console.log(numberOfQuestion);
 	//set correct answers
 	sessionStorage.setItem('a1','a');
 	sessionStorage.setItem('a2','c');
@@ -41,9 +43,9 @@ $(document).ready(function(){
 //Process the answers
 function process(n){
 	//Get input value
-	var submitted = $('input[name=q'+n+']:checked').val();
+	const submitted = $('input[name=q'+n+']:checked').val();
 	if(submitted == sessionStorage.getItem('a'+n+'')){
-			score = score + point;
+		score = score + point;
 	}
 
 	if(n == total){
@@ -57,6 +59,5 @@ function process(n){
 	return false;
 }
 
-console.log(Response.toString);
 //Add event listener
 window.addEventListener('load',init,false);
