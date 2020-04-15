@@ -44,7 +44,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 @app.route('/', methods=['GET'])
 def home():
     print("Hello")
-    if not session.get('logged in'):
+    if session.get('logged in'):
         return redirect(url_for('login'))
     else:
         return redirect(url_for('dashboard'))
@@ -61,7 +61,7 @@ def home():
 # login_register.html
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if session.get('logged in'):
+    if session['logged in']:
         return redirect(url_for('home'))
     return render_template('login_register.html')
 
@@ -184,15 +184,15 @@ def dashboard():
     else:
         return redirect(url_for('login'))
 
-# # examiner.html
-# @app.route('/examiner')
-# def examiner():
-#     if not session['logged in']:
-#         return redirect(url_for('home'))
-#     elif session.get('role') != "examiner":
-#         return redirect(url_for('dashboard'))
-#     else:
-#         return render_template('ExaminerDashboard.html')
+# examiner.html
+@app.route('/examiner')
+def examiner():
+    if not session['logged in']:
+        return redirect(url_for('home'))
+    elif session.get('role') != "examiner":
+        return redirect(url_for('dashboard'))
+    else:
+        return render_template('ExaminerDashboard.html')
 
 # StudentDashboard.html
 @app.route('/student')
@@ -214,14 +214,14 @@ def student():
 # def exams2():
 #     return render_template('exams2.html')
 
-# # quiz.html
-# @app.route('/quiz')
-# def quiz():
-#     examCode = 'ECS404U'
-#     quiz = db.child('exams').child(examCode).child('markScheme').get().val()
-#     examName = quiz['examName']
-#     questions =  quiz['questions']
-#     return render_template('quiz.html.jinja', examCode=examCode, examName=examName, questions=questions)
+# quiz.html
+@app.route('/quiz')
+def quiz():
+    examCode = 'ECS404U'
+    quiz = db.child('exams').child(examCode).child('markScheme').get().val()
+    examName = quiz['examName']
+    questions =  quiz['questions']
+    return render_template('quiz.html.jinja', examCode=examCode, examName=examName, questions=questions)
 
 # # timetable.html
 # @app.route('/timetable')
