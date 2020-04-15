@@ -7,10 +7,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
-	<script src="{{ url_for('static', filename='js/quiz.js') }}" type="text/javascript" defer></script>
-	<script type="text/javascript" defer>
-		init({{ questions }},{{ questions|length }})
+	<script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
+	<script defer>
+		let score = 0; //Set score to 0
+		let total= {{ questions|length|safe }}; //Total number of questions
+		let point = 1; //Points per correct answer
+		let answerArr = [];
+
+		//Initializer
+		function init(questions){
+			//set correct answers
+			let i = 1;
+			const questionArr = Object.values(questions);
+			for(question of questionArr){
+				console.log(question);
+				if(typeof question.answers != 'undefined'){
+					sessionStorage.setItem('a'+i,question.answers.answer);
+				}
+				i++;
+			}
+		}
+		init({{ questions|safe }});
 	</script>
+	<script src="{{ url_for('static', filename='js/quiz.js') }}" type="text/javascript" defer></script>
 </head>
 
 <body>
@@ -18,34 +37,31 @@
 		<header>
 			<div class="pull-left">Examination</div>
 			<div class="pull-right">Full Marks</div>
-
 		</header>
 		<main>
-			{{ questions }}
 			{% for question in questions.values() %}
-			{{ question }}
-				<form class="questionForm" id= q{{ loop.index }} data-question="1">
-					<h3>1. {{ question['question'] }} </h3>
+				<form class="questionForm" id= q{{ loop.index }} data-question={{ loop.index }}>
+					<h3>{{ loop.index }}. {{ question['question'] }} </h3>
 					{% if 'answers' in question %}
 						<ul>
-							<li><input name="q1" type="radio" value="a" />1. {{ question['answers']['mcqAnswers'][0] }}</li>
-							<li><input name="q1" type="radio" value="b" />2. {{ question['answers']['mcqAnswers'][1] }}</li>
-							<li><input name="q1" type="radio" value="c" />3. {{ question['answers']['mcqAnswers'][2] }}</li>
-							<li><input name="q1" type="radio" value="d" />4. {{ question['answers']['mcqAnswers'][3] }}</li>
+							<li><input name=q{{ loop.index }} type="radio" value="1" />1. {{ question['answers']['mcqAnswers'][0] }}</li>
+							<li><input name=q{{ loop.index }} type="radio" value="2" />2. {{ question['answers']['mcqAnswers'][1] }}</li>
+							<li><input name=q{{ loop.index }} type="radio" value="3" />3. {{ question['answers']['mcqAnswers'][2] }}</li>
+							<li><input name=q{{ loop.index }} type="radio" value="4" />4. {{ question['answers']['mcqAnswers'][3] }}</li>
 						</ul>
 					{% else %}
-						<textarea rows = "10" cols = "60" name="q"{{ loop.index }}></textarea><br/>
+						<textarea id=textarea{{ loop.index }} rows = "10" cols = "60" name=q{{ loop.index }}></textarea><br/>
 					{% endif %}
-					<button id="submit">Submit</button>
+					<button id="prev" class='pull-left'>Previous</button>
+					<button id='next' class='pull-right'>Next</button>
 				</form>
 			{% endfor %}
 
-			<div id="results"></div>
+			<div id="completed"></div>
 			<br>
 		</main>
 		<footer>
-			<div class="pull-left">Total: 10 Questions</div>
-			<div class="pull-right2"><a href="{{ url_for('examiner') }}">Go Back To Exam Page</div>
+			<div class="pull-left">Total: {{ questions|length }} Questions</div>
 		</footer>
 	</div>
 </body>

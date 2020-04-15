@@ -44,7 +44,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 @app.route('/', methods=['GET'])
 def home():
     print("Hello")
-    if session.get('logged in'):
+    if not session.get('logged in'):
         return redirect(url_for('login'))
     else:
         return redirect(url_for('dashboard'))
@@ -61,7 +61,7 @@ def home():
 # login_register.html
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if session['logged in']:
+    if session.get('logged in'):
         return redirect(url_for('home'))
     return render_template('login_register.html')
 
@@ -173,7 +173,7 @@ def AdminDashboard():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    if not session['logged in']:
+    if not session.get('logged in'):
         return redirect(url_for('home'))
     elif session.get('role') == "examiner":
         return redirect(url_for('examiner'))
@@ -215,9 +215,13 @@ def student():
 #     return render_template('exams2.html')
 
 # quiz.html
-@app.route('/quiz')
+@app.route('/quiz', methods=['GET','POST'])
 def quiz():
     examCode = 'ECS404U'
+    if request.method == 'POST':
+        req = request.get_json()
+        db.child('exams').child(examCode).child('attempt').set({'answers':req['answers']})
+        return redirect('student')
     quiz = db.child('exams').child(examCode).child('markScheme').get().val()
     examName = quiz['examName']
     questions =  quiz['questions']
