@@ -6,8 +6,6 @@ registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   let credentials = {
     SID: document.getElementById("SID"),
-    fname: document.getElementById("fname"),
-    lname: document.getElementById("lname"),
     email: document.getElementById("email"),
     password: document.getElementById("password"),
     password2: document.getElementById("password2"),
@@ -56,20 +54,6 @@ function checkRegisterInputs(credentials) {
     success = false;
   } else {
     setSuccessFor(credentials.SID);
-  }
-
-  if (credentials.fname.value.trim() === "") {
-    setErrorFor(credentials.fname, "First Name cannot be blank");
-    success = false;
-  } else {
-    setSuccessFor(credentials.fname);
-  }
-
-  if (credentials.lname.value.trim() === "") {
-    setErrorFor(credentials.lname, "Last Name cannot be blank");
-    success = false;
-  } else {
-    setSuccessFor(credentials.lname);
   }
 
   if (credentials.email.value.trim() === "") {

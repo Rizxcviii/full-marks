@@ -20,15 +20,19 @@
             </div>
 
                 <br>
-                <form>
                     <fieldset>
-                        <button id="CreateExam">Create Exam</button>
+                        <form action="{{ url_for('createExam') }}">
+                            <button id="CreateExam">Create Exam</button>
+                        </form> 
                         <br>
-                        <button id="ReviewScript">Review Scripts</button>
+                        <form action="">
+                            <button id="ReviewScript">Review Scripts</button>
+                        </form>
                         <br>
+                        <form action="{{ url_for('logout') }}">
                         <button id="AdminLogout">Sign Out</button>
+                        </form>
                     </fieldset>
-                </form>
 
 
 

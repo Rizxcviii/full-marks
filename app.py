@@ -41,24 +41,28 @@ easily have 2 or more routes above the view function, one after the other, to li
 '''
 
 # The route that is loaded up when first coming to the website.
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
     print("Hello")
     if not session.get('logged in'):
         return redirect(url_for('login'))
-    elif session.get('logged in') and session.get('role') == "admin":
-        return redirect(url_for('AdminDashboard'))
-    elif session.get('logged in') and session.get('role') == "examiner":
-        return redirect(url_for('examiner'))
-    elif session.get('logged in') and session.get('role') == "tech":
-        return render_template('tech')
     else:
-        return render_template('student')
-    return redirect(url_for('login'))
+        return redirect(url_for('dashboard'))
+    # elif session.get('role') == "admin":
+    #     return redirect(url_for('AdminDashboard'))
+    # elif session.get('role') == "examiner":
+    #     return redirect(url_for('examiner'))
+    # elif ession.get('role') == "tech":
+    #     return render_template('tech')
+    # else:
+    #     return redirect(url_for('student'))
+    # return redirect(url_for('login'))
 
 # login_register.html
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login():
+    if session['logged in']:
+        return redirect(url_for('home'))
     return render_template('login_register.html')
 
 # You can parse over form data directly by including the 'methods' argument, followed by the form methods being used
@@ -67,15 +71,16 @@ def login():
 def handleRegistrationData():
     req = request.get_json() # Since we know that data is being sent as JSON, we need to convert it to a data structure that python understands, which is dictionaries
     try:
-        user = createUser(req['email'], req['password'], req['username'], 'student')
+        user = createUser(req['email'], req['password'], req['SID'], 'student')
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
         print(e)
         try:
             error = json.loads(str(e)[str(e).index(']')+2:]) # If the error is a Firebase error, it throws back a specfic 'JSON' object, so we need to translate it to JSON for JavaScript
         except Exception as e: # Else, it could be any other Error, so we need to capture it and handle it
-            return make_response({"message": "Unknown error occured"})
-        return make_response(error, 500)
-    return make_response({"success" : "true"}, 301)
+            print(e)
+            return make_response({"message": str(e)}, 500)
+        return make_response(error, 511)
+    return make_response({"success" : True}, 200)
 
 # If you choose login within the login page, the below ''sub route'' will be called, handling that data passed. 
 @app.route('/login/handleLoginData', methods=['POST'])
@@ -100,34 +105,35 @@ def handleLoginData():
         try:
             error = json.loads(str(e)[str(e).index(']')+2:])
         except Exception as e: 
-            return make_reponse({"message": "Unknown error occured"})
-        return make_response(error, 500)
-    return make_response({"success" : "true"}, 301)
+            print(e)
+            return make_reponse({"message": str(e)}, 500)
+        return make_response(error, 511)
+    return make_response({"success" : True}, 200)
 
-# ImageCapture.html
-@app.route('/ImageCapture')
-def imageCapture():
-    return render_template('ImageCapture.html')
+# # ImageCapture.html
+# @app.route('/ImageCapture')
+# def imageCapture():
+#     return render_template('ImageCapture.html')
 
-# index.html
-@app.route('/dashboard')
-def dashboard():
-    return render_template('index.html')
+# # index.html
+# @app.route('/dashboard')
+# def dashboard():
+#     return render_template('index.html')
 
-# personalDetails.html
-@app.route('/personalDetails')
-def personalDetails():
-    return render_template('personalDetails.html')
+# # personalDetails.html
+# @app.route('/personalDetails')
+# def personalDetails():
+#     return render_template('personalDetails.html')
 
-# button.html
-@app.route('/button')
-def button():
-    return render_template('button.html')
+# # button.html
+# @app.route('/button')
+# def button():
+#     return render_template('button.html')
 
-# ExaminerLogin.html
-@app.route('/ExaminerLogin')
-def ExaminerLogin():
-    return render_template('ExaminerLogin.html')
+# # ExaminerLogin.html
+# @app.route('/ExaminerLogin')
+# def ExaminerLogin():
+#     return render_template('ExaminerLogin.html')
 
 # # admin.html
 # @app.route('/admin', methods=['POST'])
@@ -139,12 +145,14 @@ def ExaminerLogin():
 # admin.html
 @app.route('/admin', methods=['POST','GET'])
 def admin():
-    if not session.get('logged in') or session.get('role') != 'admin':
+    if not session.get('logged in'):
         return redirect(url_for('login'))
+    elif session.get('role') != 'admin':
+        return redirect(url_for('dashboard'))
     elif request.method == 'POST':
         req = request.get_json()
         user = createUser(req['email'], req['password'], req['userRole'], req['userRole'])
-        return redirect(url_for('AdminDashboard'))
+        return redirect(url_for('dashboard'))
     return render_template('admin.html')
 
 @app.route('/AdminDashboard')
@@ -162,33 +170,90 @@ def AdminDashboard():
 #         auth.current_user = None
 #         return redirect(url_for('AdminDashboard'))
 
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    if not session['logged in']:
+        return redirect(url_for('home'))
+    elif session.get('role') == "examiner":
+        return redirect(url_for('examiner'))
+    elif session.get('role') == "admin":
+        return redirect(url_for('AdminDashboard'))
+    elif session.get('role') == "student":
+        return redirect(url_for('student'))
+    else:
+        return redirect(url_for('login'))
+
 # examiner.html
 @app.route('/examiner')
 def examiner():
-    return render_template('examiner.html')
+    if not session['logged in']:
+        return redirect(url_for('home'))
+    elif session.get('role') != "examiner":
+        return redirect(url_for('dashboard'))
+    else:
+        return render_template('ExaminerDashboard.html')
 
-# exams.html
-@app.route('/exams')
-def exams():
-    return render_template('exams.html')
+@app.route('/student')
+def student():
+    if not session['logged in']:
+        return redirect(url_for('home'))
+    elif session.get('role') != "student":
+        return redirect(url_for('dashboard'))
+    else:
+        return render_template('StudentDashboard.html')
 
-# exams2.html
-@app.route('/exams2')
-def exams2():
-    return render_template('exams2.html')
+# # exams.html
+# @app.route('/exams')
+# def exams():
+#     return render_template('exams.html')
 
-# quiz.html
-@app.route('/quiz')
-def quiz():
-    return render_template('quiz.html')
+# # exams2.html
+# @app.route('/exams2')
+# def exams2():
+#     return render_template('exams2.html')
 
-# timetable.html
-@app.route('/timetable')
-def timetable():
-    return render_template('timetable.html')
+# # quiz.html
+# @app.route('/quiz')
+# def quiz():
+#     return render_template('quiz.html')
 
-@app.route('/createExam')
+# # timetable.html
+# @app.route('/timetable')
+# def timetable():
+#     return render_template('timetable.html')
+
+# @app.route('/createExam')
+# def createExam():
+#     return render_template('createExam.html')
+
+# createExam.html
+@app.route('/createExam', methods=['POST', 'GET'])
 def createExam():
+    if request.method == 'POST':
+        try:
+            req = request.get_json()
+            db.child('exams').child(req['examCode']).set({
+                'examName': req['examName']
+            })
+            questions = req['questions']
+            i = 1
+            for question in questions:
+                db.child('exams').child(req['examCode']).child('q'+str(i)).set({'question' : question['question']})
+                if 'answer' in question.keys():
+                    db.child('exams').child(req['examCode']).child('q'+str(i)).set({
+                        'answer' : int(question['answer']),
+                        'mcqAnswers' : question['mcqAnswers']
+                    })
+                i+=1
+        except Exception as e:
+            print(e)
+            try:
+                error = json.loads(str(e)[str(e).index(']')+2:])
+            except Exception as e:
+                print(e)
+                return make_response({'message': 'Unknown error has occurred'}, 500)
+            return make_response(error, 500)
+        return make_response({'success': True}, 200)
     return render_template('createExam.html')
 
 # Helper method to create a student account
