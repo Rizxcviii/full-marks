@@ -44,7 +44,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 @app.route('/', methods=['GET'])
 def home():
     print("Hello")
-    if session.get('logged in'):
+    if not session.get('logged in'):
         return redirect(url_for('login'))
     else:
         return redirect(url_for('dashboard'))
@@ -61,7 +61,7 @@ def home():
 # login_register.html
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if session['logged in']:
+    if session.get('logged in'):
         return redirect(url_for('home'))
     return render_template('login_register.html')
 
