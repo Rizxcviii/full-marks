@@ -222,38 +222,21 @@ def student():
 # def timetable():
 #     return render_template('timetable.html')
 
-<<<<<<< HEAD
-# @app.route('/createExam')
-# def createExam():
-#     return render_template('createExam.html')
-
-=======
->>>>>>> 9f3b26dc0ad41c0d936e3588b1d51ab482a4a706
 # createExam.html
 @app.route('/createExam', methods=['POST', 'GET'])
 def createExam():
     if request.method == 'POST':
         try:
             req = request.get_json()
-<<<<<<< HEAD
-            db.child('exams').child(req['examCode']).set({
-=======
             db.child('exams').child(req['examCode']).child('markScheme').set({
->>>>>>> 9f3b26dc0ad41c0d936e3588b1d51ab482a4a706
                 'examName': req['examName']
             })
             questions = req['questions']
             i = 1
             for question in questions:
-<<<<<<< HEAD
-                db.child('exams').child(req['examCode']).child('q'+str(i)).set({'question' : question['question']})
-                if 'answer' in question.keys():
-                    db.child('exams').child(req['examCode']).child('q'+str(i)).set({
-=======
                 db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({'question' : question['question']})
                 if 'answer' in question.keys():
                     db.child('exams').child(req['examCode']).child('markScheme').child('q'+str(i)).set({
->>>>>>> 9f3b26dc0ad41c0d936e3588b1d51ab482a4a706
                         'answer' : int(question['answer']),
                         'mcqAnswers' : question['mcqAnswers']
                     })

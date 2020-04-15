@@ -57,5 +57,6 @@ function process(n){
 	return false;
 }
 
+console.log(Response.toString);
 //Add event listener
 window.addEventListener('load',init,false);
