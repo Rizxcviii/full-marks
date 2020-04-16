@@ -44,6 +44,7 @@ async function submit(){
 	if(typeof response.error != 'undefined'){
 		alert('Unknown error occurred, please inform your administrator');
 	}
+	networkController.redirect('login');
 }
 
 //Process the answers
