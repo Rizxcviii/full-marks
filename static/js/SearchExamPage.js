@@ -1,6 +1,7 @@
 let submit = document.getElementById('submit');
 let search = document.getElementById('search');
 
-submit.addEventListener('submit', async e => {
-    
+search.addEventListener('submit', async e => {
+    response = await networkController.sendDataToBackend({'searched':search.value});
+    console.log(response);
 });
