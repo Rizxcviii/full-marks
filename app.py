@@ -204,12 +204,16 @@ def searchExam():
     if request.method == 'POST':
         try:
             req = request.get_json()
-            exam = db.child('exams').child(req['searched']).get().val()
-            if not exam:
-                print('not exists')
-                return make_response({"message":"exam does not exist"}, 404)
-            print('exists')
-            return make_response(jsonify(exam))
+            if req['startExam'] == True:
+                session['examCode'] = req['examCode']
+                quiz = db.child('exams').child(session.get('examCode')).child('markScheme').get().val()
+                session['examName'] = quiz['examName']
+                session['questions'] = quiz['questions']
+            else:
+                exam = db.child('exams').child(req['searched']).get().val()
+                if not exam:
+                    return make_response({"message":"exam does not exist"}, 404)
+                return make_response(jsonify(exam))
         except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
             print(e)
             try:
@@ -234,15 +238,14 @@ def exams():
 # quiz.html
 @app.route('/quiz', methods=['GET','POST'])
 def quiz():
-    examCode = 'ECS404U'
     if request.method == 'POST':
         req = request.get_json()
-        db.child('exams').child(examCode).child('attempt').set({'answers':req['answers']})
-        return redirect('student')
-    quiz = db.child('exams').child(examCode).child('markScheme').get().val()
-    examName = quiz['examName']
-    questions =  quiz['questions']
-    return render_template('quiz.html.jinja', examCode=examCode, examName=examName, questions=questions)
+        db.child('exams').child(session.get('examCode')).child('attempt').set({'answers':req['answers']})
+        session.pop('examCode')
+        session.pop('examName')
+        session.pop('questions')
+        return make_response({'message':'finished exam'})
+    return render_template('quiz.html.jinja', examCode=session.get('examCode'), examName=session.get('examName'), questions=session.get('questions'))
 
 @app.route('/mockExam')
 def mockExam():
