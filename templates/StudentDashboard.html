@@ -11,35 +11,27 @@
 
 <body>
     <div class="align">
-        <img src="{{ url_for('static', filename='img/Logo.JPG') }}" width="170" height="140" alt="logo" />
+        <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="logo" width="170" height="140" />
         <div class="card">
             <div class="head">
-                <a id="login" class="selected">Student Dashboard</a>
+                <a id="login" href="#login" class="selected">Student Dashboard</a>
             </div>
-            <br>
-                <fieldset>
-                    <form action="{{ url_for('exams') }}">
-                        <button id="Take_Practice_Exam">Take Practice Exam</button>
-                    </form>
-                    
-                    <form action="{{ url_for('searchExam') }}">
-                        <button id="Take_Exam">Take Exam</button>
-                    </form>
-                    
-                        <form action="{{ url_for('logout') }}">
-                    
-                    <button id="Signout">Sign Out</button>
-                    </form>
-                </fieldset>
-
-
-
-
+            <fieldset>
+                <form action="{{ url_for('exams') }}">
+                    <button id="Take_Practice Exam">Take Practice Exam</button>
+                </form>
+                <form action="{{ url_for('searchExam') }}">
+                    <button id="Take Exam"> Take Exam</button>
+                </form>
+                <form action="{{ url_for('student') }}">
+                    <button id="Review Answers">Review Answers</button>
+                </form>
+                <form action="{{ url_for('logout') }}">
+                    <button id="Signout">Signout</button>
+                </form>
+            </fieldset>
         </div>
     </div>
-
-
-    </p>
 </body>
 
 </html>
