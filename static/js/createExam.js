@@ -209,12 +209,13 @@ form.addEventListener('submit', async e => {
             });
         }
     );
-    if(await networkController.sendDataToBackend(markScheme,'/createExam')){
+    response = await networkController.sendDataToBackend(markScheme,'/createExam');
+    if(typeof response.error == 'undefined'){
+        alert('Exam successfully uploaded!');
         networkController.redirect('createExam');
     }else{
-        console.log('failure');
+        alert('Unknown error occurred, please inform your administrator');
     }
-    console.log(markScheme);
 });
 
 //since data being sent are DOM objects, retrieve value from DOM and trim to remove unecessary whitespace
