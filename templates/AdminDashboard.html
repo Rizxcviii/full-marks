@@ -19,7 +19,7 @@
 
   <body>
     <div class="align">
-      <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="logo" />
+      <img src="{{ url_for('static', filename='img/Logo.JPG') }}" width="170" height="140" alt="logo" />
       <div class="card">
         <div class="head">
           <a id="login" href="#login" class="selected">Admin Dashboard</a>
@@ -31,7 +31,7 @@
             <form method="GET" action="{{url_for('admin')}}">
             <button type="submit">Add User</button>
           </form>
-            <br />
+            
           <form method="GET" action="{{url_for('logout')}}">
             <button type = "submit">Logout</button>
             </form>

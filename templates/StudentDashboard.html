@@ -17,20 +17,24 @@
                 <a id="login" class="selected">Student Dashboard</a>
             </div>
             <br>
-            <fieldset>
-                <form action="{{ url_for('exams') }}">
-                    <button id="Take_Practice_Exam">Take Practice Exam</button>
-                </form>
-                <br>
-                <form action="{{ url_for('searchExam') }}">
-                    <button id="Take_Exam">Take Exam</button>
-                </form>
-                <br>
-                    <form action="{{ url_for('logout') }}">
-                
-                <button id="Signout">Sign Out</button>
-                </form>
-            </fieldset>
+                <fieldset>
+                    <form action="{{ url_for('exams') }}">
+                        <button id="Take_Practice_Exam">Take Practice Exam</button>
+                    </form>
+                    
+                    <form action="">
+                        <button id="Take_Exam">Take Exam</button>
+                    </form>
+                    
+                        <form action="{{ url_for('logout') }}">
+                    
+                    <button id="Signout">Sign Out</button>
+                    </form>
+                </fieldset>
+
+
+
+
         </div>
     </div>
 
