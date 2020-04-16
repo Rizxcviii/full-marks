@@ -2,12 +2,15 @@ const addUserForm = document.getElementById('add-user');
 
 addUserForm.addEventListener("submit", async e => {
     e.preventDefault();
-    if( await networkController.sendDataToBackend(trimObjValues({
+    response = await networkController.sendDataToBackend(trimObjValues({
         email: document.getElementById('email'),
         password: document.getElementById('pword'),
         userRole: document.getElementById('role')
-    }), '/admin') == false){
-        console.log('error');
+    }), '/admin');
+    if (typeof response.error == 'undefined') {
+        alert('user added successfully');
+    }else{
+        alert('Unknown error occurred, please contect full marks so we can rectify this issue');
     }
 });
 
