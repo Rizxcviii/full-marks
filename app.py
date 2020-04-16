@@ -199,9 +199,26 @@ def student():
     else:
         return render_template('StudentDashboard.html')
 
-@app.route('/searchExam')
+@app.route('/searchExam', methods=['GET', 'POST'])
 def searchExam():
-    image = storage.child('2020-04-16-114031.jpg').get_url(session['uid'])
+    if request.method == 'POST':
+        try:
+            req = request.get_json()
+            exam = db.child('exams').child(req['searched']).get().val()
+            if not exam:
+                print('not exists')
+                return make_response({"message":"exam does not exist"}, 404)
+            print('exists')
+            return make_response(jsonify(exam))
+        except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
+            print(e)
+            try:
+                error = json.loads(str(e)[str(e).index(']')+2:]) # If the error is a Firebase error, it throws back a specfic 'JSON' object, so we need to translate it to JSON for JavaScript
+            except Exception as e: # Else, it could be any other Error, so we need to capture it and handle it
+                print(e)
+                return make_response({"message": str(e)}, 500)
+            return make_response(error, 511)
+        return make_response({"success" : True}, 200)
     return render_template('SearchExamPage.html')
 
 # exams.html
