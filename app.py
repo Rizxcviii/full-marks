@@ -199,6 +199,11 @@ def student():
     else:
         return render_template('StudentDashboard.html')
 
+@app.route('/searchExam')
+def searchExam():
+    image = storage.child('2020-04-16-114031.jpg').get_url(session['uid'])
+    return render_template('SearchExamPage.html')
+
 # exams.html
 @app.route('/exams')
 def exams():
