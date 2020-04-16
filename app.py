@@ -173,7 +173,7 @@ def AdminDashboard():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    if not session['logged in']:
+    if not session.get('logged in'):
         return redirect(url_for('home'))
     elif session.get('role') == "examiner":
         return redirect(url_for('examiner'))
@@ -215,9 +215,13 @@ def student():
 #     return render_template('exams2.html')
 
 # quiz.html
-@app.route('/quiz')
+@app.route('/quiz', methods=['GET','POST'])
 def quiz():
     examCode = 'ECS404U'
+    if request.method == 'POST':
+        req = request.get_json()
+        db.child('exams').child(examCode).child('attempt').set({'answers':req['answers']})
+        return redirect('student')
     quiz = db.child('exams').child(examCode).child('markScheme').get().val()
     examName = quiz['examName']
     questions =  quiz['questions']

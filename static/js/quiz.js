@@ -1,25 +1,3 @@
-let score = 0; //Set score to 0
-let total; //Total number of questions
-let point = 1; //Points per correct answer
-let highest = total * point;
-
-//Initializer
-function init(questions, numberOfQuestion){
-	console.log(questions);
-	console.log(numberOfQuestion);
-	//set correct answers
-	sessionStorage.setItem('a1','a');
-	sessionStorage.setItem('a2','c');
-	sessionStorage.setItem('a3','a');
-	sessionStorage.setItem('a4','d');
-	sessionStorage.setItem('a5',"b");
-	sessionStorage.setItem('a6','c');
-	sessionStorage.setItem('a7','d');
-	sessionStorage.setItem('a8','b');
-	sessionStorage.setItem('a9','b');
-	sessionStorage.setItem('a10',"a");
-}
-
 $(document).ready(function(){
 	//Hide all questions
 	$('.questionForm').hide();
@@ -27,7 +5,7 @@ $(document).ready(function(){
 	//Show first question
 	$('#q1').show();
 
-	$('.questionForm #submit').click(function(){
+	$('.questionForm #next').click(function(){
 		//Get data attributes
 		current = $(this).parents('form:first').data('question');
 		next = $(this).parents('form:first').data('question')+1;
@@ -35,26 +13,58 @@ $(document).ready(function(){
 		$('.questionForm').hide();
 		//Show next question
 		$('#q'+next+'').fadeIn(300);
-		process(''+current+'');
+		process(''+current+'','next');
+		return false;
+	});
+
+	$('.questionForm #prev').click(function(){
+		current = $(this).parents('form:first').data('question');
+		if (current == 1) {
+			return false;
+		}
+		prev = $(this).parents('form:first').data('question')-1;
+		//Hide all questions
+		$('.questionForm').hide();
+		//Show previous question
+		$('#q'+prev+'').fadeIn(300);
+		process(''+current+'','prev');
 		return false;
 	});
 });
 
-//Process the answers
-function process(n){
-	//Get input value
-	const submitted = $('input[name=q'+n+']:checked').val();
-	if(submitted == sessionStorage.getItem('a'+n+'')){
-		score = score + point;
-	}
+//Returns to start
+function goToStart(){
+	$('#completed').hide();
+	$('#q1').fadeIn(300);
+}
 
-	if(n == total){
-		$('#results').html('<h3>Your final score is: '+score+' out of '+highest+'</h3><a href="index.html">Take Quiz Again</a>');
-		if(score == highest){
-			$('#results').append('<p>You have got them correct!');
-		} else if(score == highest - point || score == highest - point - point){
-			$('#results').append('<p>Good Job!');
-		}
+//Submit all form data to server
+async function submit(){
+	if(! await networkController.sendDataToBackend({answers: answerArr}, '/quiz')){
+		console.log(error);
+	}
+}
+
+//Process the answers
+function process(n,nav){
+	console.log(n);
+	//Get input value
+	let submitted = document.getElementById('textarea'+n);
+	if (submitted) {
+		answerArr[n] = submitted.value;
+	}else{
+		submitted = $('input[name=q'+n+']:checked').val();
+		answerArr[n] = submitted;
+	}
+	// if it was the last question and the user selected 'next'
+	if(n == total && nav == 'next'){
+		$('#completed').hide();
+		$('#completed').fadeIn(300).html(
+			"<h3>You have now completed the exam. By pressing submit, your examiner will review the marks and you can review them afterwards.</h3><br/>"+
+			"<button id='submit' onclick=submit() style=" + 'text-align:center' + ">submit</button>"+
+			"<h3>Or you can return to the start of the exam to check/change your answers</h3>"+
+			"<button id='goToStart' onclick=goToStart() style=" + 'text-align:center' + ">Review/Change Answers</button>"
+		);
 	}
 	return false;
 }
