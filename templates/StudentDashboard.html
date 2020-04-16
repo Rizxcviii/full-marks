@@ -14,28 +14,23 @@
         <img src="{{ url_for('static', filename='img/Logo.JPG') }}" width="170" height="140" alt="logo" />
         <div class="card">
             <div class="head">
-                <a id="login" href="#login" class="selected">Student Dashboard</a>
+                <a id="login" class="selected">Student Dashboard</a>
             </div>
-
             <br>
-                <fieldset>
-                    <form action="{{ url_for('exams') }}">
-                        <button id="Take_Practice_Exam">Take Practice Exam</button>
-                    </form>
-                    <br>
-                    <form action="">
-                        <button id="Take_Exam">Take Exam</button>
-                    </form>
-                    <br>
-                        <form action="{{ url_for('logout') }}">
-                    
-                    <button id="Signout">Sign Out</button>
-                    </form>
-                </fieldset>
-
-
-
-
+            <fieldset>
+                <form action="{{ url_for('exams') }}">
+                    <button id="Take_Practice_Exam">Take Practice Exam</button>
+                </form>
+                <br>
+                <form action="{{ url_for('searchExam') }}">
+                    <button id="Take_Exam">Take Exam</button>
+                </form>
+                <br>
+                    <form action="{{ url_for('logout') }}">
+                
+                <button id="Signout">Sign Out</button>
+                </form>
+            </fieldset>
         </div>
     </div>
 
