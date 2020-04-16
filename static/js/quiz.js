@@ -40,8 +40,9 @@ function goToStart(){
 
 //Submit all form data to server
 async function submit(){
-	if(! await networkController.sendDataToBackend({answers: answerArr}, '/quiz')){
-		console.log(error);
+	response =  await networkController.sendDataToBackend({answers: answerArr}, '/quiz')
+	if(typeof response.error != 'undefined'){
+		alert('Unknown error occurred, please inform your administrator');
 	}
 }
 
