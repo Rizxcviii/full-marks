@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="SearchExamPage.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/SearchExamPage.css') }}">
   </head>
   <body id= "body">
     <h1>Search For Exam</h1>
@@ -13,7 +13,7 @@
     <br></br>  <br></br>
     <div class="wrap">
        <div class="search">
-          <input type="text" class="searchTerm" placeholder="Please type in your module ID">
+          <input id="search" type="text" class="searchTerm" placeholder="Please type in your module ID">
           <button type="submit" class="searchButton">
             <i class="fa fa-search"></i>
          </button>
