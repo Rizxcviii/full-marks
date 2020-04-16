@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='exams.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/exams.css') }}">
   <h2>Practice Exams Available</h2>
 
 <body>
@@ -10,7 +10,7 @@
     </tr>
     <tr>
       <td>GUI</td>
-      <td><a href="{{ url_for('quiz') }}">Take Practice Exam </td>
+      <td><a href="{{ url_for('mockExam') }}">Take Practice Exam </td>
     </tr>
     <tr>
       <td>Procedural Programming</td>
@@ -30,7 +30,7 @@
       </tr>
     </table>
     <div id="backicon" class="backicon" >
-	  	<a href="{{ url_for('button') }}"><img src="{{ url_for('static', filename='backarrow.png') }}" alt="HomeIcon Logo" width="32" height="32">
+	  	<a href="{{ url_for('student') }}"><img src="{{ url_for('static', filename='img/backarrow.png') }}" alt="HomeIcon Logo" width="32" height="32">
 		</div>
 </body>
 </html>

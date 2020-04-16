@@ -126,11 +126,6 @@ def handleLoginData():
 # def personalDetails():
 #     return render_template('personalDetails.html')
 
-# # button.html
-# @app.route('/button')
-# def button():
-#     return render_template('button.html')
-
 # # ExaminerLogin.html
 # @app.route('/ExaminerLogin')
 # def ExaminerLogin():
@@ -204,10 +199,10 @@ def student():
     else:
         return render_template('StudentDashboard.html')
 
-# # exams.html
-# @app.route('/exams')
-# def exams():
-#     return render_template('exams.html')
+# exams.html
+@app.route('/exams')
+def exams():
+    return render_template('exams.html')
 
 # # exams2.html
 # @app.route('/exams2')
@@ -226,6 +221,10 @@ def quiz():
     examName = quiz['examName']
     questions =  quiz['questions']
     return render_template('quiz.html.jinja', examCode=examCode, examName=examName, questions=questions)
+
+@app.route('/mockExam')
+def mockExam():
+    return render_template('mockExam.html')
 
 # # timetable.html
 # @app.route('/timetable')
