@@ -27,7 +27,7 @@
 				i++;
 			}
 		}
-		init({{ questions|safe }});
+		init({{ questions|tojson|safe }});
 	</script>
 	<script src="{{ url_for('static', filename='js/quiz.js') }}" type="text/javascript" defer></script>
 </head>
