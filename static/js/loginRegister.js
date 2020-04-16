@@ -14,13 +14,15 @@ registerForm.addEventListener("submit", async (e) => {
   //if verfication is correct, send data to networkcontroller
   //if running 'sendingDataToBackend', use 'await' keywork and store in async method
   if (checkRegisterInputs(credentials)) {
-    if (
-      await networkController.sendDataToBackend(
-        trimObjValues(credentials),
-        "/login/handleRegistrationData"
-      )
-    ) {
+    response = await networkController.sendDataToBackend(trimObjValues(credentials),"/login/handleRegistrationData");
+    if(typeof response.error == 'undefined'){
       networkController.redirect("");
+    }else if(response.error.message == 'EMAIL_EXISTS') {
+      alert('Password Incorrect');
+    }else if(response.error.message == 'WEAK_PASSWORD : Password should be at least 6 characters'){
+      alert('Password should be at least 6 characters');
+    }else{
+      alert('Unknown error occured, please contact your administrator');
     }
   }
 });
@@ -35,13 +37,15 @@ loginForm.addEventListener("submit", async (e) => {
 
   //if verfication is correct, send data to networkcontroller
   if (checkLoginInputs(credentials)) {
-    if (
-      await networkController.sendDataToBackend(
-        trimObjValues(credentials),
-        "/login/handleLoginData"
-      )
-    ) {
+    response = await networkController.sendDataToBackend(trimObjValues(credentials),"/login/handleLoginData");
+    if(typeof response.error == 'undefined'){
       networkController.redirect("");
+    }else if(response.error.message == 'INVALID_PASSWORD') {
+      alert('Email/Password Incorrect');
+    }else if(response.error.message == 'EMAIL_NOT_FOUND'){
+      alert('Email does not exist');
+    }else{
+      alert('Unknown error occured, please contact your administrator')
     }
   }
 });
