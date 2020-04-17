@@ -44,5 +44,5 @@ async function startExam(){
     }else{
         response = await networkController.sendDataToBackend({examCode:exam, startExam:true}, '/searchExam');
     }
-    networkController.redirect('tAndC');
+    networkController.redirect('ImageCapture');
 }
