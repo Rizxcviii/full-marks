@@ -251,7 +251,7 @@ def quiz():
     if request.method == 'POST':
         req = request.get_json()
         if session.get('logged in'):
-            db.child('users').child(session.get('userId')).child(session.get('examCode')).set({'answers':req['answers']})
+            db.child('users').child(session.get('userId')).child('examScripts').child(session.get('examCode')).set({'answers':req['answers']})
         else:
             db.child('temp').child(session.get('sid')).child(session.get('examCode')).set({'answers':req['answers']})
             session.pop('sid', None)
@@ -269,6 +269,11 @@ def mockExam():
 # @app.route('/timetable')
 # def timetable():
 #     return render_template('timetable.html')
+
+# ExaminerReview.html
+@app.route('/ExaminerReview', methods=['POST','GET'])
+def ExaminerReview():
+    return render_template('ExaminerReview.html')
 
 # createExam.html
 @app.route('/createExam', methods=['POST', 'GET'])
