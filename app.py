@@ -111,10 +111,12 @@ def handleLoginData():
         return make_response(error, 511)
     return make_response({"success" : True}, 200)
 
-# # ImageCapture.html
-# @app.route('/ImageCapture')
-# def imageCapture():
-#     return render_template('ImageCapture.html')
+# ImageCapture.html
+@app.route('/ImageCapture', methods=['POST', 'GET'])
+def ImageCapture():
+    if request.method == 'POST':
+        print("success")
+    return render_template('ImageCapture.html')
 
 # # index.html
 # @app.route('/dashboard')
@@ -199,21 +201,24 @@ def student():
     else:
         return render_template('StudentDashboard.html')
 
+# SearchExamPage.html
 @app.route('/searchExam', methods=['GET', 'POST'])
 def searchExam():
     if request.method == 'POST':
         try:
             req = request.get_json()
             if req['startExam'] == True:
+                quiz = db.child('exams').child(req['examCode']).get().val()
                 session['examCode'] = req['examCode']
-                quiz = db.child('exams').child(session.get('examCode')).child('markScheme').get().val()
                 session['examName'] = quiz['examName']
                 session['questions'] = quiz['questions']
+                if not session.get('logged in'):
+                    session['sid'] = req['sid']
             else:
                 exam = db.child('exams').child(req['searched']).get().val()
                 if not exam:
                     return make_response({"message":"exam does not exist"}, 404)
-                return make_response(jsonify(exam))
+                return make_response({'exam':exam, 'loggedIn':session.get('logged in')})
         except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
             print(e)
             try:
@@ -235,15 +240,24 @@ def exams():
 # def exams2():
 #     return render_template('exams2.html')
 
+# T&C.html
+@app.route('/tAndC')
+def tAndC():
+    return render_template('T&C.html')
+
 # quiz.html
 @app.route('/quiz', methods=['GET','POST'])
 def quiz():
     if request.method == 'POST':
         req = request.get_json()
-        db.child('exams').child(session.get('examCode')).child('attempt').set({'answers':req['answers']})
-        session.pop('examCode')
-        session.pop('examName')
-        session.pop('questions')
+        if session.get('logged in'):
+            db.child('users').child(session.get('userId')).child(session.get('examCode')).set({'answers':req['answers']})
+        else:
+            db.child('temp').child(session.get('sid')).child(session.get('examCode')).set({'answers':req['answers']})
+            session.pop('sid', None)
+        session.pop('examCode', None)
+        session.pop('examName', None)
+        session.pop('questions', None)
         return make_response({'message':'finished exam'})
     return render_template('quiz.html.jinja', examCode=session.get('examCode'), examName=session.get('examName'), questions=session.get('questions'))
 
@@ -264,15 +278,15 @@ def createExam():
     if request.method == 'POST':
         try:
             req = request.get_json()
-            db.child('exams').child(req['examCode']).child('markScheme').set({
+            db.child('exams').child(req['examCode']).set({
                 'examName': req['examName']
             })
             questions = req['questions']
             i = 1
             for question in questions:
-                db.child('exams').child(req['examCode']).child('markScheme').child('questions').child('q'+str(i)).set({'question' : question['question']})
+                db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).set({'question' : question['question']})
                 if 'answer' in question.keys():
-                    db.child('exams').child(req['examCode']).child('markScheme').child('questions').child('q'+str(i)).child('answers').set({
+                    db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).child('answers').set({
                         'answer' : int(question['answer']),
                         'mcqAnswers' : question['mcqAnswers']
                     })
@@ -303,7 +317,7 @@ def signIn(email, password):
     user = auth.sign_in_with_email_and_password(email, password)
     user = auth.refresh(user['refreshToken'])
     print(user['userId'])
-    session['uid'] = db.child('users').child(user['userId']).child('UID').get().val()
+    session['userId'] = db.child('users').child(user['userId']).get().key()
     session['role'] = db.child('users').child(user['userId']).child('userRole').get().val()
     session['logged in'] = True
     return user
@@ -317,5 +331,5 @@ if __name__=="__main__":
 def logout():
     session['logged in'] = False
     session.pop('role', None)
-    session.pop('uid', None)
+    session.pop('userId', None)
     return redirect(url_for('home')) 
