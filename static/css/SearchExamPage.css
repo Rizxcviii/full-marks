@@ -55,6 +55,22 @@ h1{
   color:#1a1918 ;
 }
 
+.searchTermStudent {
+  width: 50%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 5px;
+  outline: none;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.searchTermStudent:focus{
+  color:#1a1918 ;
+}
+
 .searchButton {
   width: 40px;
   height: 36px;
@@ -70,7 +86,7 @@ h1{
 /*Resize the wrap to see the search bar change!*/
 .wrap{
   width: 30%;
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

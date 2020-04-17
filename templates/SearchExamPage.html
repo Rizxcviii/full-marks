@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-  <html
-    <head lang="en">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/SearchExamPage.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
-    <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='js/SearchExamPage.js') }}" defer></script>
-  </head>
-  <body id= "body">
-    <h1>Search For Exam</h1>
-    <br></br>
-    <p>Welcome to the Search for Exam page, please search the module code/ID of the assessment you want to take:</p>
+<html
+  <head lang="en">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/SearchExamPage.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+  <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/SearchExamPage.js') }}" defer></script>
+</head>
+<body id= "body">
+  <h1>Search For Exam</h1>
+  <br></br>
+  <p>Welcome to the Search for Exam page, please search the module code/ID of the assessment you want to take:</p>
 
-    <div class="wrap">
-       <div class="search">
-          <input type="text" id="searchBar" class="searchTerm" placeholder="Please type in your module ID" required>
-          <button type="submit" onclick="searchForExam()" id="search" class="searchButton">
-            <i class="fa fa-search"></i>
-         </button>
-       </div>
-    </div>
-    <div class="response "></div>
+  <div class="wrap">
+      <div class="search">
+        <input type="text" id="searchBar" class="searchTerm" placeholder="Please type in your module ID" required>
+        <button type="submit" onclick="searchForExam()" id="search" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+  </div>
+  <div class="response"></div>
+  <input class="searchTermStudent" id="sid" type="text" placeholder="Please enter your student ID here">
   <input id ="submit" type="submit" value="Submit" onclick="startExam()">
 </body>
 </html>
