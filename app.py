@@ -71,7 +71,7 @@ def login():
 def handleRegistrationData():
     req = request.get_json() # Since we know that data is being sent as JSON, we need to convert it to a data structure that python understands, which is dictionaries
     try:
-        user = createUser(req['email'], req['password'], req['SID'], 'student')
+        user = createUser(req['email'], req['password'], req['SID'], 'student', 'gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
         logout()
     except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
         print(e)
@@ -147,7 +147,7 @@ def admin():
         return redirect(url_for('dashboard'))
     elif request.method == 'POST':
         req = request.get_json()
-        user = createUser(req['email'], req['password'], req['userRole'], req['userRole'])
+        user = createUser(req['email'], req['password'], req['userRole'], req['userRole'], 'gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
         return redirect(url_for('dashboard'))
     return render_template('admin.html')
 
@@ -289,12 +289,13 @@ def createExam():
     return render_template('createExam.html')
 
 # Helper method to create a student account
-def createUser(email, password, uid, userRole):
+def createUser(email, password, uid, userRole, userImage):
     auth.create_user_with_email_and_password(email, password)
     user = signIn(email, password)
     db.child('users').child(user['userId']).set({
         'UID': uid,
-        'userRole': userRole
+        'userRole': userRole,
+        'userImage': userImage
     })
     return user
 
