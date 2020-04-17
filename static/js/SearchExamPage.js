@@ -20,9 +20,14 @@ async function searchForExam(){
         $('.response').fadeIn(300);
         $('#submit').hide();
     }else{
+        console.log(response);
         $('.response').hide();
         $('#submit').hide();
-        $('.response').html("<p>"+response.markScheme.examName+" has been found. Please press submit to take the exam</p>");
+        if (response.loggedIn == true) {
+            $('.response').html("<p>"+response.exam.markScheme.examName+" has been found. Please press submit to take the exam</p>");
+        } else {
+            $('.response').html("<p>"+response.exam.markScheme.examName+" has been found. However it seems you are not registered with full marks, so please enter your Student ID where stated</p>");
+        }
         $('.response').fadeIn(300);
         $('#submit').fadeIn(300);
         exam = searchBar.value;
@@ -31,5 +36,5 @@ async function searchForExam(){
 
 async function startExam(){
     await networkController.sendDataToBackend({examCode:exam,startExam:true}, '/searchExam');
-    networkController.redirect('quiz');
+    networkController.redirect('tAndC');
 }
