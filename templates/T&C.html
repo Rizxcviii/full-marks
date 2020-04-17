@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="T&C.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/T&C.css') }}">
   </head>
     <body id="style">
       <h1 id = "style1">Terms and Conditions</h1>
@@ -98,7 +98,7 @@ If you have any query about above mentioned terms and conditions then please dro
 info@Full Marks or contact us at +44 8575541645
 <p></p>
 <br></br>
-<form method="GET" action="{{url_for('exam')}}">
+<form method="GET" action="{{ url_for('quiz') }}">
 <p><input type="checkbox" required>
     <span class="checkmark"></span>I accept the Terms and Conditions</p>
   <br></br>
