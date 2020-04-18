@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<h1> {{ examCode }} </h1>
+	<title>Exam Review</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+	<script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
+	<script defer>
+		let score = 0; //Set score to 0
+		let total= {{ questions|length|safe }}; //Total number of questions
+		let point = 1; //Points per correct answer
+		let answerArr = [];
+
+		//Initializer
+		function init(questions){
+			//set correct answers
+			let i = 1;
+			const questionArr = Object.values(questions);
+			for(question of questionArr){
+				if(typeof question.answers != 'undefined'){
+					sessionStorage.setItem('a'+i,question.answers.answer);
+				}
+				i++;
+			}
+		}
+		init({{ questions|tojson|safe }});
+	</script>
+	<script src="{{ url_for('static', filename='js/ExaminerReview.js') }}" type="text/javascript" defer></script>
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<div class="pull-left">Examination</div>
+			<div class="pull-right">Full Marks</div>
+		</header>
+		<main>
+			{% for question in questions.values() %}
+				<form class="questionForm" id= q{{ loop.index }} data-question={{ loop.index }}>
+					<h3>{{ loop.index }}. {{ question['question'] }}</h3>
+					{% if 'answers' in question %}
+						<ul>
+							{% set outer_loop = loop %}
+							{% for i in range(4) %}
+								{% if loop.index|string == script.answers[outer_loop.index] %}
+									<li><input name=q{{ outer_loop.index }} type="radio" value={{ i+1 }} checked disabled/>{{ i+1 }}. {{ question['answers']['mcqAnswers'][i] }}</li>
+								{% else %}
+									<li><input name=q{{ outer_loop.index }} type="radio" value={{ i+1 }} disabled/>{{ i+1 }}. {{ question['answers']['mcqAnswers'][i] }}</li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					{% else %}
+						<textarea class='textarea' id=textarea{{ loop.index }} rows = "10" cols = "60" name=q{{ loop.index }} disabled>
+							{{- script.answers[loop.index] -}}
+						</textarea><br/>
+					{% endif %}
+					{% if 'answers' in question %}
+						{% if script.answers[loop.index] == question.answers.answer|string %}
+							<div class="b">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio" checked> Correct 
+								<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
+							</div>
+						{% else %}
+							<div class="b">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio"> Correct 
+								<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio" checked> InCorrect 
+							</div>
+						{% endif %}
+					{% else %}
+						<div class="b">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio"> Correct 
+							<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
+						</div>
+					{% endif %}
+					<button id="prev" class='pull-left'>Previous</button>
+					<button id='next' class='pull-right'>Next</button>
+				</form>
+			{% endfor %}
+			<div id="completed"></div>
+			<br>
+		</main>
+		<footer>
+			<div class="pull-left">Total: {{ questions|length }} Questions</div>
+		</footer>
+	</div>
+</body>
+</html>

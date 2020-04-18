@@ -200,6 +200,7 @@ def searchExam():
         return make_response({"success" : True}, 200)
     return render_template('SearchExamPage.html')
 
+<<<<<<< HEAD
 # exams.html
 @app.route('/exams')
 def exams():
@@ -210,6 +211,8 @@ def exams():
 def tAndC():
     return render_template('T&C.html')
 
+=======
+>>>>>>> 9896cb7272a5105046c61d3aed57a2d8e407e72e
 # quiz.html
 @app.route('/quiz', methods=['GET','POST'])
 def quiz():
@@ -217,8 +220,14 @@ def quiz():
         req = request.get_json()
         if session.get('logged in'):
             db.child('users').child(session.get('userId')).child('examScripts').child(session.get('examCode')).set({'answers':req['answers']})
+            user = {
+                'sid':db.child('users').child(session.get('userId')).child('UID').get().val(),
+                'uid':session.get('userId')
+            }
+            addIDToScriptsArr(user)
         else:
             db.child('temp').child(session.get('sid')).child(session.get('examCode')).set({'answers':req['answers']})
+            addIDToScriptsArr(session.get('sid'))
             session.pop('sid', None)
         session.pop('examCode', None)
         session.pop('examName', None)
@@ -226,14 +235,93 @@ def quiz():
         return make_response({'message':'finished exam'})
     return render_template('quiz.html.jinja', examCode=session.get('examCode'), examName=session.get('examName'), questions=session.get('questions'))
 
+# exams.html
+@app.route('/exams')
+def exams():
+    return render_template('exams.html')
+
+# # exams2.html
+# @app.route('/exams2')
+# def exams2():
+#     return render_template('exams2.html')
+
+# T&C.html
+@app.route('/tAndC')
+def tAndC():
+    return render_template('T&C.html')
+
 @app.route('/mockExam')
 def mockExam():
     return render_template('mockExam.html')
 
+<<<<<<< HEAD
+=======
+# # timetable.html
+# @app.route('/timetable')
+# def timetable():
+#     return render_template('timetable.html')
+
+# searchExamScripts.html
+@app.route('/searchExamScripts', methods=['POST','GET'])
+def searchExamScripts():
+    if not session.get('logged in'):
+        return redirect(url_for('home'))
+    elif session.get('role') != "examiner":
+        return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        req = request.get_json()
+        if req['startReview'] == True:
+            # req['script']
+            session['examCode'] = req['examCode']
+            scriptLocation = db.child('exams').child(session.get('examCode')).child('scripts').get().val()
+            for script in scriptLocation:
+                if 'sid' in script:
+                    if script['sid'] == req['script']:
+                        session['sid'] = script['uid']
+                        return make_response({'success':True},200)
+            session['sid'] = req['script']
+        else:
+            exam = db.child('exams').child(req['searched']).get().val()
+            if not exam:
+                return make_response({"message":"exam does not exist"}, 404)
+            return make_response({'exam':exam},200)
+        return make_response({'success':True},200)
+    return render_template('searchExamScripts.html')
+
+>>>>>>> 9896cb7272a5105046c61d3aed57a2d8e407e72e
 # ExaminerReview.html
 @app.route('/ExaminerReview', methods=['POST','GET'])
 def ExaminerReview():
-    return render_template('ExaminerReview.html')
+    markScheme = db.child('exams').child(session.get('examCode')).child('questions').get().val()
+    scriptLocation = db.child('temp').shallow().get().val()
+    if session.get('sid') in scriptLocation:
+        script = db.child('temp').child(session.get('sid')).child(session.get('examCode')).get().val()
+    else:
+        script = db.child('users').child(session.get('sid')).child('examScripts').child(session.get('examCode')).get().val()
+    print(session.get('sid'))
+    return render_template('ExaminerReview.html.jinja', sid=session.get('sid'), examCode=session.get('examCode'), questions=markScheme, script=script)
+
+# ExaminerReview.html/uploadResults
+@app.route('/ExaminerReview/uploadResults', methods=['POST','GET'])
+def uploadResults():
+    if request.method == 'POST':
+        req = request.get_json()
+        scriptLocation = db.child('exams').child(session.get('examCode')).child('scripts').get().val()
+        for script in scriptLocation:
+            if 'sid' in script:
+                if script['uid'] == session.get('sid'):
+                    db.child('users').child(session.get('sid')).child('examScripts').child(session['examCode']).child('marks').set({
+                        'marks':req['marks'],
+                        'feedback':req['feedback']
+                    })
+                    return make_response({'message':'Results uploaded'},200)
+        db.child('temp').child(session.get('sid')).child(session['examCode']).child('marks').set({
+            'marks':req['marks'],
+            'feedback':req['feedback']
+        })
+        session.pop('sid')
+        session.pop('examCode')
+        return make_response({'message':'Results uploaded'},200)
 
 # createExam.html
 @app.route('/createExam', methods=['POST', 'GET'])
@@ -287,6 +375,18 @@ def signIn(email, password):
     session['role'] = db.child('users').child(user['userId']).child('userRole').get().val()
     session['logged in'] = True
     return user
+
+# Helper method to add the ID to the Exam script under exam on Firebase
+def addIDToScriptsArr(id):
+    scripts = db.child('exams').child(session.get('examCode')).child('scripts').get().val()
+    if scripts:
+        if id in scripts:
+            return
+        scripts.append(id)
+        db.child('exams').child(session.get('examCode')).child('scripts').set(scripts)
+    else:
+        scripts = [id]
+        db.child('exams').child(session.get('examCode')).child('scripts').set(scripts)
 
 # Run the application and start it in debugging mode to display errors
 if __name__=="__main__":
