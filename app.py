@@ -130,8 +130,8 @@ def compareImages():
                                                     SourceImage={'Bytes':imageSource.read()}, 
                                                     TargetImage={'Bytes':imageTarget.read()})
         print(comparisonResponse)
-
-        return '<h1>{{ comparisonResponse }}</h1>'
+        similarity = comparisonResponse['FaceMatches'][0]['Similarity']
+        return make_response({'simmilarity':similarity})
 
 # admin.html
 @app.route('/admin', methods=['POST','GET'])

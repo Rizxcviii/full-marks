@@ -15,8 +15,8 @@
 
         Webcam.upload( base64image, '{{ url_for("compareImages") }}', function(code, text) {
           console.log('Save successfully');
-          console.log(code);
-          console.log(text);
+          alert(code);
+          alert(text);
         });
       }
     </script>
