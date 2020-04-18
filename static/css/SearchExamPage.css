@@ -71,6 +71,10 @@ h1{
   color:#1a1918 ;
 }
 
+.searchTermScripts{
+  height: auto;
+}
+
 .searchButton {
   width: 40px;
   height: 36px;

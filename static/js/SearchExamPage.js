@@ -4,7 +4,6 @@ let search = document.getElementById('search');
 let sid = document.getElementById('sid');
 let exam;
 $('.response, #submit, #sid').hide();
-('#sid')
 
 async function searchForExam(){
     if(searchBar.value == ""){
