@@ -1,6 +1,7 @@
 from flask import * # flask module that includes the flask requirements needed
 import pyrebase # pyrebase is a module that interacts with the Firebase API to parse commands and queries to Firebase
 import json # JSON module to perform translation to/from JSON, since we're dealing with JavaScript Objects also
+import boto3, base64
 
 # The config data structure that holds the Firebase configuration
 config = {
@@ -23,12 +24,11 @@ firebase = pyrebase.initialize_app(config)
 storage = firebase.storage() # Storage bucket for storing files other than normal text, such as images, videos, etc
 db = firebase.database() # Real Time database for storing data. Real Time so firebase updates as you push data, no need to refresh database webpage if being viewed
 auth = firebase.auth() # Authentication service, provides authentication for different users of the application, and also handling creating/logging in new users with email/password
-# role = None
-# uid = None
-# session = ''
-# termsAccepted = None
 app = Flask(__name__)
 app.secret_key = 'a'
+client = boto3.client('rekognition')
+
+
 
 '''
 ''@app.route'' is an app decorator used to manage the flow of website. Inside the arguments is the custom 'url' that you can create, with '/' being the index route. 
@@ -48,15 +48,6 @@ def home():
         return redirect(url_for('login'))
     else:
         return redirect(url_for('dashboard'))
-    # elif session.get('role') == "admin":
-    #     return redirect(url_for('AdminDashboard'))
-    # elif session.get('role') == "examiner":
-    #     return redirect(url_for('examiner'))
-    # elif ession.get('role') == "tech":
-    #     return render_template('tech')
-    # else:
-    #     return redirect(url_for('student'))
-    # return redirect(url_for('login'))
 
 # login_register.html
 @app.route('/login', methods=['POST', 'GET'])
@@ -86,21 +77,9 @@ def handleRegistrationData():
 # If you choose login within the login page, the below ''sub route'' will be called, handling that data passed. 
 @app.route('/login/handleLoginData', methods=['POST'])
 def handleLoginData():
-    # if request.form['password'] == link to db here and request.form['email'] == link to db here:
-        # uid = db.child('users').child(student['userId']).child('UID').get().val()
-        # role = db.child('users').child(student['userId']).child('UID').get().val()
-    #     if role == "student":
-    #         termsAccepted = False
-    #     session['logged in'] = True
-    # else:
-    #     flash('Incorrect Password and Email Combination')
-    # return home()
     req = request.get_json()
     try:
         user = signIn(req['email'], req['password'])
-    #     if role == "student":
-    #         termsAccepted = False
-    #     session['logged in'] = True
     except Exception as e:
         print(e)
         try:
@@ -114,31 +93,31 @@ def handleLoginData():
 # ImageCapture.html
 @app.route('/ImageCapture', methods=['POST', 'GET'])
 def ImageCapture():
+    if session.get('role') == "admin" or session.get('role') == "exmainer" :
+        return redirect(url_for('home'))
     if request.method == 'POST':
         print("success")
     return render_template('ImageCapture.html')
 
-# # index.html
-# @app.route('/dashboard')
-# def dashboard():
-#     return render_template('index.html')
+@app.route('/compareImages', methods=['POST'])
+def compareImages():
+    # req = request.form.get('results')
+    # # source = request.'preview')
+    # print(req)
+    # target = storage.refFromURL('gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
+    source = "/Users/Jose_Bear/Desktop/Software-Engineering-Project/Rizbir1.jpeg"
+    target = storage.child("2020-04-16-114031.jpg").get_url(session.get('userId'))
+    print(target)
 
-# # personalDetails.html
-# @app.route('/personalDetails')
-# def personalDetails():
-#     return render_template('personalDetails.html')
+    imageSource = open(source, 'rb')
+    imageTarget = open(target, 'rb')
 
-# # ExaminerLogin.html
-# @app.route('/ExaminerLogin')
-# def ExaminerLogin():
-#     return render_template('ExaminerLogin.html')
+    comparisonResponse = client.compare_faces(SimilarityThreshold=90,
+                                                SourceImage={'Bytes':imageSource.read()}, 
+                                                TargetImage={'Bytes':imageTarget.read()})
+    print(comparisonResponse)
 
-# # admin.html
-# @app.route('/admin', methods=['POST'])
-# def admin():
-#     if not session.get('logged in') or session.get('role') != 'admin':
-#         return redirect(url_for('home'))
-#     return render_template('admin.html')
+    return '<h1>{{ comparisonResponse }}</h1>'
 
 # admin.html
 @app.route('/admin', methods=['POST','GET'])
@@ -158,15 +137,6 @@ def AdminDashboard():
     if not session['logged in'] or session.get('role') != 'admin':
         return redirect(url_for('home'))
     return render_template('AdminDashboard.html')
-
-# # admin.html with adding users
-# @app.route('/admin/create-user', methods=['GET', 'POST'])
-# def adminCreateUser():
-#     if request.method == 'POST' or request.method == 'GET':
-#         req = request.get_json()
-#         user = createUser(req['email'], req['password'], 'Please enter your user ID', req['userRole'])
-#         auth.current_user = None
-#         return redirect(url_for('AdminDashboard'))
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
@@ -235,11 +205,6 @@ def searchExam():
 def exams():
     return render_template('exams.html')
 
-# # exams2.html
-# @app.route('/exams2')
-# def exams2():
-#     return render_template('exams2.html')
-
 # T&C.html
 @app.route('/tAndC')
 def tAndC():
@@ -264,11 +229,6 @@ def quiz():
 @app.route('/mockExam')
 def mockExam():
     return render_template('mockExam.html')
-
-# # timetable.html
-# @app.route('/timetable')
-# def timetable():
-#     return render_template('timetable.html')
 
 # ExaminerReview.html
 @app.route('/ExaminerReview', methods=['POST','GET'])
@@ -339,3 +299,4 @@ def logout():
     session.pop('role', None)
     session.pop('userId', None)
     return redirect(url_for('home')) 
+
