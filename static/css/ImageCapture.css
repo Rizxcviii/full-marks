@@ -1,32 +1,26 @@
+* {
+  font-family: "Montserrat", sans-serif !important;
+}
+
 body {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  -webkit-animation: gradient 15s ease infinite;
-  animation: gradient 15s ease infinite;
+  background-color: #2b2b2b;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-@-webkit-keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+button{
+  display: block;
+  background: #00ff5c;
+  padding: 14px 40px;
+  border-radius: 12px;
+  color: #003b15;
+  font-weight: 700;
+  font-size: 21px;
+  cursor: pointer;
+  margin: 20 auto;
+  
 }
 
 #camera {

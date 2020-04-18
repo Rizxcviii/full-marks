@@ -1,7 +1,9 @@
+document.getElementById('form').addEventListener("submit", compareImages, true);
+
 // load the webcam
 Webcam.set({
-    width: 320,
-    hieght: 240,
+    width: 360,
+    hieght: 360,
     image_format: "jpeg",
     jpeg_quality: 90
   });

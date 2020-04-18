@@ -125,13 +125,31 @@ def compareImages():
 
         imageSource = open(source, 'rb')
         imageTarget = open(target, 'rb')
+        comparisonReponse = ""
 
-        comparisonResponse = client.compare_faces(SimilarityThreshold=90,
+        try:
+            comparisonResponse = client.compare_faces(SimilarityThreshold=0,
                                                     SourceImage={'Bytes':imageSource.read()}, 
                                                     TargetImage={'Bytes':imageTarget.read()})
+        except Exception as e:
+            return make_response({
+            'similarity':0,
+            'confidence':100
+        })
+
         print(comparisonResponse)
         similarity = comparisonResponse['FaceMatches'][0]['Similarity']
-        return make_response({'simmilarity':similarity})
+        print(similarity)
+        confidence = comparisonResponse['FaceMatches'][0]['Face']['Confidence']
+        print(confidence)
+        # if similarity >= 90:
+        #     return make_response(str("Similarity: " + str(similarity) +", Confidence: " + str(confidence)),200)
+        # else:
+        #     return make_response("images do not match in similarity", 200)
+        return make_response({
+            'similarity':similarity,
+            'confidence':confidence
+        })
 
 # admin.html
 @app.route('/admin', methods=['POST','GET'])
