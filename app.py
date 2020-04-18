@@ -279,6 +279,10 @@ def mockExam():
 # searchExamScripts.html
 @app.route('/searchExamScripts', methods=['POST','GET'])
 def searchExamScripts():
+    if not session.get('logged in'):
+        return redirect(url_for('home'))
+    elif session.get('role') != "examiner":
+        return redirect(url_for('dashboard'))
     if request.method == 'POST':
         req = request.get_json()
         if req['startReview'] == True:
@@ -329,6 +333,8 @@ def uploadResults():
             'marks':req['marks'],
             'feedback':req['feedback']
         })
+        session.pop('sid')
+        session.pop('examCode')
         return make_response({'message':'Results uploaded'},200)
 
 # createExam.html
