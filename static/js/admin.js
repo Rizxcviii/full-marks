@@ -7,8 +7,10 @@ addUserForm.addEventListener("submit", async e => {
         password: document.getElementById('pword'),
         userRole: document.getElementById('role')
     }), '/admin');
+    console.log(response);
     if (typeof response.error == 'undefined') {
         alert('user added successfully');
+        networkController.redirect('admin');
     }else{
         alert('Unknown error occurred, please contect full marks so we can rectify this issue');
     }

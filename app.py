@@ -148,9 +148,18 @@ def admin():
     elif session.get('role') != 'admin':
         return redirect(url_for('dashboard'))
     elif request.method == 'POST':
-        req = request.get_json()
-        user = createUser(req['email'], req['password'], req['userRole'], req['userRole'], 'gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
-        return redirect(url_for('dashboard'))
+        try:
+            req = request.get_json()
+            user = createUser(req['email'], req['password'], req['userRole'], req['userRole'], 'gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
+        except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
+            print(e)
+            try:
+                error = json.loads(str(e)[str(e).index(']')+2:]) # If the error is a Firebase error, it throws back a specfic 'JSON' object, so we need to translate it to JSON for JavaScript
+            except Exception as e: # Else, it could be any other Error, so we need to capture it and handle it
+                print(e)
+                return make_response({"message": str(e)}, 500)
+            return make_response(error, 511)
+        return make_response({'success':True},200)
     return render_template('admin.html')
 
 @app.route('/AdminDashboard')
@@ -286,7 +295,6 @@ def searchExamScripts():
     if request.method == 'POST':
         req = request.get_json()
         if req['startReview'] == True:
-            # req['script']
             session['examCode'] = req['examCode']
             scriptLocation = db.child('exams').child(session.get('examCode')).child('scripts').get().val()
             for script in scriptLocation:
