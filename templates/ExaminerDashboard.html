@@ -1,48 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <title>Login&Register</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/AdminDashboard.css') }}" />
-    
-    
-
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Dashboard.css') }}" />
 </head>
-
 <body>
     <div class="align">
         <img src="{{ url_for('static', filename='img/Logo.JPG') }}" alt="logo" width="170" height="140"/>
         <div class="card">
             <div class="head">
-                <a id="login" href="#login" class="selected">Examiner Dashboard</a>
+                <a id="login" class="selected">Examiner Dashboard</a>
             </div>
-
-                <br>
-                    <fieldset>
-                        <form action="{{ url_for('createExam') }}">
-                            <button id="CreateExam">Create Exam</button>
-                        </form> 
-                        
-                        <form action="">
-                            <button id="ReviewScript">Review Scripts</button>
-                        </form>
-                        
-                        <form action="{{ url_for('logout') }}">
-                        <button id="AdminLogout">Sign Out</button>
-                        </form>
-                    </fieldset>
-
-
-
-
+            <br>
+            <fieldset>
+                <form action="{{ url_for('createExam') }}">
+                    <button id="CreateExam">Create Exam</button>
+                </form> 
+                <form action="{{ url_for('searchExamScripts') }}">
+                    <button id="ReviewScript">Review Scripts</button>
+                </form>
+                <form class="logout" action="{{ url_for('logout') }}">
+                    <button id="AdminLogout">Sign Out</button>
+                </form>
+            </fieldset>
         </div>
     </div>
-    <a href="homepage.html"></a>
-
 </body>
 
 </html>

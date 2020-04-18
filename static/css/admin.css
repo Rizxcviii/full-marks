@@ -3,7 +3,7 @@
   background-position: center;
 }
 
-input[type=text], select {
+input[type=email], input[type=password], select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -11,12 +11,12 @@ input[type=text], select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  
+
 }
 
 input[type=submit] {
   width: 50%;
-  background-color: black;
+  background-color: #179413;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -27,13 +27,13 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: blue;
+  background-color: #013600;
 }
 
 
 #logout {
   width: 50%;
-  background-color: black;
+  background-color: red;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -45,7 +45,7 @@ input[type=submit]:hover {
 }
 
 #logout:hover {
-  background-color: blue;
+  background-color: #300101;
 }
 
 h2{
@@ -56,7 +56,8 @@ h2{
 div {
   border-radius: 5px;
   background-color: #f2f2f2;
-  padding: 60px;
+  padding: 50px;
+  text-align: center;
 }
 
 #admin{

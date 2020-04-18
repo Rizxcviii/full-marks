@@ -13,9 +13,9 @@
     <h2>Add User</h2>
 
     <div>
-      <form id="add-user" onsubmit="submit()">
+      <form method='POST' id="add-user" onsubmit="submit()">
         <label for="email">Email</label>
-        <input type="text" id="email" name="Email" placeholder="Email" required>
+        <input type="email" id="email" name="Email" placeholder="Email" required>
         <label for="password">Password</label>
         <input type="password" id="pword" name="Password" placeholder="Password" required>
         <label for="role">Select User</label>
@@ -25,12 +25,14 @@
           <option value="examiner">Examiner</option>
           <option value="student">Technical Invigilator</option>
         </select>
+
         <input type="submit" value="Submit">
       </form>
         <form method="GET" action="{{url_for('logout')}}">
-            <button type = "submit">Logout</button>
+            <button type = "submit" id="logout">Logout</button>
         </form>
 
     </div>
+
   </body>
 </html>

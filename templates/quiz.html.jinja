@@ -27,7 +27,7 @@
 				i++;
 			}
 		}
-		init({{ questions|safe }});
+		init({{ questions|tojson|safe }});
 	</script>
 	<script src="{{ url_for('static', filename='js/quiz.js') }}" type="text/javascript" defer></script>
 </head>
@@ -50,7 +50,7 @@
 							<li><input name=q{{ loop.index }} type="radio" value="4" />4. {{ question['answers']['mcqAnswers'][3] }}</li>
 						</ul>
 					{% else %}
-						<textarea id=textarea{{ loop.index }} rows = "10" cols = "60" name=q{{ loop.index }}></textarea><br/>
+						<textarea class='textarea' id=textarea{{ loop.index }} rows = "10" cols = "60" name=q{{ loop.index }}></textarea><br/>
 					{% endif %}
 					<button id="prev" class='pull-left'>Previous</button>
 					<button id='next' class='pull-right'>Next</button>

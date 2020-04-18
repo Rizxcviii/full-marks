@@ -56,6 +56,10 @@ ahome:active {
  color: green;
 }
 
+.textarea{
+	width: 95%;
+}
+
 header{
 	background:#1f88f4;
 	color:#ffffff;

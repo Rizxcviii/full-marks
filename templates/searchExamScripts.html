@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html
+  <head lang="en">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/SearchExamPage.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+  <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/searchExamScripts.js') }}" defer></script>
+</head>
+<body id= "body">
+  <h1>Search For Exam Scripts</h1>
+  <br></br>
+  <p>Welcome to the Search for Exam scripts, please search the module code/ID of the assessment you want to review:</p>
+
+  <div class="wrap">
+      <div class="search">
+        <input type="text" id="searchBar" class="searchTerm" placeholder="Please type in your module ID" required>
+        <button type="submit" onclick="searchForExam()" id="search" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+  </div>
+  <div class="response"></div>
+  <label id='lblScripts' class='scripts' for="scripts">Please choose an  exam script to review</label>
+  <select id='scripts' class="searchTermStudent searchTermScripts">
+    <option selected='true' disabled='disabled'>Please choose an exam script</option>
+  </select>
+  <input id ="submit" type="submit" value="Submit" onclick="startReview()">
+</body>
+</html>

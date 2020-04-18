@@ -13,7 +13,7 @@
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/AdminDashboard.css') }}"
+      href="{{ url_for('static', filename='css/Dashboard.css') }}"
     />
   </head>
 
@@ -22,17 +22,16 @@
       <img src="{{ url_for('static', filename='img/Logo.JPG') }}" width="170" height="140" alt="logo" />
       <div class="card">
         <div class="head">
-          <a id="login" href="#login" class="selected">Admin Dashboard</a>
+          <a id="login" class="selected">Admin Dashboard</a>
         </div>
-
-        <br /><br /><br /><br /><br />
+        <br>
         <!-- <form> -->
           <fieldset>
             <form method="GET" action="{{url_for('admin')}}">
             <button type="submit">Add User</button>
           </form>
             
-          <form method="GET" action="{{url_for('logout')}}">
+          <form class="logout" method="GET" action="{{url_for('logout')}}">
             <button type = "submit">Logout</button>
             </form>
           </fieldset>
