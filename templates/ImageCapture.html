@@ -11,6 +11,9 @@
   <body>
     <div id="camera"></div>
     <button onclick="takeSnapshot()">Take Picture</button>
-    <div id="results"></div>
+    <form method="POST" action="{{url_for('compareImages')}}">
+      <div id="results"></div>
+      <button type="submit">Compare</button>
+    </form>
   </body>
 </html>
