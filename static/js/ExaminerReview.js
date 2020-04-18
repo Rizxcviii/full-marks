@@ -52,7 +52,11 @@ function goToStart(){
 
 //Submit all form data to server
 async function submit(){
-	response =  await networkController.sendDataToBackend({answers: answerArr}, '/quiz')
+	let feedback = document.getElementById('feedback');
+	response =  await networkController.sendDataToBackend({
+		marks: answerArr,
+		feedback: feedback.value
+	}, '/ExaminerReview/uploadResults')
 	if(typeof response.error != 'undefined'){
 		alert('Unknown error occurred, please inform your administrator');
 	}
@@ -61,22 +65,23 @@ async function submit(){
 
 //Process the answers
 function process(n,nav){
-	console.log(n);
 	//Get input value
-	let submitted = document.getElementById('textarea'+n);
-	if (submitted) {
+	let submitted = document.getElementById('correct'+n);
+	if (submitted.checked) {
 		answerArr[n] = submitted.value;
 	}else{
-		submitted = $('input[name=q'+n+']:checked').val();
-		answerArr[n] = submitted;
+		answerArr[n] = 'incorrect';
 	}
+	console.log(answerArr);
 	// if it was the last question and the user selected 'next'
 	if(n == total && nav == 'next'){
 		$('#completed').hide();
 		$('#completed').fadeIn(300).html(
-			"<h3>You have now completed the exam. By pressing submit, your examiner will review the marks and you can review them afterwards.</h3><br/>"+
+			"<h3>You have now completed the review of the exam. By pressing submit, the student will now be able to review their results, IF they are registered with full marks. If not, then you/the institution will inform them yourselves.</h3><br/>"+
+			"<h2>FEEDBACK</h2>"+
+			"<textarea id='feedback' rows='10' cols='60' class='textarea'></textarea>"+
 			"<button id='submit' onclick=submit() style=" + 'text-align:center' + ">submit</button>"+
-			"<h3>Or you can return to the start of the exam to check/change your answers</h3>"+
+			"<h3>Or you can return to the start of the review to check/change your marks given</h3>"+
 			"<button id='goToStart' onclick=goToStart() style=" + 'text-align:center' + ">Review/Change Answers</button>"
 		);
 	}

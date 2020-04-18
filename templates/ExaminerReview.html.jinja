@@ -20,8 +20,6 @@
 			let i = 1;
 			const questionArr = Object.values(questions);
 			for(question of questionArr){
-				console.log(question);
-				console.log(typeof question.answers);
 				if(typeof question.answers != 'undefined'){
 					sessionStorage.setItem('a'+i,question.answers.answer);
 				}
@@ -62,19 +60,19 @@
 					{% if 'answers' in question %}
 						{% if script.answers[loop.index] == question.answers.answer|string %}
 							<div class="b">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=correct{{ loop.index }} name="correct" type="radio" checked> Correct 
-								<input id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio" checked> Correct 
+								<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
 							</div>
 						{% else %}
 							<div class="b">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=correct{{ loop.index }} name="correct" type="radio"> Correct 
-								<input id=incorrect{{ loop.index }} name="correct" type="radio" checked> InCorrect 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio"> Correct 
+								<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio" checked> InCorrect 
 							</div>
 						{% endif %}
 					{% else %}
 						<div class="b">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=correct{{ loop.index }} name="correct" type="radio"> Correct 
-							<input id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio"> Correct 
+							<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
 						</div>
 					{% endif %}
 					<button id="prev" class='pull-left'>Previous</button>

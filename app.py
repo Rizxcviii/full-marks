@@ -311,6 +311,26 @@ def ExaminerReview():
     print(session.get('sid'))
     return render_template('ExaminerReview.html.jinja', sid=session.get('sid'), examCode=session.get('examCode'), questions=markScheme, script=script)
 
+# ExaminerReview.html/uploadResults
+@app.route('/ExaminerReview/uploadResults', methods=['POST','GET'])
+def uploadResults():
+    if request.method == 'POST':
+        req = request.get_json()
+        scriptLocation = db.child('exams').child(session.get('examCode')).child('scripts').get().val()
+        for script in scriptLocation:
+            if 'sid' in script:
+                if script['uid'] == session.get('sid'):
+                    db.child('users').child(session.get('sid')).child('examScripts').child(session['examCode']).child('marks').set({
+                        'marks':req['marks'],
+                        'feedback':req['feedback']
+                    })
+                    return make_response({'message':'Results uploaded'},200)
+        db.child('temp').child(session.get('sid')).child(session['examCode']).child('marks').set({
+            'marks':req['marks'],
+            'feedback':req['feedback']
+        })
+        return make_response({'message':'Results uploaded'},200)
+
 # createExam.html
 @app.route('/createExam', methods=['POST', 'GET'])
 def createExam():
