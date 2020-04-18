@@ -3,35 +3,36 @@
     <title>Taking Picture</title>
     <link rel="stylesheet" href="ImageCapture.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
-    />
-    <link rel="stylesheet" href="https://codepen.io/P1N2O/pen/xxbjYqx.css" />
+    
+    
   </head>
   <style>
     #camera {
-      width: 360x;
-      height: 360px;
-      border: 1px solid black;
+      width: 325x;
+      height: 240px;
+      border: 1px solid red;
+      align-items: center;
+
     }
   </style>
 
   <body>
+    <h2>Image Identification</h2>
+    
     <div id="camera"></div>
     <button onclick="takeSnapshot()">
       Take Picture
     </button>
 
     <div id="results"></div>
-  </body>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
 
   <script>
     // load the webcam
     Webcam.set({
-      width: 360,
-      hieght: 360,
+      width: 325,
+      hieght: 240,
       image_format: "jpeg",
       jpeg_quality: 90,
     });
@@ -54,4 +55,6 @@
   <form action="button.html">
     <button>Submit</button>
   </form>
+</div>
+  </body>
 </html>
