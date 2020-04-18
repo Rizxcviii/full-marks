@@ -6,12 +6,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
     <link rel="stylesheet" href="https://codepen.io/P1N2O/pen/xxbjYqx.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js" defer></script>
+    <script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/ImageCapture.js') }}" defer></script>
+    <script defer>
+      function compareImages(){
+        // Get base64 value from <img id='imageprev'> source
+        let base64image = document.getElementById("preview").src;
+
+        Webcam.upload( base64image, '{{ url_for("compareImages") }}', function(code, text) {
+          console.log('Save successfully');
+          console.log(code);
+          console.log(text);
+        });
+      }
+    </script>
   </head>
   <body>
     <div id="camera"></div>
     <button onclick="takeSnapshot()">Take Picture</button>
-    <form method="POST" action="{{url_for('compareImages')}}">
+    <form method="POST" onsubmit="compareImages()">
       <div id="results"></div>
       <button type="submit">Compare</button>
     </form>

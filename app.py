@@ -1,7 +1,8 @@
 from flask import * # flask module that includes the flask requirements needed
 import pyrebase # pyrebase is a module that interacts with the Firebase API to parse commands and queries to Firebase
 import json # JSON module to perform translation to/from JSON, since we're dealing with JavaScript Objects also
-import boto3, base64
+import boto3, base64, os
+from werkzeug.utils import secure_filename
 
 # The config data structure that holds the Firebase configuration
 config = {
@@ -15,6 +16,9 @@ config = {
     "measurementId": "G-30ZTMVX2HF"
 }
 
+UPLOAD_FOLDER = 'static/img'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
 # pyrebase includes buiilt in functions to work with the firebase API, so most of the heavy work is done for us.
 
 # Initalising the firebase app to use services
@@ -27,7 +31,7 @@ auth = firebase.auth() # Authentication service, provides authentication for dif
 app = Flask(__name__)
 app.secret_key = 'a'
 client = boto3.client('rekognition')
-
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 '''
@@ -99,25 +103,35 @@ def ImageCapture():
         print("success")
     return render_template('ImageCapture.html')
 
-@app.route('/compareImages', methods=['POST'])
+@app.route('/compareImages', methods=['POST','GET'])
 def compareImages():
-    # req = request.form.get('results')
-    # # source = request.'preview')
-    # print(req)
-    # target = storage.refFromURL('gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
-    source = "/Users/Jose_Bear/Desktop/Software-Engineering-Project/Rizbir1.jpeg"
-    target = storage.child("2020-04-16-114031.jpg").get_url(session.get('userId'))
-    print(target)
+    if request.method == 'POST':
+        if 'webcam' not in request.files:
+            print('No file found')
+            return
+        file = request.files['webcam']
+        if file.filename == '':
+            print('No selected file')
+            return
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # req = request.form.get('results')
+        # # source = request.'preview')
+        # print(req)
+        # target = storage.refFromURL('gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
+        source = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        target = "/home/rizbir/se/Software-Engineering-Project/Rizbir2.jpeg"
+        print(target)
 
-    imageSource = open(source, 'rb')
-    imageTarget = open(target, 'rb')
+        imageSource = open(source, 'rb')
+        imageTarget = open(target, 'rb')
 
-    comparisonResponse = client.compare_faces(SimilarityThreshold=90,
-                                                SourceImage={'Bytes':imageSource.read()}, 
-                                                TargetImage={'Bytes':imageTarget.read()})
-    print(comparisonResponse)
+        comparisonResponse = client.compare_faces(SimilarityThreshold=90,
+                                                    SourceImage={'Bytes':imageSource.read()}, 
+                                                    TargetImage={'Bytes':imageTarget.read()})
+        print(comparisonResponse)
 
-    return '<h1>{{ comparisonResponse }}</h1>'
+        return '<h1>{{ comparisonResponse }}</h1>'
 
 # admin.html
 @app.route('/admin', methods=['POST','GET'])

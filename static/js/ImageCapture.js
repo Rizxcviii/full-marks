@@ -6,20 +6,17 @@ Webcam.set({
     jpeg_quality: 90
   });
 
-  Webcam.attach("#camera");
+Webcam.attach("#camera");
 
-  // let shutter = new Audio();
-  // shutter.autoplay = true;
-  // shutter.src = navigator.userAgent.match(/Firefox/)
-  //   ? "shutter.ogg"
-  //   : "shutter.mp3";
+// let shutter = new Audio();
+// shutter.autoplay = true;
+// shutter.src = navigator.userAgent.match(/Firefox/)
+//   ? "shutter.ogg"
+//   : "shutter.mp3";
 
-  function takeSnapshot() {
-    Webcam.snap(function(data_uri) {
-      document.getElementById("results").innerHTML =
-        '<img id="preview" src="' + data_uri + '" />';
-      
-      var base64image = document.getElementById("preview").src;
-      // return base64image;
-       });
-  }
+function takeSnapshot() {
+  Webcam.snap(function(data_uri) {
+    document.getElementById("results").innerHTML =
+      '<img id="preview" src="' + data_uri + '" />';
+  });
+}
