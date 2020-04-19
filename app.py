@@ -309,25 +309,17 @@ def quiz():
 def exams():
     return render_template('exams.html')
 
-# # exams2.html
-# @app.route('/exams2')
-# def exams2():
-#     return render_template('exams2.html')
-
 # T&C.html
 @app.route('/tAndC')
 def tAndC():
+    if session.get('examCode') == None:
+        return redirect(url_for('dashboard'))
     return render_template('T&C.html')
 
 # mockExam/html
 @app.route('/mockExam')
 def mockExam():
     return render_template('mockExam.html')
-
-# # timetable.html
-# @app.route('/timetable')
-# def timetable():
-#     return render_template('timetable.html')
 
 # searchExamScripts.html
 @app.route('/searchExamScripts', methods=['POST','GET'])
