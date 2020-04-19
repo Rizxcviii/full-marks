@@ -58,9 +58,27 @@ function addQuestion(){
         answerDiv.appendChild(lineBreak);
     }
 
+    let lblMarks = createLabel("Number of marks awarded", 'marks'+questionNumber);
+    questionDiv.appendChild(lblMarks);
+    let lbMarks = createLineBreak();
+    questionDiv.appendChild(lbMarks);
+    let marks = createMarks();
+    questionDiv.appendChild(marks);
+
     let lineBreak = createLineBreak();
     questionDiv.appendChild(lineBreak);
     questionNumber++;
+}
+
+//create marks input
+function createMarks(){
+    marks = document.createElement('input');
+    marks.setAttribute('type', 'number');
+    marks.setAttribute('class', 'q'+questionNumber+' marks');
+    marks.setAttribute('id', 'marks'+questionNumber);
+    marks.setAttribute('placeholder', 'Number of marks for question');
+    marks.required = true;
+    return marks;
 }
 
 //create an answer radio
@@ -186,10 +204,13 @@ form.addEventListener('submit', async e => {
             let question;
             let mcqAnswers = [];
             let answer;
+            let marks;
             children = currentValue.childNodes;
             children.forEach(function(item){
                 if (item.classList.contains('questionGiven')) {
                     question = item.value;
+                }else if(item.classList.contains('marks')){
+                    marks = item.value;
                 }else if (item.classList.contains('mcqAnswers')) {
                     item.childNodes.forEach(
                         function(currentValue){
@@ -205,7 +226,8 @@ form.addEventListener('submit', async e => {
             markScheme.questions.push({
                 question: question,
                 mcqAnswers: mcqAnswers,
-                answer: answer
+                answer: answer,
+                marks: marks
             });
         }
     );
