@@ -97,3 +97,11 @@ h1{
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.wrapScript{
+  width: 30%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -5%);
+}
