@@ -204,7 +204,7 @@ def student():
             session.pop('examCode', None)
             session.pop('feedback', None)
             session.pop('marks', None)
-    if not session['logged in'] or session.get('role') != "student"::
+    if not session['logged in'] or session.get('role') != "student":
         return redirect(url_for('dashboard'))
     else:
         return render_template('StudentDashboard.html')
@@ -212,7 +212,7 @@ def student():
 # StudentReview.html
 @app.route('/StudentReview', methods=['POST','GET'])
 def StudentReview():
-    if not session.get('logged in') or session.get('role') != "student"::
+    if not session.get('logged in') or session.get('role') != "student":
         return redirect(url_for('dashboard'))
     else:
         return render_template('StudentReview.html.jinja', totalMarks=session.get('totalMarks'), feedback=session.get('feedback'), marks=session.get('marks'), examCode=session.get('examCode'))
@@ -220,7 +220,7 @@ def StudentReview():
 # searchMarks.html
 @app.route('/searchMarks', methods=['GET','POST'])
 def searchMarks():
-    if not session.get('logged in') or session.get('role') != "student"::
+    if not session.get('logged in') or session.get('role') != "student":
         return redirect(url_for('home'))
     if request.method == 'POST':
         req = request.get_json()
