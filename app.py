@@ -242,14 +242,11 @@ def searchMarks():
             session['feedback'] = route['marks']['feedback']
             session['marks'] = route['marks']['marks']
             session['totalMarks'] = route['totalMarks']
-        else:
-            exam = db.child('users').child(session.get('userId')).child('examScripts').child(req['searched']).get().val()
-            print(exam)
-            if not exam:
-                return make_response({"message":"exam does not exist"}, 404)
-            return make_response({'exam':exam}, 200)
-        return make_response({'success':True}, 200)
-    return render_template('SearchMarks.html')
+    exams = db.child('users').child(session.get('userId')).child('examScripts').shallow().get().val()
+    print(exams)
+    if not exams:
+        return redirect(url_for('student'))
+    return render_template('SearchMarks.html.jinja', exams=exams)
 
 # SearchExamPage.html
 @app.route('/searchExam', methods=['GET', 'POST'])
