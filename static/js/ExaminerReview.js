@@ -74,7 +74,7 @@ function process(n,nav){
 		$('#completed').fadeIn(300).html(
 			"<h3>You have now completed the review of the exam. By pressing submit, the student will now be able to review their results, IF they are registered with full marks. If not, then you/the institution will inform them yourselves.</h3><br/>"+
 			"<h2>FEEDBACK</h2>"+
-			"<textarea id='feedback' rows='10' cols='60' class='textarea'></textarea>"+
+			"<textarea id='feedback' rows='10' cols='60' class='textarea'></textarea><br>"+
 			"<button id='submit' onclick=submit() style=" + 'text-align:center' + ">submit</button>"+
 			"<h3>Or you can return to the start of the review to check/change your marks given</h3>"+
 			"<button id='goToStart' onclick=goToStart() style=" + 'text-align:center' + ">Review/Change Answers</button>"
