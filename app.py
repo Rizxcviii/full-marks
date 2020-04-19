@@ -188,7 +188,7 @@ def dashboard():
     else:
         return redirect(url_for('login'))
 
-# examiner.html
+# ExaminerDashboard.html
 @app.route('/examiner')
 def examiner():
     if not session.get('logged in') or session.get('role') != "examiner":
