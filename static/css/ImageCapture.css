@@ -24,7 +24,9 @@ button{
 }
 
 #camera {
-  width: 360x;
-  height: 360px;
-  border: 1px solid black;
+  width: 325x;
+  height: 240px;
+  border: 1px solid red;
+  
+
 }
