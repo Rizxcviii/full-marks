@@ -145,7 +145,7 @@ def compareImages():
 # admin.html
 @app.route('/admin', methods=['POST','GET'])
 def admin():
-    if not session['logged in']:
+    if not session.get('logged in'):
         return redirect(url_for('login'))
     elif session.get('role') != 'admin':
         return redirect(url_for('dashboard'))
@@ -171,7 +171,7 @@ def admin():
 
 @app.route('/AdminDashboard')
 def AdminDashboard():
-    if not session['logged in'] or session.get('role') != 'admin':
+    if not session.get('logged in') or session.get('role') != 'admin':
         return redirect(url_for('home'))
     return render_template('AdminDashboard.html')
 
@@ -191,7 +191,7 @@ def dashboard():
 # examiner.html
 @app.route('/examiner')
 def examiner():
-    if not session['logged in'] or session.get('role') != "examiner":
+    if not session.get('logged in') or session.get('role') != "examiner":
         return redirect(url_for('dashboard'))
     else:
         return render_template('ExaminerDashboard.html')
@@ -204,7 +204,7 @@ def student():
             session.pop('examCode', None)
             session.pop('feedback', None)
             session.pop('marks', None)
-    if not session['logged in'] or session.get('role') != "student":
+    if not session.get('logged in') or session.get('role') != "student":
         return redirect(url_for('dashboard'))
     else:
         return render_template('StudentDashboard.html')
@@ -383,7 +383,7 @@ def uploadResults():
 # createExam.html
 @app.route('/createExam', methods=['POST', 'GET'])
 def createExam():
-    if not session['logged in'] or session.get('role') != "examiner":
+    if not session.get('logged in') or session.get('role') != "examiner":
         return redirect(url_for('dashboard'))
     if request.method == 'POST':
         try:
