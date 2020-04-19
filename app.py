@@ -114,10 +114,6 @@ def compareImages():
             return
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # req = request.form.get('results')
-        # # source = request.'preview')
-        # print(req)
-        # target = storage.refFromURL('gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
         source = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         target = "/home/rizbir/se/Software-Engineering-Project/Rizbir2.jpeg"
         print(target)
@@ -141,10 +137,6 @@ def compareImages():
         print(similarity)
         confidence = comparisonResponse['FaceMatches'][0]['Face']['Confidence']
         print(confidence)
-        # if similarity >= 90:
-        #     return make_response(str("Similarity: " + str(similarity) +", Confidence: " + str(confidence)),200)
-        # else:
-        #     return make_response("images do not match in similarity", 200)
         return make_response({
             'similarity':similarity,
             'confidence':confidence
@@ -199,9 +191,7 @@ def dashboard():
 # examiner.html
 @app.route('/examiner')
 def examiner():
-    if not session['logged in']:
-        return redirect(url_for('home'))
-    elif session.get('role') != "examiner":
+    if not session['logged in'] or session.get('role') != "examiner"::
         return redirect(url_for('dashboard'))
     else:
         return render_template('ExaminerDashboard.html')
@@ -214,9 +204,7 @@ def student():
             session.pop('examCode', None)
             session.pop('feedback', None)
             session.pop('marks', None)
-    if not session['logged in']:
-        return redirect(url_for('home'))
-    elif session.get('role') != "student":
+    if not session['logged in'] or session.get('role') != "student"::
         return redirect(url_for('dashboard'))
     else:
         return render_template('StudentDashboard.html')
@@ -224,9 +212,7 @@ def student():
 # StudentReview.html
 @app.route('/StudentReview', methods=['POST','GET'])
 def StudentReview():
-    if not session.get('logged in'):
-        return redirect(url_for('home'))
-    elif session.get('role') != "student":
+    if not session.get('logged in') or session.get('role') != "student"::
         return redirect(url_for('dashboard'))
     else:
         return render_template('StudentReview.html.jinja', totalMarks=session.get('totalMarks'), feedback=session.get('feedback'), marks=session.get('marks'), examCode=session.get('examCode'))
@@ -234,10 +220,8 @@ def StudentReview():
 # searchMarks.html
 @app.route('/searchMarks', methods=['GET','POST'])
 def searchMarks():
-    if not session.get('logged in'):
+    if not session.get('logged in') or session.get('role') != "student"::
         return redirect(url_for('home'))
-    elif session.get('role') != "student":
-        return redirect(url_for('dashboard'))
     if request.method == 'POST':
         req = request.get_json()
         if req['startReview'] == True:
@@ -254,6 +238,8 @@ def searchMarks():
 # SearchExamPage.html
 @app.route('/searchExam', methods=['GET', 'POST'])
 def searchExam():
+    if session.get('role') == "admin" or session.get('role') == "exmainer" :
+        return redirect(url_for('home'))
     if request.method == 'POST':
         try:
             req = request.get_json()
@@ -283,6 +269,8 @@ def searchExam():
 # quiz.html
 @app.route('/quiz', methods=['GET','POST'])
 def quiz():
+    if session.get('role') == "admin" or session.get('role') == "exmainer" :
+        return redirect(url_for('home'))
     if request.method == 'POST':
         req = request.get_json()
         if session.get('logged in'):
@@ -311,6 +299,8 @@ def quiz():
 # exams.html
 @app.route('/exams')
 def exams():
+    if session.get('role') != "student":
+        return redirect(url_for('dashboard'))
     return render_template('exams.html')
 
 # T&C.html
@@ -323,14 +313,14 @@ def tAndC():
 # mockExam/html
 @app.route('/mockExam')
 def mockExam():
+    if session.get('role') != "student":
+        return redirect(url_for('dashboard'))
     return render_template('mockExam.html')
 
 # searchExamScripts.html
 @app.route('/searchExamScripts', methods=['POST','GET'])
 def searchExamScripts():
-    if not session.get('logged in'):
-        return redirect(url_for('home'))
-    elif session.get('role') != "examiner":
+    if not session.get('logged in') or session.get('role') != "examiner":
         return redirect(url_for('dashboard'))
     if request.method == 'POST':
         req = request.get_json()
@@ -354,6 +344,8 @@ def searchExamScripts():
 # ExaminerReview.html
 @app.route('/ExaminerReview', methods=['POST','GET'])
 def ExaminerReview():
+    if not session.get('logged in') or session.get('role') != "examiner":
+        return redirect(url_for('dashboard'))
     markScheme = db.child('exams').child(session.get('examCode')).child('questions').get().val()
     scriptLocation = db.child('temp').shallow().get().val()
     if session.get('sid') in scriptLocation:
