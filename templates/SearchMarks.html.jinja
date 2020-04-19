@@ -17,7 +17,8 @@
   <p>Welcome to the Search for Feedback page, please search the module code/ID of the assessment you want to attain feedback for:</p>
 
   <div class="wrapScript">
-    <label id='lblScripts' class='scripts searchTermScripts' for="scripts">Please choose an exam to attain feedback for</label>
+    <label id='lblScripts' class='scripts searchTermScripts' for="scripts">Please choose an exam to attain feedback for:</label>
+	<br>
     <select id='scripts' class="searchTermStudent searchTermScripts"><br/>
       {% for exam in exams %}
         <option value={{ exam }}>{{ exam }}</option>
