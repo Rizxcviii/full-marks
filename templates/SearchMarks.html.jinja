@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html
+<html>
+  <title>Searching Results</title>
   <head lang="en">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +18,7 @@
 
   <div class="wrapScript">
     <label id='lblScripts' class='scripts searchTermScripts' for="scripts">Please choose an exam to attain feedback for</label>
-    <select id='scripts' class="searchTermStudent searchTermScripts">
+    <select id='scripts' class="searchTermStudent searchTermScripts"><br/>
       {% for exam in exams %}
         <option value={{ exam }}>{{ exam }}</option>
       {% endfor %}
