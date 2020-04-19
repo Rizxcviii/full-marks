@@ -60,19 +60,21 @@
 					{% if 'answers' in question %}
 						{% if script.answers[loop.index] == question.answers.answer|string %}
 							<div class="b">
-								<input value={{ question['marks'] }} max={{ question['marks'] }} id=marks{{ loop.index }} name="marks" type="number"> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio" checked> Correct 
+								<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
 							</div>
 						{% else %}
 							<div class="b">
-								<input value=0 max={{ question['marks'] }} id=marks{{ loop.index }} name="marks" type="number"> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio"> Correct 
+								<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio" checked> InCorrect 
 							</div>
 						{% endif %}
 					{% else %}
 						<div class="b">
-							<input value=0 max={{ question['marks'] }} id=marks{{ loop.index }} name="marks" type="number"> 
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='correct' id=correct{{ loop.index }} name="correct" type="radio"> Correct 
+							<input value='incorrect' id=incorrect{{ loop.index }} name="correct" type="radio"> InCorrect 
 						</div>
 					{% endif %}
-					<h3>{{ 'Marks '+question['marks'] }}</h3>
 					<button id="prev" class='pull-left'>Previous</button>
 					<button id='next' class='pull-right'>Next</button>
 				</form>

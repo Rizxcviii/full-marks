@@ -47,6 +47,7 @@ easily have 2 or more routes above the view function, one after the other, to li
 # The route that is loaded up when first coming to the website.
 @app.route('/', methods=['GET'])
 def home():
+    print("Hello")
     if not session.get('logged in'):
         return redirect(url_for('login'))
     else:
@@ -202,53 +203,14 @@ def examiner():
         return render_template('ExaminerDashboard.html')
 
 # StudentDashboard.html
-@app.route('/student', methods=['GET','POST'])
+@app.route('/student')
 def student():
-    if request.method == 'POST':
-        if session.get('feedback'):
-            session.pop('examCode', None)
-            session.pop('feedback', None)
-            session.pop('marks', None)
     if not session['logged in']:
         return redirect(url_for('home'))
     elif session.get('role') != "student":
         return redirect(url_for('dashboard'))
     else:
         return render_template('StudentDashboard.html')
-
-# StudentReview.html
-@app.route('/StudentReview', methods=['POST','GET'])
-def StudentReview():
-    if not session.get('logged in'):
-        return redirect(url_for('home'))
-    elif session.get('role') != "student":
-        return redirect(url_for('dashboard'))
-    else:
-        return render_template('StudentReview.html.jinja', feedback=session.get('feedback'), marks=session.get('marks'), examCode=session.get('examCode'))
-    
-# searchMarks.html
-@app.route('/searchMarks', methods=['GET','POST'])
-def searchMarks():
-    if not session.get('logged in'):
-        return redirect(url_for('home'))
-    elif session.get('role') != "student":
-        return redirect(url_for('dashboard'))
-    if request.method == 'POST':
-        req = request.get_json()
-        if req['startReview'] == True:
-            marks = db.child('users').child(session.get('userId')).child('examScripts').child(req['examCode']).child('marks').get().val()
-            print(marks)
-            session['examCode'] = req['examCode']
-            session['feedback'] = marks['feedback']
-            session['marks'] = marks['marks']
-        else:
-            exam = db.child('users').child(session.get('userId')).child('examScripts').child(req['searched']).get().val()
-            print(exam)
-            if not exam:
-                return make_response({"message":"exam does not exist"}, 404)
-            return make_response({'exam':exam}, 200)
-        return make_response({'success':True}, 200)
-    return render_template('SearchMarks.html')
 
 # SearchExamPage.html
 @app.route('/searchExam', methods=['GET', 'POST'])
@@ -316,7 +278,6 @@ def exams():
 def tAndC():
     return render_template('T&C.html')
 
-# mockExam/html
 @app.route('/mockExam')
 def mockExam():
     return render_template('mockExam.html')
@@ -369,24 +330,21 @@ def ExaminerReview():
 def uploadResults():
     if request.method == 'POST':
         req = request.get_json()
-        marks = req['marks']
-        marks = marks[1:]
-        marks = [ int(x) for x in marks]
         scriptLocation = db.child('exams').child(session.get('examCode')).child('scripts').get().val()
         for script in scriptLocation:
             if 'sid' in script:
                 if script['uid'] == session.get('sid'):
                     db.child('users').child(session.get('sid')).child('examScripts').child(session['examCode']).child('marks').set({
-                        'marks':marks,
+                        'marks':req['marks'],
                         'feedback':req['feedback']
                     })
                     return make_response({'message':'Results uploaded'},200)
         db.child('temp').child(session.get('sid')).child(session['examCode']).child('marks').set({
-            'marks':marks,
+            'marks':req['marks'],
             'feedback':req['feedback']
         })
-        session.pop('sid', None)
-        session.pop('examCode', None)
+        session.pop('sid')
+        session.pop('examCode')
         return make_response({'message':'Results uploaded'},200)
 
 # createExam.html
@@ -403,14 +361,11 @@ def createExam():
             questions = req['questions']
             i = 1
             for question in questions:
-                db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).set({
-                    'question' : question['question'],
-                    'marks':question['marks']
-                })
+                db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).set({'question' : question['question']})
                 if 'answer' in question.keys():
                     db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).child('answers').set({
                         'answer' : int(question['answer']),
-                        'mcqAnswers' : question['mcqAnswers'],
+                        'mcqAnswers' : question['mcqAnswers']
                     })
                 i+=1
         except Exception as e:
@@ -467,11 +422,5 @@ def logout():
     session['logged in'] = False
     session.pop('role', None)
     session.pop('userId', None)
-    session.pop('sid', None)
-    session.pop('examCode', None)
-    session.pop('examName', None)
-    session.pop('questions', None) 
-    session.pop('feedback', None)
-    session.pop('marks', None) 
     return redirect(url_for('home')) 
 

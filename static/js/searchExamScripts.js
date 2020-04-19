@@ -21,9 +21,7 @@ async function searchForExam(){
         $('.response').html("<p>"+response.message+"</p>");
         $('.response').fadeIn(300);
     }else{
-
         $('.response, #submit, #scripts, #lblScripts').hide();
-        $('#scripts').empty();
         $('.response').html("<p>"+response.exam.examName+" has been found. Please select the exam script for review and press submit</p>");
         const scripts = response.exam.scripts;
         scripts.forEach(script => {
