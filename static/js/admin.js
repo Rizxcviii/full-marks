@@ -10,7 +10,11 @@ addUserForm.addEventListener("submit", async e => {
     console.log(response);
     if (typeof response.error == 'undefined') {
         alert('user added successfully');
-        networkController.redirect('admin');
+        networkController.redirect('dashboard');
+    }else if(response.error.message == 'EMAIL_EXISTS'){
+        alert('Email already exists');
+    }else if(response.error.message == "WEAK_PASSWORD : Password should be at least 6 characters"){
+        alert("Password should be at least 6 characters");
     }else{
         alert('Unknown error occurred, please contect full marks so we can rectify this issue');
     }

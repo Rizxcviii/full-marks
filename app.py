@@ -161,7 +161,11 @@ def admin():
         try:
             req = request.get_json()
             print(req)
+            adminId = session.get('userId')
             user = createUser(req['email'], req['password'], req['userRole'], req['userRole'], 'gs://full-marks-7f03b.appspot.com/2020-04-16-114031.jpg')
+            session['logged in'] = True
+            session['userId'] = adminId
+            session['role'] = 'admin'
         except Exception as e: # pyrebase unfortunately does not include error handling, but we can take advantage of the exception that is thrown and store the error object that Firebase throws back
             print(e)
             try:
