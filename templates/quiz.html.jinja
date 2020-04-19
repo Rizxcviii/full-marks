@@ -9,9 +9,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
 	<script src="{{ url_for('static', filename='js/NetworkController.js') }}" defer></script>
 	<script defer>
-		let score = 0; //Set score to 0
 		let total= {{ questions|length|safe }}; //Total number of questions
-		let point = 1; //Points per correct answer
 		let answerArr = [];
 
 		//Initializer
@@ -30,6 +28,7 @@
 		init({{ questions|tojson|safe }});
 	</script>
 	<script src="{{ url_for('static', filename='js/quiz.js') }}" type="text/javascript" defer></script>
+	<script>let marks=[];</script>
 </head>
 
 <body>
@@ -53,6 +52,7 @@
 						<textarea class='textarea' id=textarea{{ loop.index }} rows = "10" cols = "60" name=q{{ loop.index }}></textarea><br/>
 					{% endif %}
 					<h3>{{ 'Marks: '+question['marks'] }}</h3>
+					<script>marks.push({{ question.marks|int }})</script>
 					<button id="prev" class='pull-left'>Previous</button>
 					<button id='next' class='pull-right'>Next</button>
 				</form>

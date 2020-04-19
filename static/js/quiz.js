@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	console.log(marks);
 	//Hide all questions
 	$('.questionForm').hide();
 
@@ -40,7 +41,11 @@ function goToStart(){
 
 //Submit all form data to server
 async function submit(){
-	response =  await networkController.sendDataToBackend({answers: answerArr}, '/quiz')
+	totalMarks = marks.reduce((a,b) => a+b, 0);
+	response =  await networkController.sendDataToBackend({
+		answers: answerArr,
+		totalMarks: totalMarks
+	}, '/quiz');
 	if(typeof response.error != 'undefined'){
 		alert('Unknown error occurred, please inform your administrator');
 	}

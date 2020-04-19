@@ -224,7 +224,7 @@ def StudentReview():
     elif session.get('role') != "student":
         return redirect(url_for('dashboard'))
     else:
-        return render_template('StudentReview.html.jinja', feedback=session.get('feedback'), marks=session.get('marks'), examCode=session.get('examCode'))
+        return render_template('StudentReview.html.jinja', totalMarks=session.get('totalMarks'), feedback=session.get('feedback'), marks=session.get('marks'), examCode=session.get('examCode'))
     
 # searchMarks.html
 @app.route('/searchMarks', methods=['GET','POST'])
@@ -236,11 +236,12 @@ def searchMarks():
     if request.method == 'POST':
         req = request.get_json()
         if req['startReview'] == True:
-            marks = db.child('users').child(session.get('userId')).child('examScripts').child(req['examCode']).child('marks').get().val()
-            print(marks)
+            route = db.child('users').child(session.get('userId')).child('examScripts').child(req['examCode']).get().val()
+            print(route)
             session['examCode'] = req['examCode']
-            session['feedback'] = marks['feedback']
-            session['marks'] = marks['marks']
+            session['feedback'] = route['marks']['feedback']
+            session['marks'] = route['marks']['marks']
+            session['totalMarks'] = route['totalMarks']
         else:
             exam = db.child('users').child(session.get('userId')).child('examScripts').child(req['searched']).get().val()
             print(exam)
@@ -285,14 +286,20 @@ def quiz():
     if request.method == 'POST':
         req = request.get_json()
         if session.get('logged in'):
-            db.child('users').child(session.get('userId')).child('examScripts').child(session.get('examCode')).set({'answers':req['answers']})
+            db.child('users').child(session.get('userId')).child('examScripts').child(session.get('examCode')).set({
+                'answers':req['answers'],
+                'totalMarks':req['totalMarks']
+            })
             user = {
                 'sid':db.child('users').child(session.get('userId')).child('UID').get().val(),
                 'uid':session.get('userId')
             }
             addIDToScriptsArr(user)
         else:
-            db.child('temp').child(session.get('sid')).child(session.get('examCode')).set({'answers':req['answers']})
+            db.child('temp').child(session.get('sid')).child(session.get('examCode')).set({
+                'answers':req['answers'],
+                'totalMarks':req['totalMarks']
+            })
             addIDToScriptsArr(session.get('sid'))
             session.pop('sid', None)
         session.pop('examCode', None)
