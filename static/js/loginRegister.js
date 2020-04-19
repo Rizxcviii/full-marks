@@ -18,7 +18,7 @@ registerForm.addEventListener("submit", async (e) => {
     if(typeof response.error == 'undefined'){
       networkController.redirect("");
     }else if(response.error.message == 'EMAIL_EXISTS') {
-      alert('Password Incorrect');
+      alert('Email already exists');
     }else if(response.error.message == 'WEAK_PASSWORD : Password should be at least 6 characters'){
       alert('Password should be at least 6 characters');
     }else{
