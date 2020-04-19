@@ -361,11 +361,14 @@ def createExam():
             questions = req['questions']
             i = 1
             for question in questions:
-                db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).set({'question' : question['question']})
+                db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).set({
+                    'question' : question['question'],
+                    'marks':question['marks']
+                })
                 if 'answer' in question.keys():
                     db.child('exams').child(req['examCode']).child('questions').child('q'+str(i)).child('answers').set({
                         'answer' : int(question['answer']),
-                        'mcqAnswers' : question['mcqAnswers']
+                        'mcqAnswers' : question['mcqAnswers'],
                     })
                 i+=1
         except Exception as e:

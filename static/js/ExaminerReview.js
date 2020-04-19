@@ -9,16 +9,15 @@ $(document).ready(function(){
 		//Get data attributes
 		current = $(this).parents('form:first').data('question');
 		next = $(this).parents('form:first').data('question')+1;
-		correct = document.getElementById('correct'+current);
-		incorrect = document.getElementById('incorrect'+current);
-		if(correct.checked == true || incorrect.checked == true){
+		marks = document.getElementById('marks'+current);
+		if (marks.value <= marks.max) {
 			//Hide all questions
 			$('.questionForm').hide();
 			//Show next question
 			$('#q'+next+'').fadeIn(300);
 			process(''+current+'','next');
-		}else{
-			alert("Please specify whether the answer is correct or incorrect");
+		} else {
+			alert('You have to set a range equal to or beneath ' + marks.max);
 		}
 		return false;
 	});
@@ -30,15 +29,15 @@ $(document).ready(function(){
 		}
 		prev = $(this).parents('form:first').data('question')-1;
 		correct = document.getElementById('correct'+current);
-		incorrect = document.getElementById('incorrect'+current);
-		if(correct.checked == true || incorrect.checked == true){
+		marks = document.getElementById('marks'+current);
+		if (marks.value <= marks.max) {
 			//Hide all questions
 			$('.questionForm').hide();
 			//Show previous question
 			$('#q'+prev+'').fadeIn(300);
 			process(''+current+'','prev');
 		}else{
-			alert("Please specify whether the answer is correct or incorrect");
+			alert('You have to set a range equal to or beneath ' + marks.max);
 		}
 		return false;
 	});
@@ -66,12 +65,8 @@ async function submit(){
 //Process the answers
 function process(n,nav){
 	//Get input value
-	let submitted = document.getElementById('correct'+n);
-	if (submitted.checked) {
-		answerArr[n] = submitted.value;
-	}else{
-		answerArr[n] = 'incorrect';
-	}
+	let submitted = document.getElementById('marks'+n);
+	answerArr[n] = submitted.value;
 	console.log(answerArr);
 	// if it was the last question and the user selected 'next'
 	if(n == total && nav == 'next'){
