@@ -30,7 +30,9 @@ h1{
   font-size: 24px;
 }
 
-
+#search{
+  background-color: #cc5200;
+}
 
 .search {
   width: 100%;
@@ -40,7 +42,7 @@ h1{
 
 .searchTerm {
   width: 100%;
-  border: 3px solid #00B4CC;
+  border: 3px solid #cc5200;
   border-right: none;
   padding: 5px;
   height: 20px;
@@ -56,8 +58,8 @@ h1{
 }
 
 .searchTermStudent {
-  width: 50%;
-  border: 3px solid #00B4CC;
+  width: 28.8%;
+  border: 3px solid #800040;
   padding: 5px;
   height: 20px;
   border-radius: 5px 5px;
@@ -78,7 +80,7 @@ h1{
 .searchButton {
   width: 40px;
   height: 36px;
-  border: 1px solid #00B4CC;
+  border: 1px solid #cc5200;
   background:#00B4CC;
   text-align: center;
   color: #fff;
