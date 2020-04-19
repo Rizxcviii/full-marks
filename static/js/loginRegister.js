@@ -41,7 +41,7 @@ loginForm.addEventListener("submit", async (e) => {
     if(typeof response.error == 'undefined'){
       networkController.redirect("");
     }else if(response.error.message == 'INVALID_PASSWORD') {
-      alert('Email/Password Incorrect');
+      alert('Password Incorrect');
     }else if(response.error.message == 'EMAIL_NOT_FOUND'){
       alert('Email does not exist');
     }else{
