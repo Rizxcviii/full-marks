@@ -231,6 +231,10 @@ form.addEventListener('submit', async e => {
             });
         }
     );
+    if(markScheme.questions.length == 0){
+        alert('Please add a question to upload!');
+        return;
+    }
     response = await networkController.sendDataToBackend(markScheme,'/createExam');
     if(typeof response.error == 'undefined'){
         alert('Exam successfully uploaded!');
