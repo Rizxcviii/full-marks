@@ -115,7 +115,8 @@ def compareImages():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         source = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        target = "/home/rizbir/se/Software-Engineering-Project/Rizbir2.jpeg"
+        print(source)
+        target = os.path.normpath(app.root_path) + "/ComparisonImage.jpeg"
         print(target)
 
         imageSource = open(source, 'rb')
@@ -123,10 +124,13 @@ def compareImages():
         comparisonReponse = ""
 
         try:
-            comparisonResponse = client.compare_faces(SimilarityThreshold=0,
-                                                    SourceImage={'Bytes':imageSource.read()}, 
-                                                    TargetImage={'Bytes':imageTarget.read()})
+            comparisonResponse = client.compare_faces(
+                SimilarityThreshold=0,
+                SourceImage={'Bytes':imageSource.read()}, 
+                TargetImage={'Bytes':imageTarget.read()}
+            )
         except Exception as e:
+            print('comparison failure')
             return make_response({
             'similarity':0,
             'confidence':100
