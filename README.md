@@ -42,7 +42,7 @@ or
 
     python app.py
 
-To run the Flask server, for which a localhost port will be running the application
+This will run the Flask server, for which a localhost port will be running the application
 
 **NOTE: I have noticed that these commands tend to change in formatting, or you may need to run an entierly different command altogether. This obviously depends on your Operating System and the terminal with which you may be using (i.e. Whether you are using Powershell or the normal CMD)**
 
